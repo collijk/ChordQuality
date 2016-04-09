@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="ManagedMIDI">
+</Property><Property Name="Solution File" Value="C:\Users\Andrew\Desktop\chord qual pack\ChordQuality\ManagedMIDI\ManagedMIDI.sln">
+</Property><Property Name="Date" Value="Thursday, May 05, 2011">
+</Property><Property Name="Time" Value="20:18:26 PM">
+</Property></Properties><Event ErrorLevel="0" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Converting project file 'C:\Users\Andrew\Desktop\chord qual pack\ChordQuality\ManagedMIDI\ManagedMIDI.vcproj'.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="VCWebServiceProxyGeneratorTool is no longer supported. The tool has been removed from your project settings.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'CopyLocalDependencies' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="1" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Attribute 'UseDependenciesInBuild' of 'AssemblyReference' is not supported in this version and has been removed during conversion.">
+</Event><Event ErrorLevel="0" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Done converting to new project file 'C:\Users\Andrew\Desktop\chord qual pack\ChordQuality\ManagedMIDI\ManagedMIDI.vcxproj'.">
+</Event><Event ErrorLevel="3" Project="ManagedMIDI" Source="ManagedMIDI.vcproj" Description="Converted">
+</Event></UpgradeLog>

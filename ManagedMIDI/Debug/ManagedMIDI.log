@@ -1,0 +1,31 @@
+﻿Build started 8/11/2011 3:33:13 PM.
+     1>Project "H:\newcq2011\ManagedMIDI\ManagedMIDI.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\ManagedMIDI.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\CL.exe /c /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\\" /AIC:\Windows\Microsoft.NET\Framework\v3.5\ /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\\" /AIC:\Windows\Microsoft.NET\Framework\v3.0\ /AIC:\Windows\Microsoft.NET\Framework\v2.0.50727\ /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDLL /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Debug\ManagedMIDI.pch" /Fo"Debug\\" /Fd"Debug\vc90.pdb" /TP /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\mscorlib.dll /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll" /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll /analyze- /errorReport:prompt Stdafx.cpp /d1clr:nostdlib 
+         Stdafx.cpp
+         C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\CL.exe /c /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\\" /AIC:\Windows\Microsoft.NET\Framework\v3.5\ /AI"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\\" /AIC:\Windows\Microsoft.NET\Framework\v3.0\ /AIC:\Windows\Microsoft.NET\Framework\v2.0.50727\ /Zi /clr /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDLL /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\ManagedMIDI.pch" /Fo"Debug\\" /Fd"Debug\vc90.pdb" /TP /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\mscorlib.dll /FU"C:\Program Files\Reference Assemblies\Microsoft\Framework\v3.5\System.Core.dll" /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Data.dll /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\System.dll /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll /FUC:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Xml.dll /analyze- /errorReport:prompt AssemblyInfo.cpp ManagedMIDI.cpp /d1clr:nostdlib 
+         AssemblyInfo.cpp
+         ManagedMIDI.cpp
+         Generating Code...
+       Link:
+         C:\Program Files\Microsoft Visual Studio 9.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"H:\newcq2011\Debug\ManagedMIDI.dll" /INCREMENTAL /NOLOGO /MANIFEST /ManifestFile:"Debug\ManagedMIDI.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"H:\newcq2011\Debug\ManagedMIDI.pdb" /ASSEMBLYDEBUG /TLBID:1 /DYNAMICBASE /FIXED:NO /NXCOMPAT /MACHINE:X86 /DLL Debug\AssemblyInfo.obj
+         Debug\ManagedMIDI.obj
+         Debug\Stdafx.obj
+         ManagedMIDI.vcxproj -> H:\newcq2011\Debug\ManagedMIDI.dll
+       Manifest:
+         C:\Program Files\Microsoft SDKs\Windows\v6.0A\bin\mt.exe /nologo /verbose /outputresource:"H:\newcq2011\Debug\ManagedMIDI.dll;#2" /manifest Debug\ManagedMIDI.dll.intermediate.manifest
+       _CopyFilesMarkedCopyLocal:
+         Copying file from "C:\Windows\Microsoft.NET\Framework\v2.0.50727\mscorlib.dll" to "H:\newcq2011\Debug\mscorlib.dll".
+         Copying file from "C:\Windows\Microsoft.NET\Framework\v2.0.50727\System.Windows.Forms.dll" to "H:\newcq2011\Debug\System.Windows.Forms.dll".
+       CopyFilesToOutputDirectory:
+         Copying file from "Debug\ManagedMIDI.pdb" to "H:\newcq2011\Debug\ManagedMIDI.pdb".
+       FinalizeBuildStatus:
+         Deleting file "Debug\ManagedMIDI.unsuccessfulbuild".
+         Touching "Debug\ManagedMIDI.lastbuildstate".
+     1>Done Building Project "H:\newcq2011\ManagedMIDI\ManagedMIDI.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:32.09
