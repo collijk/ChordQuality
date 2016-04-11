@@ -45,5 +45,7 @@ Temporary Items
 bin/
 obj/
 ipch/
-backup/
 Release/
+Debug/
+*.sdf
+*.ncb
