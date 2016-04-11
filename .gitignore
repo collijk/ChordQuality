@@ -49,3 +49,5 @@ Release/
 Debug/
 *.sdf
 *.ncb
+*.v12.suo
+*.opensdf
