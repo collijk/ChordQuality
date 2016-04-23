@@ -1738,7 +1738,6 @@ namespace ChordQuality
 			update_tuning_avg();
 			if (f!=null) redraw_chords();
 		}
-		/***** Penalties Event Handlers Begins *****/
 
 		/***** Print Layout Event Handlers Begins *****/
 		void ApplyButtonClick(object sender,System.EventArgs e)
@@ -1756,7 +1755,6 @@ namespace ChordQuality
 			}
 			zoomScroll.Value=bars;
 		}
-		/***** Print Layout Event Handlers Ends *****/
 
 		/***** Menu Items Event Handlers Begins *****/
         private void menuItemAdd_Click(object sender, EventArgs e)
@@ -1853,7 +1851,6 @@ namespace ChordQuality
 			FileInfoForm fif = new FileInfoForm(f);
 			fif.Show();
 		}
-		/***** Menu Items Event Handlers Ends *****/
 
 		/***** Note Display Event Handlers Begins *****/
 		private void NoteDisplayOnMouseHover(object sender, EventArgs e)
@@ -1885,7 +1882,6 @@ namespace ChordQuality
 				else menuItemAdd.Enabled = false;
 			}
 		}
-		/***** Note Display Event Handlers Ends *****/
 
 		/***** Playback Event Handlers Begins *****/
 		void PlayButtonClick(object sender, System.EventArgs e)
@@ -1919,7 +1915,6 @@ namespace ChordQuality
 			if (pl != null)
 				pl.Volume = ((double)volumeBar.Value) / volumeBar.Maximum;
 		}
-		/***** Playback Event Handlers Ends *****/
 
 		/***** Helper Functions Begins *****/
 		public String getMidiFileName()
@@ -2148,7 +2143,6 @@ namespace ChordQuality
 			timer1.Enabled = false;
 			cursor.Left = noteDisplay.Left;
 		}
-		/***** Helper Functions Ends *****/
 	}
 }
 
