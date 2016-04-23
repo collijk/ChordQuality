@@ -38,7 +38,7 @@ namespace ChordQuality
 		private System.Windows.Forms.VScrollBar weightScroll5;
 		private System.Windows.Forms.MenuItem menuItemAdd;
 		private System.Windows.Forms.PrintDialog printDialog1;
-        private System.Windows.Forms.PrintPreviewControl printPreviewDialog1;
+		private System.Windows.Forms.PrintPreviewControl printPreviewDialog1;
 		private System.Windows.Forms.VScrollBar penaltyScrollAdd;
 		private System.Windows.Forms.MenuItem menuItemPrint;
 		private System.Windows.Forms.MenuItem menuItemBest;
@@ -106,29 +106,31 @@ namespace ChordQuality
 		private System.Windows.Forms.VScrollBar zoomScroll;
 		private System.Windows.Forms.MenuItem menuItemInfo;
 		private System.Windows.Forms.VScrollBar weightScroll6Maj;
-        private MenuItem menuItemPrintPreview;
+		private MenuItem menuItemPrintPreview;
+		private Panel hoverBar;
 		private float rf;
-       	public MainForm()
+		public MainForm()
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
 		}
-		
+
 		[STAThread]
 		public static void Main(string[] args)
 		{
-            Application.Run(new MainForm());
+			Application.Run(new MainForm());
 		}
-		
+
 		#region Windows Forms Designer generated code
 		/// <summary>
 		/// This method is required for Windows Forms designer support.
 		/// Do not change the method contents inside the source code editor. The Forms designer might
 		/// not be able to load this method if it was changed manually.
 		/// </summary>
-		private void InitializeComponent() {
+		private void InitializeComponent()
+		{
 			this.components = new System.ComponentModel.Container();
 			this.weightScroll6Maj = new System.Windows.Forms.VScrollBar();
 			this.menuItemInfo = new System.Windows.Forms.MenuItem();
@@ -202,6 +204,7 @@ namespace ChordQuality
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.chordNameDisplay = new System.Windows.Forms.PictureBox();
 			this.cursor = new System.Windows.Forms.Panel();
+			this.hoverBar = new TransparentPanel();
 			this.noteDisplay = new System.Windows.Forms.PictureBox();
 			this.saveMidFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
@@ -239,6 +242,7 @@ namespace ChordQuality
 			this.chordBox.SuspendLayout();
 			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).BeginInit();
+			this.cursor.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -999,6 +1003,7 @@ namespace ChordQuality
 			this.panel2.Controls.Add(this.chordDisplay);
 			this.panel2.Controls.Add(this.offsetScroll);
 			this.panel2.Controls.Add(this.cursor);
+			this.panel2.Controls.Add(this.hoverBar);
 			this.panel2.Controls.Add(this.noteDisplay);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel2.Location = new System.Drawing.Point(0, 192);
@@ -1024,6 +1029,15 @@ namespace ChordQuality
 			this.cursor.Size = new System.Drawing.Size(1, 54);
 			this.cursor.TabIndex = 30;
 			// 
+			// hoverBar
+			// 
+			this.hoverBar.BackColor = System.Drawing.Color.DarkGray;
+			this.hoverBar.Location = new System.Drawing.Point(8, 7);
+			this.hoverBar.Name = "hoverBar";
+			this.hoverBar.Size = new System.Drawing.Size(1, 54);
+			this.hoverBar.TabIndex = 31;
+			this.hoverBar.Visible = false;
+			// 
 			// noteDisplay
 			// 
 			this.noteDisplay.BackColor = System.Drawing.Color.White;
@@ -1033,7 +1047,7 @@ namespace ChordQuality
 			this.noteDisplay.TabIndex = 29;
 			this.noteDisplay.TabStop = false;
 			this.noteDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteDisplayMouseDown);
-			this.noteDisplay.MouseHover += new System.EventHandler(this.NoteDisplayOnMouseHover);
+			this.noteDisplay.MouseLeave += new System.EventHandler(this.NoteDisplayOnMouseLeave);
 			this.noteDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NoteDisplayMouseMove);
 			// 
 			// saveMidFileDialog
@@ -1171,7 +1185,6 @@ namespace ChordQuality
 			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.Closed += new System.EventHandler(this.MainFormClosed);
 			this.Load += new System.EventHandler(this.MainFormLoad);
-			this.MouseHover += new System.EventHandler(this.NoteDisplayOnMouseHover);
 			((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).EndInit();
 			this.intervalBox.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).EndInit();
@@ -1190,6 +1203,7 @@ namespace ChordQuality
 			this.chordBox.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).EndInit();
+			this.cursor.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).EndInit();
 			this.ResumeLayout(false);
 
@@ -1197,300 +1211,294 @@ namespace ChordQuality
 		private System.Windows.Forms.TextBox factor;
 		private System.Windows.Forms.Label label10;
 		#endregion
-		
-		MidiFile f=null;
-		Color[] colors=new Color[19]{Color.Black,Color.Red,Color.Green,Color.Orange,Color.Blue,Color.Black,Color.Black,Color.Black,Color.Black,Color.Magenta,Color.Cyan,Color.Pink,Color.LightBlue,Color.Brown,Color.Gold,Color.Silver,Color.Black,Color.Black,Color.Black};
-		Color[] trackColors=new Color[19]{Color.Black,Color.Red,Color.Green,Color.Orange,Color.Blue,Color.Black,Color.Black,Color.Black,Color.Black,Color.Magenta,Color.Cyan,Color.Pink,Color.LightBlue,Color.Brown,Color.Gold,Color.Silver,Color.Black,Color.Black,Color.Black};
-		Color selectColor=Color.FromArgb(32,0,0,255);
-		Pen pen=new Pen(Color.Black,2);
-		Pen barpen=new Pen(Color.LightGray,1);
-		Pen orientpen=new Pen(Color.LightGray,1);
-		Pen thinpen=new Pen(Color.Black,1);
-		Pen framepen=new Pen(Color.Black,3);
-		Font drawFont=new Font("Courier New",10);
-		Font smallFont=new Font("Courier New",6);
-		SolidBrush drawBrush=new SolidBrush(Color.Black);
-		StringFormat drawFormat=new StringFormat(StringFormatFlags.DirectionVertical);
-		MidiFilePlayer pl=null;
+
+		MidiFile f = null;
+		Color[] colors = new Color[19] { Color.Black, Color.Red, Color.Green, Color.Orange, Color.Blue, Color.Black, Color.Black, Color.Black, Color.Black, Color.Magenta, Color.Cyan, Color.Pink, Color.LightBlue, Color.Brown, Color.Gold, Color.Silver, Color.Black, Color.Black, Color.Black };
+		Color[] trackColors = new Color[19] { Color.Black, Color.Red, Color.Green, Color.Orange, Color.Blue, Color.Black, Color.Black, Color.Black, Color.Black, Color.Magenta, Color.Cyan, Color.Pink, Color.LightBlue, Color.Brown, Color.Gold, Color.Silver, Color.Black, Color.Black, Color.Black };
+		Color selectColor = Color.FromArgb(32, 0, 0, 255);
+		Pen pen = new Pen(Color.Black, 2);
+		Pen barpen = new Pen(Color.LightGray, 1);
+		Pen orientpen = new Pen(Color.LightGray, 1);
+		Pen thinpen = new Pen(Color.Black, 1);
+		Pen framepen = new Pen(Color.Black, 3);
+		Font drawFont = new Font("Courier New", 10);
+		Font smallFont = new Font("Courier New", 6);
+		SolidBrush drawBrush = new SolidBrush(Color.Black);
+		StringFormat drawFormat = new StringFormat(StringFormatFlags.DirectionVertical);
+		MidiFilePlayer pl = null;
 		ArrayList chords;
 		TuningScheme[] tunings;
-		double play_start=-1,play_stop=-1;
+		double play_start = -1, play_stop = -1;
 		RadioButton[] tuningRadios;
-		CheckBox[] tuningChecks,trackChecks;
+		CheckBox[] tuningChecks, trackChecks;
 		PrintDocument pd;
 		int pages_printed;
-		MenuItem[] menuItems,menuItemsRem;
-		QualityWeights qw=new QualityWeights();
-		int RowsPerPage=5,Pages=0;
+		MenuItem[] menuItems, menuItemsRem;
+		QualityWeights qw = new QualityWeights();
+		int RowsPerPage = 5, Pages = 0;
 		TrackDisplay trackDisplay = null;
-		
+
 		void MainFormLoad(object sender, System.EventArgs e)
 		{
 			// misc init.'s
-			orientpen.DashStyle=DashStyle.Dot;
+			orientpen.DashStyle = DashStyle.Dot;
 			// detect output ports
-			MidiOutDevs mout=new MidiOutDevs();
-			for (int i=0;i<mout.NumDevs;i++)
+			MidiOutDevs mout = new MidiOutDevs();
+			for (int i = 0; i < mout.NumDevs; i++)
 				outputBox.Items.Add(mout.Label(i));
-			outputBox.SelectedIndex=0;
+			outputBox.SelectedIndex = 0;
 			// load tunings from textfiles
-        	DirectoryInfo di=new DirectoryInfo(Environment.CurrentDirectory);
-        	FileInfo[] fi = di.GetFiles("*.tng");
-        	tunings=new TuningScheme[fi.Length+1];
-        	tunings[0]=new TuningScheme();
-        	for (int n=0;n<fi.Length;n++)
-        		tunings[n+1]=new TuningScheme(fi[n].Name);
-        	tuningChecks=new CheckBox[tunings.Length];
-        	tuningRadios=new RadioButton[tunings.Length];
-        	for (int n=0;n<tunings.Length;n++)
-        	{
-        		tuningChecks[n]=new CheckBox();
-        		tuningChecks[n].Location=new Point(4,4+n*16);
-        		tuningChecks[n].Size=new Size(152,16);
-        		tuningChecks[n].ForeColor=colors[n];
-        		tuningChecks[n].Text=tunings[n].Name;
-        		tuningChecks[n].CheckedChanged+=new System.EventHandler(TuningCheckedChanged);
-        		tuningPanel.Controls.Add(tuningChecks[n]);
-        		tuningRadios[n]=new RadioButton();
-        		tuningRadios[n].Location=new Point(156,4+n*16);
-        		tuningRadios[n].Size=new Size(16,16);
-        		tuningRadios[n].ForeColor=colors[n];
-        		tuningRadios[n].CheckedChanged+=new System.EventHandler(TuningRadioCheckedChanged);
-           		tuningPanel.Controls.Add(tuningRadios[n]);
-        	}
-           	tuningChecks[0].Checked=true;
-           	tuningRadios[0].Checked=true;
-        	// load patch map
-        	if (File.Exists("MIDI_PatchMap.txt"))
-        	{
-	        	StreamReader sr=new StreamReader("MIDI_PatchMap.txt");
-				for (int i=0;i<128;i++)
+			DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory);
+			FileInfo[] fi = di.GetFiles("*.tng");
+			tunings = new TuningScheme[fi.Length + 1];
+			tunings[0] = new TuningScheme();
+			for (int n = 0; n < fi.Length; n++)
+				tunings[n + 1] = new TuningScheme(fi[n].Name);
+			tuningChecks = new CheckBox[tunings.Length];
+			tuningRadios = new RadioButton[tunings.Length];
+			for (int n = 0; n < tunings.Length; n++)
+			{
+				tuningChecks[n] = new CheckBox();
+				tuningChecks[n].Location = new Point(4, 4 + n * 16);
+				tuningChecks[n].Size = new Size(152, 16);
+				tuningChecks[n].ForeColor = colors[n];
+				tuningChecks[n].Text = tunings[n].Name;
+				tuningChecks[n].CheckedChanged += new System.EventHandler(TuningCheckedChanged);
+				tuningPanel.Controls.Add(tuningChecks[n]);
+				tuningRadios[n] = new RadioButton();
+				tuningRadios[n].Location = new Point(156, 4 + n * 16);
+				tuningRadios[n].Size = new Size(16, 16);
+				tuningRadios[n].ForeColor = colors[n];
+				tuningRadios[n].CheckedChanged += new System.EventHandler(TuningRadioCheckedChanged);
+				tuningPanel.Controls.Add(tuningRadios[n]);
+			}
+			tuningChecks[0].Checked = true;
+			tuningRadios[0].Checked = true;
+			// load patch map
+			if (File.Exists("MIDI_PatchMap.txt"))
+			{
+				StreamReader sr = new StreamReader("MIDI_PatchMap.txt");
+				for (int i = 0; i < 128; i++)
 					instrBox.Items.Add(sr.ReadLine());
 				sr.Close();
-        	}
-        	else
-        	{
-        		for (int i=1;i<129;i++)
-        			instrBox.Items.Add(i.ToString().PadLeft(3,'0'));
-        	}
-        	instrBox.SelectedIndex=0;
-        	// adjust chordDisplay size
-        	double q,maxq=0;
-        	for (int i=0;i<tunings.Length;i++)
-        	{
-        		q=tunings[i].MaxQuality();
-        		if (q>maxq) maxq=q;
-        	}
-        	chordDisplay.Top=noteDisplay.Bottom+1;
-        	chordDisplay.Height=(int)(2*maxq);
-        	chordNameDisplay.Top=chordDisplay.Bottom+1;
-        	offsetScroll.Top=chordNameDisplay.Bottom;
-			offsetLabel.Top=offsetScroll.Bottom+8;
-			zoomScroll.Height=noteDisplay.Height+chordDisplay.Height+chordNameDisplay.Height+2;
+			}
+			else
+			{
+				for (int i = 1; i < 129; i++)
+					instrBox.Items.Add(i.ToString().PadLeft(3, '0'));
+			}
+			instrBox.SelectedIndex = 0;
+			// adjust chordDisplay size
+			double q, maxq = 0;
+			for (int i = 0; i < tunings.Length; i++)
+			{
+				q = tunings[i].MaxQuality();
+				if (q > maxq) maxq = q;
+			}
+			chordDisplay.Top = noteDisplay.Bottom + 1;
+			chordDisplay.Height = (int)(2 * maxq);
+			chordNameDisplay.Top = chordDisplay.Bottom + 1;
+			offsetScroll.Top = chordNameDisplay.Bottom;
+			offsetLabel.Top = offsetScroll.Bottom + 8;
+			zoomScroll.Height = noteDisplay.Height + chordDisplay.Height + chordNameDisplay.Height + 2;
 		}
-		
+
 		void OpenFileDialog1FileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			if (stopButton.Enabled) StopPlayback();
-			playButton.Enabled=true;
-			menuItemSave.Enabled=true;
-			menuItemPrint.Enabled=true;
-			menuItemMidi2Txt.Enabled=true;
-			menuItemMarkers.Enabled=true;
-			menuItemAnalysis.Enabled=true;
-			menuItemInfo.Enabled=true;
-            menuItemPrintPreview.Enabled = true;
-			play_start=-1;
-			play_stop=-1;
+			playButton.Enabled = true;
+			menuItemSave.Enabled = true;
+			menuItemPrint.Enabled = true;
+			menuItemMidi2Txt.Enabled = true;
+			menuItemMarkers.Enabled = true;
+			menuItemAnalysis.Enabled = true;
+			menuItemInfo.Enabled = true;
+			menuItemPrintPreview.Enabled = true;
+			play_start = -1;
+			play_stop = -1;
 			// read midi file
-			MidiFileReader fr=new MidiFileReader();
-			f=fr.Read(openMidFileDialog.FileName);
-			
+			MidiFileReader fr = new MidiFileReader();
+			f = fr.Read(openMidFileDialog.FileName);
+
 			// load the track display into memory
 			trackDisplay = new TrackDisplay(f.tracks, trackColors);
-			
+
 			// init file player
-			pl=new MidiFilePlayer(f);
-			pl.Volume=((double)volumeBar.Value)/volumeBar.Maximum;
-			pl.Tempo=f.tempo;
-			if (f.instrument>=0) pl.Instrument=f.instrument;
-			for (int i=0;i<tuningRadios.Length;i++)
+			pl = new MidiFilePlayer(f);
+			pl.Volume = ((double)volumeBar.Value) / volumeBar.Maximum;
+			pl.Tempo = f.tempo;
+			if (f.instrument >= 0) pl.Instrument = f.instrument;
+			for (int i = 0; i < tuningRadios.Length; i++)
+			{
 				if (tuningRadios[i].Checked)
-					pl.Tuning=tunings[i];
+				{
+					pl.Tuning = tunings[i];
+				}
+			}
+
 			// show file information
-			Text="ChordQuality   ---   "+f.name;
-			if (f.tempo>=tempoBar.Minimum && f.tempo<=tempoBar.Maximum)
-				tempoBar.Value=(int)f.tempo;
-			if (f.instrument>=0) instrBox.SelectedIndex=f.instrument;
-			transposeFileUpDown.Maximum=127-f.max_note;
-			transposeFileUpDown.Minimum=0-f.min_note;
+			Text = "ChordQuality   ---   " + f.name;
+			if (f.tempo >= tempoBar.Minimum && f.tempo <= tempoBar.Maximum)
+			{
+				tempoBar.Value = (int)f.tempo;
+			}
+			if (f.instrument >= 0)
+			{
+				instrBox.SelectedIndex = f.instrument;
+			}
+			transposeFileUpDown.Maximum = 127 - f.max_note;
+			transposeFileUpDown.Minimum = 0 - f.min_note;
+
 			// adjust noteDisplay size
-			noteDisplay.Height=(f.max_note-f.min_note)*2+1;
-			cursor.Height=noteDisplay.Height;
-			chordDisplay.Top=noteDisplay.Bottom+1;
-			noteDisplay.Image=new Bitmap(noteDisplay.Width,noteDisplay.Height);
-			chordDisplay.Image=new Bitmap(chordDisplay.Width,chordDisplay.Height);
-			chordNameDisplay.Image=new Bitmap(chordNameDisplay.Width,chordNameDisplay.Height);
+			noteDisplay.Height = (f.max_note - f.min_note) * 2 + 1;
+			cursor.Height = noteDisplay.Height;
+			hoverBar.Height = noteDisplay.Height;
+			chordDisplay.Top = noteDisplay.Bottom + 1;
+			noteDisplay.Image = new Bitmap(noteDisplay.Width, noteDisplay.Height);
+			chordDisplay.Image = new Bitmap(chordDisplay.Width, chordDisplay.Height);
+			chordNameDisplay.Image = new Bitmap(chordNameDisplay.Width, chordNameDisplay.Height);
+
 			// display track names
 			trackPanel.Controls.Clear();
-			trackChecks=new CheckBox[f.tracks.Length];
-        	for (int n=0;n<f.tracks.Length;n++)
-        	{
-        		trackChecks[n]=new CheckBox();
-        		trackChecks[n].Location=new Point(4,4+n*16);
-        		trackChecks[n].Size=new Size(192,16);
-        		trackChecks[n].ForeColor=trackColors[n];
-        		trackChecks[n].Text="#"+(n+1).ToString()+": "+f.tracks[n].name;
-        		trackChecks[n].Checked=true;
-        		trackChecks[n].CheckedChanged+=new System.EventHandler(TrackCheckedChanged);
-        		trackChecks[n].ContextMenu=contextMenu1;
-        		trackPanel.Controls.Add(trackChecks[n]);
-        	}
-        	// create "markers -> add" menu
-        	menuItems=new MenuItem[f.tracks.Length];
-        	for (int i=0;i<f.tracks.Length;i++)
-        	{
-        		menuItems[i]=new MenuItem();
-        		menuItems[i].Text="#"+(i+1).ToString()+": "+f.tracks[i].name;
-        		menuItems[i].Click+=new System.EventHandler(MenuItemClick);
-        	}
-        	menuItemAdd.MenuItems.Clear();
-        	menuItemAdd.MenuItems.AddRange(menuItems);
-        	// create "markers -> remove" menu
-        	menuItemsRem=new MenuItem[f.tracks.Length];
-        	for (int i=0;i<f.tracks.Length;i++)
-        	{
-        		menuItemsRem[i]=new MenuItem();
-        		menuItemsRem[i].Text="#"+(i+1).ToString()+": "+f.tracks[i].name;
-        		menuItemsRem[i].Click+=new System.EventHandler(MenuItemRemClick);
-        	}
-        	menuItemRemove.MenuItems.Clear();
-        	menuItemRemove.MenuItems.AddRange(menuItemsRem);
-        	//
-			chords=f.FindChords();
+			trackChecks = new CheckBox[f.tracks.Length];
+			for (int n = 0; n < f.tracks.Length; n++)
+			{
+				trackChecks[n] = new CheckBox();
+				trackChecks[n].Location = new Point(4, 4 + n * 16);
+				trackChecks[n].Size = new Size(192, 16);
+				trackChecks[n].ForeColor = trackColors[n];
+				trackChecks[n].Text = "#" + (n + 1).ToString() + ": " + f.tracks[n].name;
+				trackChecks[n].Checked = true;
+				trackChecks[n].CheckedChanged += new System.EventHandler(TrackCheckedChanged);
+				trackChecks[n].ContextMenu = contextMenu1;
+				trackPanel.Controls.Add(trackChecks[n]);
+			}
+
+			// create "markers -> add" menu
+			menuItems = new MenuItem[f.tracks.Length];
+			for (int i = 0; i < f.tracks.Length; i++)
+			{
+				menuItems[i] = new MenuItem();
+				menuItems[i].Text = "#" + (i + 1).ToString() + ": " + f.tracks[i].name;
+				menuItems[i].Click += new System.EventHandler(MenuItemClick);
+			}
+			menuItemAdd.MenuItems.Clear();
+			menuItemAdd.MenuItems.AddRange(menuItems);
+
+			// create "markers -> remove" menu
+			menuItemsRem = new MenuItem[f.tracks.Length];
+			for (int i = 0; i < f.tracks.Length; i++)
+			{
+				menuItemsRem[i] = new MenuItem();
+				menuItemsRem[i].Text = "#" + (i + 1).ToString() + ": " + f.tracks[i].name;
+				menuItemsRem[i].Click += new System.EventHandler(MenuItemRemClick);
+			}
+			menuItemRemove.MenuItems.Clear();
+			menuItemRemove.MenuItems.AddRange(menuItemsRem);
+
+			//
+			chords = f.FindChords();
 			update_tuning_avg();
+
 			//
 			thresholdUpDown.SelectedIndex++;
 			thresholdUpDown.SelectedIndex--;
-			zoomScroll.Maximum=f.bars;
-			if (f.bars<zoomScroll.Value) zoomScroll.Value=f.bars;
-			offsetScroll.Maximum=Math.Max(f.bars-zoomScroll.Value,0);
-			offsetScroll.Value=0;
+			zoomScroll.Maximum = f.bars;
+			if (f.bars < zoomScroll.Value)
+			{
+				zoomScroll.Value = f.bars;
+			}
+			offsetScroll.Maximum = Math.Max(f.bars - zoomScroll.Value, 0);
+			offsetScroll.Value = 0;
+
 			//
-			QualityCheckCheckedChanged(this,new System.EventArgs());
+			QualityCheckCheckedChanged(this, new System.EventArgs());
 			applyButton.PerformClick();
 			//redraw();
 		}
-		
+
 		void Timer1Tick(object sender, System.EventArgs e)
 		{
-			double p=pl.Position;
-			if (p<0) return;
-			if (p>=f.bars) StopPlayback();
+			double p = pl.Position;
+			if (p < 0) return;
+			if (p >= f.bars)
+			{
+				StopPlayback();
+			}
 			else
 			{
-				if (p>=offsetScroll.Value+zoomScroll.Value) offsetScroll.Value=Math.Min(offsetScroll.Value+zoomScroll.Value,offsetScroll.Maximum);
-				else if (p<offsetScroll.Value) offsetScroll.Value=(int)p;
-				cursor.Left=noteDisplay.Left+(int)((p-offsetScroll.Value)*noteDisplay.Width/zoomScroll.Value);
-				if ((play_start!=play_stop) && (cursor.Left>noteDisplay.Width*(Math.Max(play_start,play_stop)-offsetScroll.Value)/zoomScroll.Value)) StopPlayback();
+				if (p >= offsetScroll.Value + zoomScroll.Value)
+				{
+					offsetScroll.Value = Math.Min(offsetScroll.Value + zoomScroll.Value, offsetScroll.Maximum);
+				}
+				else if (p < offsetScroll.Value)
+				{
+					offsetScroll.Value = (int)p;
+				}
+
+				cursor.Left = noteDisplay.Left + (int)((p - offsetScroll.Value) * noteDisplay.Width / zoomScroll.Value);
+				if ((play_start != play_stop) && (cursor.Left > noteDisplay.Width * (Math.Max(play_start, play_stop) - offsetScroll.Value) / zoomScroll.Value))
+				{
+					StopPlayback();
+				}
 			}
 		}
-		
+
 		void OffsetScrollValueChanged(object sender, System.EventArgs e)
 		{
-			offsetLabel.Text="offset: "+offsetScroll.Value.ToString()+" bars";
+			offsetLabel.Text = "offset: " + offsetScroll.Value.ToString() + " bars";
 			redraw();
 		}
-		
+
 		void ZoomScrollValueChanged(object sender, System.EventArgs e)
 		{
-			barsEdit.Text=zoomScroll.Value.ToString();
+			barsEdit.Text = zoomScroll.Value.ToString();
 			applyButton.PerformClick();
-			if (f!=null)
+			if (f != null)
 			{
-				offsetScroll.Maximum=Math.Max(f.bars-zoomScroll.Value,0);
+				offsetScroll.Maximum = Math.Max(f.bars - zoomScroll.Value, 0);
 				redraw();
 			}
 		}
-		
+
 		void MainFormClosed(object sender, System.EventArgs e)
 		{
-			if (stopButton.Enabled) StopPlayback();
+			if (stopButton.Enabled)
+			{
+				StopPlayback();
+			}
 		}
-		
-		void ChordDisplayMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (f==null) return;
-			int b=e.X*zoomScroll.Value/chordDisplay.Width+offsetScroll.Value+1;
-			toolTip1.SetToolTip(chordDisplay,"bar "+b.ToString());
-		}
-		
+
 		void InstrCheckCheckedChanged(object sender, System.EventArgs e)
 		{
-			if (pl!=null) pl.Instrument=instrBox.SelectedIndex;
+			if (pl != null) pl.Instrument = instrBox.SelectedIndex;
 		}
-		
+
 		void InstrBoxSelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			if (pl!=null) pl.Instrument=instrBox.SelectedIndex;
+			if (pl != null) pl.Instrument = instrBox.SelectedIndex;
 		}
-		
-		void TuningCheckedChanged(object sender,System.EventArgs e)
+
+		void PrintPage(object sender, PrintPageEventArgs ev)
 		{
-			if (f!=null)
+			ev.Graphics.PageUnit = GraphicsUnit.Pixel;
+
+			string s = openMidFileDialog.FileName + " [" + (pages_printed + 1).ToString() + "]";
+			ev.Graphics.DrawString(s, drawFont, drawBrush, 0, 0);
+			int h0 = (int)(drawFont.Height * ev.Graphics.DpiX / 96);
+			int vscale = (int)(ev.Graphics.VisibleClipBounds.Height - h0) / RowsPerPage / (f.max_note - f.min_note);
+			int h = vscale * (f.max_note - f.min_note);
+			if (pd.PrinterSettings.PrintRange == PrintRange.SomePages && pages_printed < pd.PrinterSettings.FromPage - 1)
+				pages_printed = pd.PrinterSettings.FromPage - 1;
+
+			for (int i = 0; i < RowsPerPage; i++)
 			{
-				for (int i=0;i<tunings.Length;i++)
-					tunings[i].enabled=tuningChecks[i].Checked;
-				redraw_chords();
-			}
-		}
-		
-		void TuningRadioCheckedChanged(object sender,System.EventArgs e)
-		{
-			if (pl!=null)
-			{
-				for (int i=0;i<tuningRadios.Length;i++)
-					if (tuningRadios[i].Checked)
-						pl.Tuning=tunings[i];
-			}
-		}		
-		
-		void TrackCheckedChanged(object sender,System.EventArgs e)
-		{
-			if (f!=null)
-			{
-				for (int i=0;i<f.tracks.Length;i++)
-					f.tracks[i].enabled=trackChecks[i].Checked;
-				chords=f.FindChords();
-				update_tuning_avg();
-				
-				// update the in memory track display
-				trackDisplay = new TrackDisplay(f.tracks, trackColors);
-				
-				redraw();
-			}
-		}
-		
-		void PrintPage(object sender,PrintPageEventArgs ev) 
-		{
-			ev.Graphics.PageUnit=GraphicsUnit.Pixel;
-			
-			string s=openMidFileDialog.FileName+" ["+(pages_printed+1).ToString()+"]";
-			ev.Graphics.DrawString(s,drawFont,drawBrush,0,0);
-			int h0=(int)(drawFont.Height*ev.Graphics.DpiX/96);
-			int vscale=(int)(ev.Graphics.VisibleClipBounds.Height-h0)/RowsPerPage/(f.max_note-f.min_note);
-			int h=vscale*(f.max_note-f.min_note);
-			if (pd.PrinterSettings.PrintRange==PrintRange.SomePages && pages_printed<pd.PrinterSettings.FromPage-1)
-				pages_printed=pd.PrinterSettings.FromPage-1;
-			
-			for (int i=0;i<RowsPerPage;i++)
-			{
-				if ((RowsPerPage*pages_printed+i)*zoomScroll.Value>=f.bars) break;
-				draw_notes(ev.Graphics,(RowsPerPage*pages_printed+i)*zoomScroll.Value,h0+i*h,vscale);
-				ev.Graphics.DrawLine(framepen,0,h0+i*h,0,h0+(i+1)*h);
-				ev.Graphics.DrawLine(framepen,ev.Graphics.VisibleClipBounds.Width-1,h0+i*h,ev.Graphics.VisibleClipBounds.Width-1,h0+(i+1)*h);
-				ev.Graphics.DrawLine(framepen,0,h0+i*h,ev.Graphics.VisibleClipBounds.Width,h0+i*h);
-				ev.Graphics.DrawLine(framepen,0,h0+(i+1)*h,ev.Graphics.VisibleClipBounds.Width,h0+(i+1)*h);
+				if ((RowsPerPage * pages_printed + i) * zoomScroll.Value >= f.bars) break;
+				draw_notes(ev.Graphics, (RowsPerPage * pages_printed + i) * zoomScroll.Value, h0 + i * h, vscale);
+				ev.Graphics.DrawLine(framepen, 0, h0 + i * h, 0, h0 + (i + 1) * h);
+				ev.Graphics.DrawLine(framepen, ev.Graphics.VisibleClipBounds.Width - 1, h0 + i * h, ev.Graphics.VisibleClipBounds.Width - 1, h0 + (i + 1) * h);
+				ev.Graphics.DrawLine(framepen, 0, h0 + i * h, ev.Graphics.VisibleClipBounds.Width, h0 + i * h);
+				ev.Graphics.DrawLine(framepen, 0, h0 + (i + 1) * h, ev.Graphics.VisibleClipBounds.Width, h0 + (i + 1) * h);
 				/*if (qualityCheck.Checked)
 				{
 					draw_chords(ev.Graphics,(n*pages_printed+i)*zoomScroll.Value,h0+i*h+noteDisplay.Height);
@@ -1498,269 +1506,200 @@ namespace ChordQuality
 				}*/
 			}
 			pages_printed++;
-			if (pd.PrinterSettings.PrintRange==PrintRange.SomePages)
+			if (pd.PrinterSettings.PrintRange == PrintRange.SomePages)
 			{
-				if (pages_printed<pd.PrinterSettings.ToPage)
-					ev.HasMorePages=true;
-				else ev.HasMorePages=false;
+				if (pages_printed < pd.PrinterSettings.ToPage)
+					ev.HasMorePages = true;
+				else ev.HasMorePages = false;
 			}
 			else
 			{
-				if (pages_printed*RowsPerPage*zoomScroll.Value<f.bars)
-					ev.HasMorePages=true;
-				else ev.HasMorePages=false;
+				if (pages_printed * RowsPerPage * zoomScroll.Value < f.bars)
+					ev.HasMorePages = true;
+				else ev.HasMorePages = false;
 			}
 		}
-		
-		void MenuItemMidi2TxtClick(object sender, System.EventArgs e)
-		{
-			if (f==null) return;
-			string fn=openMidFileDialog.FileName;
-			fn=Path.ChangeExtension(fn,".txt");
-			StreamWriter sw=new StreamWriter(fn);
-			foreach (MidiTrack t in f.tracks)
-			{
-				sw.WriteLine("######## TRACK "+(Array.IndexOf(f.tracks,t)+1).ToString()+" ########################");
-				for (int i=0;i<t.events.Count;i++)
-					sw.WriteLine(t.events[i].ToString());
-			}
-			sw.Close();
-			Shell.Execute(fn);
-		}
-		
+
 		void TempoBarValueChanged(object sender, System.EventArgs e)
 		{
-			if (pl!=null) pl.Tempo=tempoBar.Value;
-			tempoLabel.Text="tempo: "+tempoBar.Value.ToString()+" bpm";
+			if (pl != null) pl.Tempo = tempoBar.Value;
+			tempoLabel.Text = "tempo: " + tempoBar.Value.ToString() + " bpm";
 		}
-		
+
 		void SaveFileDialog1FileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			MidiFileWriter fw=new MidiFileWriter();
-			fw.Write(f,saveMidFileDialog.FileName);
+			MidiFileWriter fw = new MidiFileWriter();
+			fw.Write(f, saveMidFileDialog.FileName);
 		}
-		
+
 		void TransposeTuningUpDownValueChanged(object sender, System.EventArgs e)
 		{
-			for (int i=0;i<tunings.Length;i++)
-				tunings[i].Transpose=(int)transposeTuningUpDown.Value;
-			if (f!=null)
+			for (int i = 0; i < tunings.Length; i++)
+				tunings[i].Transpose = (int)transposeTuningUpDown.Value;
+			if (f != null)
 			{
 				update_tuning_avg();
 				redraw_chords();
 			}
-			if (pl!=null)
+			if (pl != null)
 			{
-				for (int i=0;i<tuningRadios.Length;i++)
+				for (int i = 0; i < tuningRadios.Length; i++)
 					if (tuningRadios[i].Checked)
-						pl.Tuning=tunings[i];
+						pl.Tuning = tunings[i];
 			}
 		}
-		
-		void QualityCheckCheckedChanged(object sender,System.EventArgs e)
+
+		void QualityCheckCheckedChanged(object sender, System.EventArgs e)
 		{
-			chordDisplay.Visible=qualityCheck.Checked;
-			chordNameDisplay.Visible=labelCheck.Checked;
-			zoomScroll.Height=noteDisplay.Height;
+			chordDisplay.Visible = qualityCheck.Checked;
+			chordNameDisplay.Visible = labelCheck.Checked;
+			zoomScroll.Height = noteDisplay.Height;
 			if (chordDisplay.Visible)
 			{
-				chordNameDisplay.Top=chordDisplay.Bottom+1;
-				zoomScroll.Height+=chordDisplay.Height+1;
+				chordNameDisplay.Top = chordDisplay.Bottom + 1;
+				zoomScroll.Height += chordDisplay.Height + 1;
 			}
-			else chordNameDisplay.Top=noteDisplay.Bottom+1;
+			else chordNameDisplay.Top = noteDisplay.Bottom + 1;
 			if (chordNameDisplay.Visible)
 			{
-				offsetScroll.Top=chordNameDisplay.Bottom;
-				zoomScroll.Height+=chordNameDisplay.Height+1;
+				offsetScroll.Top = chordNameDisplay.Bottom;
+				zoomScroll.Height += chordNameDisplay.Height + 1;
 			}
 			else if (chordDisplay.Visible)
-				offsetScroll.Top=chordDisplay.Bottom;
+				offsetScroll.Top = chordDisplay.Bottom;
 			else
-				offsetScroll.Top=noteDisplay.Bottom;
-			offsetLabel.Top=offsetScroll.Bottom+8;
-			if (f!=null) redraw();
+				offsetScroll.Top = noteDisplay.Bottom;
+			offsetLabel.Top = offsetScroll.Bottom + 8;
+			if (f != null) redraw();
 		}
-		
-		void MenuItemBestClick(object sender, System.EventArgs e)
-		{
-			int mini=0,minj=0;
-			double q,minq=100;
-			for (int i=0;i<tunings.Length;i++)
-				for (int j=0;j<12;j++)
-				{
-					tunings[i].Transpose=j;
-					q=tunings[i].AvgQuality(chords,qw);
-					if (q<minq)
-					{
-						minq=q;
-						mini=i;
-						minj=j;
-					}
-				}
-			MessageBox.Show(tunings[mini].Name+" +"+minj+" ("+Math.Round(minq,5)+")","Best Tuning");
-			transposeTuningUpDown.Value=minj;
-			TransposeTuningUpDownValueChanged(this,null);
-		}
-		
+
 		void Panel2Resize(object sender, System.EventArgs e)
 		{
-			if (panel2.Width>0)
+			if (panel2.Width > 0)
 			{
-				noteDisplay.Width=panel2.Width-32;
-				chordDisplay.Width=noteDisplay.Width;
-				chordNameDisplay.Width=noteDisplay.Width;
-				offsetScroll.Width=noteDisplay.Width;
-				zoomScroll.Left=noteDisplay.Right;
-				noteDisplay.Image=new Bitmap(noteDisplay.Width,noteDisplay.Height);
-				chordDisplay.Image=new Bitmap(chordDisplay.Width,chordDisplay.Height);
-				chordNameDisplay.Image=new Bitmap(chordNameDisplay.Width,chordNameDisplay.Height);
-				if (f!=null) redraw();
+				noteDisplay.Width = panel2.Width - 32;
+				chordDisplay.Width = noteDisplay.Width;
+				chordNameDisplay.Width = noteDisplay.Width;
+				offsetScroll.Width = noteDisplay.Width;
+				zoomScroll.Left = noteDisplay.Right;
+				noteDisplay.Image = new Bitmap(noteDisplay.Width, noteDisplay.Height);
+				chordDisplay.Image = new Bitmap(chordDisplay.Width, chordDisplay.Height);
+				chordNameDisplay.Image = new Bitmap(chordNameDisplay.Width, chordNameDisplay.Height);
+				if (f != null) redraw();
 			}
 		}
-		
+
 		void WeightScroll6MajValueChanged(object sender, System.EventArgs e)
 		{
-			qw.M6=(20-weightScroll6Maj.Value)/10.0;
+			qw.M6 = (20 - weightScroll6Maj.Value) / 10.0;
 			update_tuning_avg();
-			if (f!=null) redraw_chords();
+			if (f != null) redraw_chords();
 		}
-		
+
 		void WeightScroll6minValueChanged(object sender, System.EventArgs e)
 		{
-			qw.m6=(20-weightScroll6min.Value)/10.0;
+			qw.m6 = (20 - weightScroll6min.Value) / 10.0;
 			update_tuning_avg();
-			if (f!=null) redraw_chords();
+			if (f != null) redraw_chords();
 		}
-		
+
 		void WeightScroll5ValueChanged(object sender, System.EventArgs e)
 		{
-			qw.fifth=(20-weightScroll5.Value)/10.0;
+			qw.fifth = (20 - weightScroll5.Value) / 10.0;
 			update_tuning_avg();
-			if (f!=null) redraw_chords();
+			if (f != null) redraw_chords();
 		}
-		
+
 		void WeightScroll4ValueChanged(object sender, System.EventArgs e)
 		{
-			qw.fourth=(20-weightScroll4.Value)/10.0;
+			qw.fourth = (20 - weightScroll4.Value) / 10.0;
 			update_tuning_avg();
-			if (f!=null) redraw_chords();
+			if (f != null) redraw_chords();
 		}
-		
+
 		void WeightScroll3MajValueChanged(object sender, System.EventArgs e)
 		{
-			qw.M3=(20-weightScroll3Maj.Value)/10.0;
+			qw.M3 = (20 - weightScroll3Maj.Value) / 10.0;
 			update_tuning_avg();
-			if (f!=null) redraw_chords();
+			if (f != null) redraw_chords();
 		}
-		
+
 		void WeightScroll3minValueChanged(object sender, System.EventArgs e)
 		{
-			qw.m3=(20-weightScroll3min.Value)/10.0;
+			qw.m3 = (20 - weightScroll3min.Value) / 10.0;
 			update_tuning_avg();
-			if (f!=null) redraw_chords();
+			if (f != null) redraw_chords();
 		}
-		
+
 		void SaveTxtFileDialogFileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			AnalysisFileWriter w=new AnalysisFileWriter(saveTxtFileDialog.FileName);
-			w.WriteTracks(f,(int)transposeFileUpDown.Value);
+			AnalysisFileWriter w = new AnalysisFileWriter(saveTxtFileDialog.FileName);
+			w.WriteTracks(f, (int)transposeFileUpDown.Value);
 			w.WriteTunings(tunings);
 			w.WriteTuningTranspose((int)transposeTuningUpDown.Value);
-			w.WriteWeights(qw,thresholdUpDown);
-			w.WriteChords(chords,f,tunings,qw);
+			w.WriteWeights(qw, thresholdUpDown);
+			w.WriteChords(chords, f, tunings, qw);
 			w.Close();
 			Shell.Execute(saveTxtFileDialog.FileName);
 		}
-		
+
 		void WeightScrollCh5ValueChanged(object sender, System.EventArgs e)
 		{
-			qw.Ch5=(20-weightScrollCh5.Value)/10.0;
+			qw.Ch5 = (20 - weightScrollCh5.Value) / 10.0;
 			update_tuning_avg();
-			if (f!=null) redraw_chords();
+			if (f != null) redraw_chords();
 		}
-		
+
 		void WeightScrollCh3ValueChanged(object sender, System.EventArgs e)
 		{
-			qw.Ch3=(20-weightScrollCh3.Value)/10.0;
+			qw.Ch3 = (20 - weightScrollCh3.Value) / 10.0;
 			update_tuning_avg();
-			if (f!=null) redraw_chords();
+			if (f != null) redraw_chords();
 		}
-		
-		void MenuItemExportClick(object sender, System.EventArgs e)
-		{
-			saveTxtFileDialog.FileName=Path.ChangeExtension(f.name,null);
-			saveTxtFileDialog.FileName+="_analysis.txt";
-			saveTxtFileDialog.ShowDialog();
-		}
-		
+
 		void TransposeFileUpDownValueChanged(object sender, System.EventArgs e)
 		{
-			if (f!=null)
+			if (f != null)
 			{
 				f.Transpose((int)transposeFileUpDown.Value);
-				chords=f.FindChords();
+				chords = f.FindChords();
 				update_tuning_avg();
 				redraw();
 			}
-			
+
 		}
-		
+
 		void PenaltyScrollAddValueChanged(object sender, System.EventArgs e)
 		{
-			qw.Add=(10-penaltyScrollAdd.Value)/10.0;
+			qw.Add = (10 - penaltyScrollAdd.Value) / 10.0;
 			update_tuning_avg();
-			if (f!=null) redraw_chords();
+			if (f != null) redraw_chords();
 		}
-		
+
 		void ThresholdUpDownSelectedItemChanged(object sender, System.EventArgs e)
 		{
-			if (f!=null)
+			if (f != null)
 			{
 				switch (thresholdUpDown.SelectedIndex)
 				{
-					case 0: qw.Threshold=4*f.timing; break;
-					case 1: qw.Threshold=4*f.timing/2.0; break;
-					case 2: qw.Threshold=4*f.timing/4.0; break;
-					case 3: qw.Threshold=4*f.timing/8.0; break;
-					case 4: qw.Threshold=4*f.timing/16.0; break;
-					case 5: qw.Threshold=4*f.timing/32.0; break;
-					case 6: qw.Threshold=4*f.timing/64.0; break;
+					case 0: qw.Threshold = 4 * f.timing; break;
+					case 1: qw.Threshold = 4 * f.timing / 2.0; break;
+					case 2: qw.Threshold = 4 * f.timing / 4.0; break;
+					case 3: qw.Threshold = 4 * f.timing / 8.0; break;
+					case 4: qw.Threshold = 4 * f.timing / 16.0; break;
+					case 5: qw.Threshold = 4 * f.timing / 32.0; break;
+					case 6: qw.Threshold = 4 * f.timing / 64.0; break;
 				}
 				update_tuning_avg();
 				redraw_chords();
 			}
 		}
-		
-		/***** Penalties Event Handlerss Begins *****/
-		void PenaltyScrollShortValueChanged(object sender, System.EventArgs e)
-		{
-			qw.Short=(10-penaltyScrollShort.Value)/10.0;
-			update_tuning_avg();
-			if (f!=null) redraw_chords();
-		}
-
-		/***** Print Layout Event Handlers Begins *****/
-		void ApplyButtonClick(object sender,System.EventArgs e)
-		{
-			int bars=Int32.Parse(barsEdit.Text);
-			RowsPerPage=Int32.Parse(rowsEdit.Text);
-			int barspp=bars*RowsPerPage;
-			barsPerPageBox.Text=barspp.ToString();
-			rf=(float)Double.Parse(factor.Text);
-			redraw();
-			if (f!=null)
-			{
-				Pages=(int)Math.Ceiling((double)f.bars/barspp);
-				pagesBox.Text=Pages.ToString();
-			}
-			zoomScroll.Value=bars;
-		}
 
 		/***** Menu Items Event Handlers Begins *****/
-        private void menuItemAdd_Click(object sender, EventArgs e)
-        {
+		private void menuItemAdd_Click(object sender, EventArgs e)
+		{
 
-        }
+		}
 
 		private void MenuItem1Click(object sender, System.EventArgs e)
 		{
@@ -1852,39 +1791,52 @@ namespace ChordQuality
 			fif.Show();
 		}
 
-		/***** Note Display Event Handlers Begins *****/
-		private void NoteDisplayOnMouseHover(object sender, EventArgs e)
-		{
-			
-		}
-
-		private void NoteDisplayMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				play_start = ((double)e.X * zoomScroll.Value) / noteDisplay.Width + offsetScroll.Value;
-				play_stop = play_start;
-			}
-		}
-
-		private void NoteDisplayMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		private void MenuItemMidi2TxtClick(object sender, System.EventArgs e)
 		{
 			if (f == null) return;
-			int b = e.X * zoomScroll.Value / noteDisplay.Width + offsetScroll.Value + 1;
-			int n = ClosestNote(e.X, e.Y);
-			if (n >= 0) toolTip1.SetToolTip(noteDisplay, "bar " + b.ToString() + "\n" + KeyList.NoteName(n));
-			else toolTip1.SetToolTip(noteDisplay, "bar " + b.ToString());
-			if ((e.Button == MouseButtons.Left) && (play_start >= 0))
+			string fn = openMidFileDialog.FileName;
+			fn = Path.ChangeExtension(fn, ".txt");
+			StreamWriter sw = new StreamWriter(fn);
+			foreach (MidiTrack t in f.tracks)
 			{
-				play_stop = ((double)e.X * zoomScroll.Value) / noteDisplay.Width + offsetScroll.Value;
-				redraw_notes();
-				if (play_stop != play_start) menuItemAdd.Enabled = true;
-				else menuItemAdd.Enabled = false;
+				sw.WriteLine("######## TRACK " + (Array.IndexOf(f.tracks, t) + 1).ToString() + " ########################");
+				for (int i = 0; i < t.events.Count; i++)
+					sw.WriteLine(t.events[i].ToString());
 			}
+			sw.Close();
+			Shell.Execute(fn);
 		}
 
-		/***** Playback Event Handlers Begins *****/
-		void PlayButtonClick(object sender, System.EventArgs e)
+		private void MenuItemBestClick(object sender, System.EventArgs e)
+		{
+			int mini = 0, minj = 0;
+			double q, minq = 100;
+			for (int i = 0; i < tunings.Length; i++)
+				for (int j = 0; j < 12; j++)
+				{
+					tunings[i].Transpose = j;
+					q = tunings[i].AvgQuality(chords, qw);
+					if (q < minq)
+					{
+						minq = q;
+						mini = i;
+						minj = j;
+					}
+				}
+			MessageBox.Show(tunings[mini].Name + " +" + minj + " (" + Math.Round(minq, 5) + ")", "Best Tuning");
+			transposeTuningUpDown.Value = minj;
+			TransposeTuningUpDownValueChanged(this, null);
+		}
+
+		private void MenuItemExportClick(object sender, System.EventArgs e)
+		{
+			saveTxtFileDialog.FileName = Path.ChangeExtension(f.name, null);
+			saveTxtFileDialog.FileName += "_analysis.txt";
+			saveTxtFileDialog.ShowDialog();
+		}
+
+		/***** Playback Event Handlers Begin *****/
+		private void PlayButtonClick(object sender, System.EventArgs e)
 		{
 			playButton.Enabled = false;
 			pauseButton.Enabled = true;
@@ -1910,13 +1862,138 @@ namespace ChordQuality
 			timer1.Enabled = false;
 		}
 
-		void VolumeBarScroll(object sender, System.EventArgs e)
+		private void VolumeBarScroll(object sender, System.EventArgs e)
 		{
 			if (pl != null)
 				pl.Volume = ((double)volumeBar.Value) / volumeBar.Maximum;
 		}
 
-		/***** Helper Functions Begins *****/
+		/***** Tracks Event Handlers Beging *****/
+		void TrackCheckedChanged(object sender, System.EventArgs e)
+		{
+			if (f != null)
+			{
+				for (int i = 0; i < f.tracks.Length; i++)
+					f.tracks[i].enabled = trackChecks[i].Checked;
+				chords = f.FindChords();
+				update_tuning_avg();
+
+				// update the in memory track display
+				trackDisplay = new TrackDisplay(f.tracks, trackColors);
+
+				redraw();
+			}
+		}
+
+		/***** Tunning Event Handlers Begin *****/
+		void TuningCheckedChanged(object sender, System.EventArgs e)
+		{
+			if (f != null)
+			{
+				for (int i = 0; i < tunings.Length; i++)
+					tunings[i].enabled = tuningChecks[i].Checked;
+				redraw_chords();
+			}
+		}
+
+		void TuningRadioCheckedChanged(object sender, System.EventArgs e)
+		{
+			if (pl != null)
+			{
+				for (int i = 0; i < tuningRadios.Length; i++)
+					if (tuningRadios[i].Checked)
+						pl.Tuning = tunings[i];
+			}
+		}
+
+		/***** Penalties Event Handlers Begin *****/
+		private void PenaltyScrollShortValueChanged(object sender, System.EventArgs e)
+		{
+			qw.Short = (10 - penaltyScrollShort.Value) / 10.0;
+			update_tuning_avg();
+			if (f != null) redraw_chords();
+		}
+
+		/***** Print Layout Event Handlers Begin *****/
+		private void ApplyButtonClick(object sender, System.EventArgs e)
+		{
+			int bars = Int32.Parse(barsEdit.Text);
+			RowsPerPage = Int32.Parse(rowsEdit.Text);
+			int barspp = bars * RowsPerPage;
+			barsPerPageBox.Text = barspp.ToString();
+			rf = (float)Double.Parse(factor.Text);
+			redraw();
+			if (f != null)
+			{
+				Pages = (int)Math.Ceiling((double)f.bars / barspp);
+				pagesBox.Text = Pages.ToString();
+			}
+			zoomScroll.Value = bars;
+		}
+
+		/***** Note Display Event Handlers Begin *****/
+		private void NoteDisplayOnMouseLeave(object sender, EventArgs e)
+		{
+			//this.hoverBar.Visible = false;
+			System.Diagnostics.Debug.WriteLine("Leave");
+		}
+
+		private void NoteDisplayMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				play_start = ((double)e.X * zoomScroll.Value) / noteDisplay.Width + offsetScroll.Value;
+				play_stop = play_start;
+			}
+			else if (e.Button == MouseButtons.Right)
+			{
+				//perform a cut
+
+			}
+		}
+
+		private void NoteDisplayMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (f == null) return;
+			int b = e.X * zoomScroll.Value / noteDisplay.Width + offsetScroll.Value + 1;
+			int n = ClosestNote(e.X, e.Y);
+			if (n >= 0)
+			{
+				toolTip1.SetToolTip(noteDisplay, "bar " + b.ToString() + "\n" + KeyList.NoteName(n));
+			}
+			else
+			{
+				toolTip1.SetToolTip(noteDisplay, "bar " + b.ToString());
+			}
+			if ((e.Button == MouseButtons.Left) && (play_start >= 0))
+			{
+				play_stop = ((double)e.X * zoomScroll.Value) / noteDisplay.Width + offsetScroll.Value;
+				redraw_notes();
+				if (play_stop != play_start)
+				{
+					menuItemAdd.Enabled = true;
+				}
+				else
+				{
+					menuItemAdd.Enabled = false;
+				}
+			}
+
+			System.Diagnostics.Debug.WriteLine(this.hoverBar.Left + " " + e.X);
+			this.hoverBar.Visible = true;
+			this.hoverBar.Left = this.noteDisplay.Left + e.X;
+			noteDisplay.Refresh();
+		}
+
+		/***** Chord Display Event Handlers Being *****/
+		private void ChordDisplayMouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (f == null) return;
+			int b = e.X * zoomScroll.Value / chordDisplay.Width + offsetScroll.Value + 1;
+			toolTip1.SetToolTip(chordDisplay, "bar " + b.ToString());
+		}
+
+		/***** Helper Functions Begin *****/
 		public String getMidiFileName()
 		{
 			return openMidFileDialog.FileName;
@@ -2144,6 +2221,25 @@ namespace ChordQuality
 			cursor.Left = noteDisplay.Left;
 		}
 	}
+
+	class TransparentPanel : System.Windows.Forms.Panel
+	{
+		//from http://stackoverflow.com/questions/547172/pass-through-mouse-events-to-parent-control
+		protected override void WndProc(ref Message m)
+		{
+			const int WM_NCHITTEST = 0x0084;
+			const int HTTRANSPARENT = (-1);
+
+			if (m.Msg == WM_NCHITTEST)
+			{
+				m.Result = (IntPtr)HTTRANSPARENT;
+			}
+			else
+			{
+				base.WndProc(ref m);
+			}
+		}
+	}
 }
 
 
@@ -2151,9 +2247,9 @@ public class AnalysisFileWriter
 {
 	public AnalysisFileWriter(string filename)
 	{
-		sw=File.CreateText(filename);
+		sw = File.CreateText(filename);
 	}
-	public void WriteTracks(MidiFile f,int t)
+	public void WriteTracks(MidiFile f, int t)
 	{
 		sw.WriteLine("<<< SOURCE FILE >>>");
 		sw.WriteLine(f.name);
@@ -2162,19 +2258,19 @@ public class AnalysisFileWriter
 		sw.WriteLine(t);
 		sw.WriteLine();
 		sw.WriteLine("<<< TRACKS >>>");
-		for (int i=0;i<f.tracks.Length;i++)
+		for (int i = 0; i < f.tracks.Length; i++)
 		{
 			sw.Write("[");
 			if (f.tracks[i].enabled) sw.Write("X");
 			else sw.Write(" ");
-			sw.WriteLine("] #"+(i+1)+": "+f.tracks[i].name);
+			sw.WriteLine("] #" + (i + 1) + ": " + f.tracks[i].name);
 		}
 		sw.WriteLine();
 	}
 	public void WriteTunings(TuningScheme[] tun)
 	{
 		sw.WriteLine("<<< TUNINGS >>>");
-		for (int i=0;i<tun.Length;i++)
+		for (int i = 0; i < tun.Length; i++)
 		{
 			if (tun[i].enabled)
 				sw.WriteLine(tun[i].ToString());
@@ -2187,50 +2283,50 @@ public class AnalysisFileWriter
 		sw.WriteLine(t);
 		sw.WriteLine();
 	}
-	public void WriteWeights(QualityWeights w,DomainUpDown tud)
+	public void WriteWeights(QualityWeights w, DomainUpDown tud)
 	{
 		sw.WriteLine("<<< QUALITY WEIGHTS >>>");
 		sw.WriteLine("INTERVALS:");
-		sw.WriteLine("6M:\t"+w.M6);
-		sw.WriteLine("6m:\t"+w.m6);
-		sw.WriteLine("5:\t"+w.fifth);
-		sw.WriteLine("4:\t"+w.fourth);
-		sw.WriteLine("3M:\t"+w.M3);
-		sw.WriteLine("3m:\t"+w.m3);
+		sw.WriteLine("6M:\t" + w.M6);
+		sw.WriteLine("6m:\t" + w.m6);
+		sw.WriteLine("5:\t" + w.fifth);
+		sw.WriteLine("4:\t" + w.fourth);
+		sw.WriteLine("3M:\t" + w.M3);
+		sw.WriteLine("3m:\t" + w.m3);
 		sw.WriteLine("CHORDS:");
-		sw.WriteLine("5:\t"+w.Ch5);
-		sw.WriteLine("3M:\t"+w.Ch3);
+		sw.WriteLine("5:\t" + w.Ch5);
+		sw.WriteLine("3M:\t" + w.Ch3);
 		sw.WriteLine();
 		sw.WriteLine("<<< PENALTIES >>>");
-		sw.WriteLine("Additional Notes:\t"+w.Add);
-		sw.WriteLine("Short Notes:\t"+w.Short);
-		sw.WriteLine("Threshold for Short Notes:\t"+tud.Text);
+		sw.WriteLine("Additional Notes:\t" + w.Add);
+		sw.WriteLine("Short Notes:\t" + w.Short);
+		sw.WriteLine("Threshold for Short Notes:\t" + tud.Text);
 		sw.WriteLine();
 	}
-	public void WriteChords(ArrayList chords,MidiFile f,TuningScheme[] t,QualityWeights w)
+	public void WriteChords(ArrayList chords, MidiFile f, TuningScheme[] t, QualityWeights w)
 	{
 		sw.WriteLine();
 		sw.WriteLine("<<< CHORDS & INTERVALS >>>");
 		sw.WriteLine();
 		sw.Write("POS\tNAME\tDUR");
-		for (int i=0;i<t.Length;i++)
-			if (t[i].enabled) sw.Write("\t"+t[i].Name);
+		for (int i = 0; i < t.Length; i++)
+			if (t[i].enabled) sw.Write("\t" + t[i].Name);
 		sw.WriteLine();
 		foreach (TimeInfo c in chords)
 		{
 			if (!w.enabled(c)) continue;
-			sw.Write(Math.Round(c.Time/4.0/f.timing,2)+"\t"+c.Name+"\t"+Math.Round(c.Duration/4.0/f.timing,2));
-			for (int i=0;i<t.Length;i++)
-				if (t[i].enabled) sw.Write("\t"+t[i].Quality(c,w));
+			sw.Write(Math.Round(c.Time / 4.0 / f.timing, 2) + "\t" + c.Name + "\t" + Math.Round(c.Duration / 4.0 / f.timing, 2));
+			for (int i = 0; i < t.Length; i++)
+				if (t[i].enabled) sw.Write("\t" + t[i].Quality(c, w));
 			sw.WriteLine();
 		}
 		sw.Write("POS\tNAME\tDUR");
-		for (int i=0;i<t.Length;i++)
-			if (t[i].enabled) sw.Write("\t"+t[i].Name);
+		for (int i = 0; i < t.Length; i++)
+			if (t[i].enabled) sw.Write("\t" + t[i].Name);
 		sw.WriteLine();
 		sw.Write("AVERAGE:\t\t");
-		for (int i=0;i<t.Length;i++)
-			if (t[i].enabled) sw.Write("\t"+Math.Round(t[i].AvgQuality(chords,w),1));
+		for (int i = 0; i < t.Length; i++)
+			if (t[i].enabled) sw.Write("\t" + Math.Round(t[i].AvgQuality(chords, w), 1));
 	}
 	public void Close()
 	{
