@@ -107,7 +107,7 @@ namespace ChordQuality
 		private System.Windows.Forms.MenuItem menuItemInfo;
 		private System.Windows.Forms.VScrollBar weightScroll6Maj;
 		private MenuItem menuItemPrintPreview;
-		private Panel hoverBar;
+		private TransparentPanel hoverBar;
 		private float rf;
 		public MainForm()
 		{
@@ -204,7 +204,7 @@ namespace ChordQuality
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.chordNameDisplay = new System.Windows.Forms.PictureBox();
 			this.cursor = new System.Windows.Forms.Panel();
-			this.hoverBar = new TransparentPanel();
+			this.hoverBar = new ChordQuality.TransparentPanel();
 			this.noteDisplay = new System.Windows.Forms.PictureBox();
 			this.saveMidFileDialog = new System.Windows.Forms.SaveFileDialog();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
@@ -242,17 +242,16 @@ namespace ChordQuality
 			this.chordBox.SuspendLayout();
 			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).BeginInit();
-			this.cursor.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// weightScroll6Maj
 			// 
 			this.weightScroll6Maj.LargeChange = 1;
-			this.weightScroll6Maj.Location = new System.Drawing.Point(8, 14);
+			this.weightScroll6Maj.Location = new System.Drawing.Point(8, 12);
 			this.weightScroll6Maj.Maximum = 20;
 			this.weightScroll6Maj.Name = "weightScroll6Maj";
-			this.weightScroll6Maj.Size = new System.Drawing.Size(16, 83);
+			this.weightScroll6Maj.Size = new System.Drawing.Size(16, 72);
 			this.weightScroll6Maj.TabIndex = 24;
 			this.weightScroll6Maj.Value = 10;
 			this.weightScroll6Maj.ValueChanged += new System.EventHandler(this.WeightScroll6MajValueChanged);
@@ -267,11 +266,11 @@ namespace ChordQuality
 			// zoomScroll
 			// 
 			this.zoomScroll.LargeChange = 1;
-			this.zoomScroll.Location = new System.Drawing.Point(968, 7);
+			this.zoomScroll.Location = new System.Drawing.Point(968, 6);
 			this.zoomScroll.Maximum = 60;
 			this.zoomScroll.Minimum = 1;
 			this.zoomScroll.Name = "zoomScroll";
-			this.zoomScroll.Size = new System.Drawing.Size(16, 131);
+			this.zoomScroll.Size = new System.Drawing.Size(16, 114);
 			this.zoomScroll.TabIndex = 44;
 			this.zoomScroll.Value = 15;
 			this.zoomScroll.ValueChanged += new System.EventHandler(this.ZoomScrollValueChanged);
@@ -279,9 +278,9 @@ namespace ChordQuality
 			// chordDisplay
 			// 
 			this.chordDisplay.BackColor = System.Drawing.Color.White;
-			this.chordDisplay.Location = new System.Drawing.Point(8, 65);
+			this.chordDisplay.Location = new System.Drawing.Point(8, 56);
 			this.chordDisplay.Name = "chordDisplay";
-			this.chordDisplay.Size = new System.Drawing.Size(960, 55);
+			this.chordDisplay.Size = new System.Drawing.Size(960, 48);
 			this.chordDisplay.TabIndex = 42;
 			this.chordDisplay.TabStop = false;
 			this.chordDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ChordDisplayMouseMove);
@@ -301,27 +300,27 @@ namespace ChordQuality
 			this.intervalBox.Controls.Add(this.label13);
 			this.intervalBox.Controls.Add(this.label12);
 			this.intervalBox.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-			this.intervalBox.Location = new System.Drawing.Point(8, 14);
+			this.intervalBox.Location = new System.Drawing.Point(8, 12);
 			this.intervalBox.Name = "intervalBox";
-			this.intervalBox.Size = new System.Drawing.Size(120, 123);
+			this.intervalBox.Size = new System.Drawing.Size(120, 107);
 			this.intervalBox.TabIndex = 16;
 			this.intervalBox.TabStop = false;
 			this.intervalBox.Text = "Intervals";
 			// 
 			// label22
 			// 
-			this.label22.Location = new System.Drawing.Point(24, 97);
+			this.label22.Location = new System.Drawing.Point(24, 84);
 			this.label22.Name = "label22";
-			this.label22.Size = new System.Drawing.Size(16, 20);
+			this.label22.Size = new System.Drawing.Size(16, 17);
 			this.label22.TabIndex = 27;
 			this.label22.Text = "6 m";
 			this.label22.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// label16
 			// 
-			this.label16.Location = new System.Drawing.Point(8, 97);
+			this.label16.Location = new System.Drawing.Point(8, 84);
 			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(16, 20);
+			this.label16.Size = new System.Drawing.Size(16, 17);
 			this.label16.TabIndex = 26;
 			this.label16.Text = "6 M";
 			this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -329,10 +328,10 @@ namespace ChordQuality
 			// weightScroll6min
 			// 
 			this.weightScroll6min.LargeChange = 1;
-			this.weightScroll6min.Location = new System.Drawing.Point(24, 14);
+			this.weightScroll6min.Location = new System.Drawing.Point(24, 12);
 			this.weightScroll6min.Maximum = 20;
 			this.weightScroll6min.Name = "weightScroll6min";
-			this.weightScroll6min.Size = new System.Drawing.Size(16, 83);
+			this.weightScroll6min.Size = new System.Drawing.Size(16, 72);
 			this.weightScroll6min.TabIndex = 25;
 			this.weightScroll6min.Value = 10;
 			this.weightScroll6min.ValueChanged += new System.EventHandler(this.WeightScroll6minValueChanged);
@@ -340,10 +339,10 @@ namespace ChordQuality
 			// weightScroll3min
 			// 
 			this.weightScroll3min.LargeChange = 1;
-			this.weightScroll3min.Location = new System.Drawing.Point(88, 14);
+			this.weightScroll3min.Location = new System.Drawing.Point(88, 12);
 			this.weightScroll3min.Maximum = 20;
 			this.weightScroll3min.Name = "weightScroll3min";
-			this.weightScroll3min.Size = new System.Drawing.Size(16, 83);
+			this.weightScroll3min.Size = new System.Drawing.Size(16, 72);
 			this.weightScroll3min.TabIndex = 23;
 			this.weightScroll3min.Value = 10;
 			this.weightScroll3min.ValueChanged += new System.EventHandler(this.WeightScroll3minValueChanged);
@@ -351,10 +350,10 @@ namespace ChordQuality
 			// weightScroll3Maj
 			// 
 			this.weightScroll3Maj.LargeChange = 1;
-			this.weightScroll3Maj.Location = new System.Drawing.Point(72, 14);
+			this.weightScroll3Maj.Location = new System.Drawing.Point(72, 12);
 			this.weightScroll3Maj.Maximum = 20;
 			this.weightScroll3Maj.Name = "weightScroll3Maj";
-			this.weightScroll3Maj.Size = new System.Drawing.Size(16, 83);
+			this.weightScroll3Maj.Size = new System.Drawing.Size(16, 72);
 			this.weightScroll3Maj.TabIndex = 22;
 			this.weightScroll3Maj.Value = 10;
 			this.weightScroll3Maj.ValueChanged += new System.EventHandler(this.WeightScroll3MajValueChanged);
@@ -362,10 +361,10 @@ namespace ChordQuality
 			// weightScroll4
 			// 
 			this.weightScroll4.LargeChange = 1;
-			this.weightScroll4.Location = new System.Drawing.Point(56, 14);
+			this.weightScroll4.Location = new System.Drawing.Point(56, 12);
 			this.weightScroll4.Maximum = 20;
 			this.weightScroll4.Name = "weightScroll4";
-			this.weightScroll4.Size = new System.Drawing.Size(16, 83);
+			this.weightScroll4.Size = new System.Drawing.Size(16, 72);
 			this.weightScroll4.TabIndex = 21;
 			this.weightScroll4.Value = 10;
 			this.weightScroll4.ValueChanged += new System.EventHandler(this.WeightScroll4ValueChanged);
@@ -373,66 +372,66 @@ namespace ChordQuality
 			// weightScroll5
 			// 
 			this.weightScroll5.LargeChange = 1;
-			this.weightScroll5.Location = new System.Drawing.Point(40, 14);
+			this.weightScroll5.Location = new System.Drawing.Point(40, 12);
 			this.weightScroll5.Maximum = 20;
 			this.weightScroll5.Name = "weightScroll5";
-			this.weightScroll5.Size = new System.Drawing.Size(16, 83);
+			this.weightScroll5.Size = new System.Drawing.Size(16, 72);
 			this.weightScroll5.TabIndex = 20;
 			this.weightScroll5.Value = 10;
 			this.weightScroll5.ValueChanged += new System.EventHandler(this.WeightScroll5ValueChanged);
 			// 
 			// label15
 			// 
-			this.label15.Location = new System.Drawing.Point(56, 97);
+			this.label15.Location = new System.Drawing.Point(56, 84);
 			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(16, 20);
+			this.label15.Size = new System.Drawing.Size(16, 17);
 			this.label15.TabIndex = 19;
 			this.label15.Text = "4";
 			this.label15.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// label14
 			// 
-			this.label14.Location = new System.Drawing.Point(88, 97);
+			this.label14.Location = new System.Drawing.Point(88, 84);
 			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(16, 20);
+			this.label14.Size = new System.Drawing.Size(16, 17);
 			this.label14.TabIndex = 18;
 			this.label14.Text = "3 m";
 			this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// label13
 			// 
-			this.label13.Location = new System.Drawing.Point(72, 97);
+			this.label13.Location = new System.Drawing.Point(72, 84);
 			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(16, 20);
+			this.label13.Size = new System.Drawing.Size(16, 17);
 			this.label13.TabIndex = 17;
 			this.label13.Text = "3 M";
 			this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// label12
 			// 
-			this.label12.Location = new System.Drawing.Point(40, 97);
+			this.label12.Location = new System.Drawing.Point(40, 84);
 			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(16, 20);
+			this.label12.Size = new System.Drawing.Size(16, 17);
 			this.label12.TabIndex = 16;
 			this.label12.Text = "5";
 			this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// pagesBox
 			// 
-			this.pagesBox.Location = new System.Drawing.Point(88, 147);
+			this.pagesBox.Location = new System.Drawing.Point(88, 127);
 			this.pagesBox.Name = "pagesBox";
 			this.pagesBox.ReadOnly = true;
-			this.pagesBox.Size = new System.Drawing.Size(32, 22);
+			this.pagesBox.Size = new System.Drawing.Size(32, 20);
 			this.pagesBox.TabIndex = 7;
 			this.pagesBox.Text = "0";
 			// 
 			// weightScrollCh5
 			// 
 			this.weightScrollCh5.LargeChange = 1;
-			this.weightScrollCh5.Location = new System.Drawing.Point(8, 14);
+			this.weightScrollCh5.Location = new System.Drawing.Point(8, 12);
 			this.weightScrollCh5.Maximum = 20;
 			this.weightScrollCh5.Name = "weightScrollCh5";
-			this.weightScrollCh5.Size = new System.Drawing.Size(16, 83);
+			this.weightScrollCh5.Size = new System.Drawing.Size(16, 72);
 			this.weightScrollCh5.TabIndex = 0;
 			this.weightScrollCh5.Value = 10;
 			this.weightScrollCh5.ValueChanged += new System.EventHandler(this.WeightScrollCh5ValueChanged);
@@ -441,7 +440,7 @@ namespace ChordQuality
 			// 
 			this.label20.Location = new System.Drawing.Point(232, 0);
 			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(48, 14);
+			this.label20.Size = new System.Drawing.Size(48, 12);
 			this.label20.TabIndex = 48;
 			this.label20.Text = "Tracks:";
 			this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -449,10 +448,10 @@ namespace ChordQuality
 			// weightScrollCh3
 			// 
 			this.weightScrollCh3.LargeChange = 1;
-			this.weightScrollCh3.Location = new System.Drawing.Point(24, 14);
+			this.weightScrollCh3.Location = new System.Drawing.Point(24, 12);
 			this.weightScrollCh3.Maximum = 20;
 			this.weightScrollCh3.Name = "weightScrollCh3";
-			this.weightScrollCh3.Size = new System.Drawing.Size(16, 83);
+			this.weightScrollCh3.Size = new System.Drawing.Size(16, 72);
 			this.weightScrollCh3.TabIndex = 1;
 			this.weightScrollCh3.Value = 10;
 			this.weightScrollCh3.ValueChanged += new System.EventHandler(this.WeightScrollCh3ValueChanged);
@@ -461,9 +460,9 @@ namespace ChordQuality
 			// 
 			this.qualityCheck.Checked = true;
 			this.qualityCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.qualityCheck.Location = new System.Drawing.Point(104, 150);
+			this.qualityCheck.Location = new System.Drawing.Point(104, 130);
 			this.qualityCheck.Name = "qualityCheck";
-			this.qualityCheck.Size = new System.Drawing.Size(90, 14);
+			this.qualityCheck.Size = new System.Drawing.Size(90, 12);
 			this.qualityCheck.TabIndex = 50;
 			this.qualityCheck.Text = "Show Quality";
 			this.qualityCheck.CheckedChanged += new System.EventHandler(this.QualityCheckCheckedChanged);
@@ -471,9 +470,9 @@ namespace ChordQuality
 			// label4
 			// 
 			this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-			this.label4.Location = new System.Drawing.Point(32, 110);
+			this.label4.Location = new System.Drawing.Point(32, 95);
 			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(24, 13);
+			this.label4.Size = new System.Drawing.Size(24, 12);
 			this.label4.TabIndex = 3;
 			this.label4.Text = "short";
 			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -481,10 +480,10 @@ namespace ChordQuality
 			// instrBox
 			// 
 			this.instrBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.instrBox.Location = new System.Drawing.Point(8, 82);
+			this.instrBox.Location = new System.Drawing.Point(8, 71);
 			this.instrBox.MaxDropDownItems = 32;
 			this.instrBox.Name = "instrBox";
-			this.instrBox.Size = new System.Drawing.Size(168, 20);
+			this.instrBox.Size = new System.Drawing.Size(168, 21);
 			this.instrBox.TabIndex = 6;
 			this.instrBox.SelectedIndexChanged += new System.EventHandler(this.InstrBoxSelectedIndexChanged);
 			// 
@@ -502,26 +501,26 @@ namespace ChordQuality
 			// offsetScroll
 			// 
 			this.offsetScroll.LargeChange = 1;
-			this.offsetScroll.Location = new System.Drawing.Point(8, 144);
+			this.offsetScroll.Location = new System.Drawing.Point(8, 125);
 			this.offsetScroll.Maximum = 0;
 			this.offsetScroll.Name = "offsetScroll";
-			this.offsetScroll.Size = new System.Drawing.Size(960, 14);
+			this.offsetScroll.Size = new System.Drawing.Size(960, 12);
 			this.offsetScroll.TabIndex = 41;
 			this.offsetScroll.ValueChanged += new System.EventHandler(this.OffsetScrollValueChanged);
 			// 
 			// rowsEdit
 			// 
-			this.rowsEdit.Location = new System.Drawing.Point(88, 35);
+			this.rowsEdit.Location = new System.Drawing.Point(88, 30);
 			this.rowsEdit.Name = "rowsEdit";
-			this.rowsEdit.Size = new System.Drawing.Size(32, 22);
+			this.rowsEdit.Size = new System.Drawing.Size(32, 20);
 			this.rowsEdit.TabIndex = 3;
 			this.rowsEdit.Text = "3";
 			// 
 			// tempoLabel
 			// 
-			this.tempoLabel.Location = new System.Drawing.Point(8, 103);
+			this.tempoLabel.Location = new System.Drawing.Point(8, 89);
 			this.tempoLabel.Name = "tempoLabel";
-			this.tempoLabel.Size = new System.Drawing.Size(40, 34);
+			this.tempoLabel.Size = new System.Drawing.Size(40, 30);
 			this.tempoLabel.TabIndex = 58;
 			this.tempoLabel.Text = "tempo: 120 bpm";
 			this.tempoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -534,7 +533,7 @@ namespace ChordQuality
 			// 
 			// transposeTuningUpDown
 			// 
-			this.transposeTuningUpDown.Location = new System.Drawing.Point(24, 164);
+			this.transposeTuningUpDown.Location = new System.Drawing.Point(24, 142);
 			this.transposeTuningUpDown.Maximum = new decimal(new int[] {
             12,
             0,
@@ -546,7 +545,7 @@ namespace ChordQuality
             0,
             -2147483648});
 			this.transposeTuningUpDown.Name = "transposeTuningUpDown";
-			this.transposeTuningUpDown.Size = new System.Drawing.Size(40, 22);
+			this.transposeTuningUpDown.Size = new System.Drawing.Size(40, 20);
 			this.transposeTuningUpDown.TabIndex = 47;
 			this.transposeTuningUpDown.ValueChanged += new System.EventHandler(this.TransposeTuningUpDownValueChanged);
 			// 
@@ -562,9 +561,9 @@ namespace ChordQuality
 			this.playButton.BackColor = System.Drawing.SystemColors.Control;
 			this.playButton.Enabled = false;
 			this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.playButton.Location = new System.Drawing.Point(8, 14);
+			this.playButton.Location = new System.Drawing.Point(8, 12);
 			this.playButton.Name = "playButton";
-			this.playButton.Size = new System.Drawing.Size(56, 21);
+			this.playButton.Size = new System.Drawing.Size(56, 18);
 			this.playButton.TabIndex = 2;
 			this.playButton.Text = "Play";
 			this.playButton.UseVisualStyleBackColor = false;
@@ -574,16 +573,16 @@ namespace ChordQuality
 			// 
 			this.transposeBox.Controls.Add(this.transposeFileUpDown);
 			this.transposeBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.transposeBox.Location = new System.Drawing.Point(8, 144);
+			this.transposeBox.Location = new System.Drawing.Point(8, 125);
 			this.transposeBox.Name = "transposeBox";
-			this.transposeBox.Size = new System.Drawing.Size(88, 34);
+			this.transposeBox.Size = new System.Drawing.Size(88, 29);
 			this.transposeBox.TabIndex = 52;
 			this.transposeBox.TabStop = false;
 			this.transposeBox.Text = "Transpose File";
 			// 
 			// transposeFileUpDown
 			// 
-			this.transposeFileUpDown.Location = new System.Drawing.Point(16, 14);
+			this.transposeFileUpDown.Location = new System.Drawing.Point(16, 12);
 			this.transposeFileUpDown.Maximum = new decimal(new int[] {
             24,
             0,
@@ -595,7 +594,7 @@ namespace ChordQuality
             0,
             -2147483648});
 			this.transposeFileUpDown.Name = "transposeFileUpDown";
-			this.transposeFileUpDown.Size = new System.Drawing.Size(56, 22);
+			this.transposeFileUpDown.Size = new System.Drawing.Size(56, 20);
 			this.transposeFileUpDown.TabIndex = 0;
 			this.transposeFileUpDown.ValueChanged += new System.EventHandler(this.TransposeFileUpDownValueChanged);
 			// 
@@ -615,7 +614,7 @@ namespace ChordQuality
 			this.playbackBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.playbackBox.Location = new System.Drawing.Point(8, 0);
 			this.playbackBox.Name = "playbackBox";
-			this.playbackBox.Size = new System.Drawing.Size(224, 144);
+			this.playbackBox.Size = new System.Drawing.Size(224, 125);
 			this.playbackBox.TabIndex = 15;
 			this.playbackBox.TabStop = false;
 			this.playbackBox.Text = "Playback";
@@ -625,9 +624,9 @@ namespace ChordQuality
 			this.stopButton.BackColor = System.Drawing.SystemColors.Control;
 			this.stopButton.Enabled = false;
 			this.stopButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.stopButton.Location = new System.Drawing.Point(120, 14);
+			this.stopButton.Location = new System.Drawing.Point(120, 12);
 			this.stopButton.Name = "stopButton";
-			this.stopButton.Size = new System.Drawing.Size(56, 21);
+			this.stopButton.Size = new System.Drawing.Size(56, 18);
 			this.stopButton.TabIndex = 4;
 			this.stopButton.Text = "Stop";
 			this.stopButton.UseVisualStyleBackColor = false;
@@ -635,16 +634,16 @@ namespace ChordQuality
 			// 
 			// label19
 			// 
-			this.label19.Location = new System.Drawing.Point(168, 7);
+			this.label19.Location = new System.Drawing.Point(168, 6);
 			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(48, 14);
+			this.label19.Size = new System.Drawing.Size(48, 12);
 			this.label19.TabIndex = 56;
 			this.label19.Text = "Volume";
 			this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// tempoBar
 			// 
-			this.tempoBar.Location = new System.Drawing.Point(40, 103);
+			this.tempoBar.Location = new System.Drawing.Point(40, 89);
 			this.tempoBar.Maximum = 200;
 			this.tempoBar.Minimum = 40;
 			this.tempoBar.Name = "tempoBar";
@@ -656,11 +655,11 @@ namespace ChordQuality
 			// 
 			// volumeBar
 			// 
-			this.volumeBar.Location = new System.Drawing.Point(176, 14);
+			this.volumeBar.Location = new System.Drawing.Point(176, 12);
 			this.volumeBar.Maximum = 100;
 			this.volumeBar.Name = "volumeBar";
 			this.volumeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.volumeBar.Size = new System.Drawing.Size(45, 96);
+			this.volumeBar.Size = new System.Drawing.Size(45, 83);
 			this.volumeBar.TabIndex = 55;
 			this.volumeBar.TickFrequency = 20;
 			this.volumeBar.TickStyle = System.Windows.Forms.TickStyle.Both;
@@ -669,18 +668,18 @@ namespace ChordQuality
 			// 
 			// label18
 			// 
-			this.label18.Location = new System.Drawing.Point(8, 68);
+			this.label18.Location = new System.Drawing.Point(8, 59);
 			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(64, 14);
+			this.label18.Size = new System.Drawing.Size(64, 12);
 			this.label18.TabIndex = 54;
 			this.label18.Text = "Instrument:";
 			this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// label17
 			// 
-			this.label17.Location = new System.Drawing.Point(8, 35);
+			this.label17.Location = new System.Drawing.Point(8, 30);
 			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(64, 13);
+			this.label17.Size = new System.Drawing.Size(64, 12);
 			this.label17.TabIndex = 51;
 			this.label17.Text = "MIDI Out:";
 			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -688,28 +687,28 @@ namespace ChordQuality
 			// outputBox
 			// 
 			this.outputBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.outputBox.Location = new System.Drawing.Point(8, 48);
+			this.outputBox.Location = new System.Drawing.Point(8, 42);
 			this.outputBox.MaxDropDownItems = 12;
 			this.outputBox.Name = "outputBox";
-			this.outputBox.Size = new System.Drawing.Size(168, 20);
+			this.outputBox.Size = new System.Drawing.Size(168, 21);
 			this.outputBox.TabIndex = 5;
 			// 
 			// pauseButton
 			// 
 			this.pauseButton.Enabled = false;
 			this.pauseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.pauseButton.Location = new System.Drawing.Point(64, 14);
+			this.pauseButton.Location = new System.Drawing.Point(64, 12);
 			this.pauseButton.Name = "pauseButton";
-			this.pauseButton.Size = new System.Drawing.Size(56, 21);
+			this.pauseButton.Size = new System.Drawing.Size(56, 18);
 			this.pauseButton.TabIndex = 3;
 			this.pauseButton.Text = "Pause";
 			this.pauseButton.Click += new System.EventHandler(this.PauseButtonClick);
 			// 
 			// offsetLabel
 			// 
-			this.offsetLabel.Location = new System.Drawing.Point(24, 164);
+			this.offsetLabel.Location = new System.Drawing.Point(24, 142);
 			this.offsetLabel.Name = "offsetLabel";
-			this.offsetLabel.Size = new System.Drawing.Size(88, 14);
+			this.offsetLabel.Size = new System.Drawing.Size(88, 12);
 			this.offsetLabel.TabIndex = 43;
 			this.offsetLabel.Text = "offset: 0 bars";
 			this.offsetLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -729,7 +728,7 @@ namespace ChordQuality
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel1.Location = new System.Drawing.Point(0, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(1024, 192);
+			this.panel1.Size = new System.Drawing.Size(1024, 166);
 			this.panel1.TabIndex = 45;
 			// 
 			// layoutBox
@@ -748,87 +747,87 @@ namespace ChordQuality
 			this.layoutBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.layoutBox.Location = new System.Drawing.Point(880, 0);
 			this.layoutBox.Name = "layoutBox";
-			this.layoutBox.Size = new System.Drawing.Size(132, 174);
+			this.layoutBox.Size = new System.Drawing.Size(132, 151);
 			this.layoutBox.TabIndex = 54;
 			this.layoutBox.TabStop = false;
 			this.layoutBox.Text = "Printing Layout";
 			// 
 			// label10
 			// 
-			this.label10.Location = new System.Drawing.Point(6, 54);
+			this.label10.Location = new System.Drawing.Point(6, 47);
 			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(72, 22);
+			this.label10.Size = new System.Drawing.Size(72, 19);
 			this.label10.TabIndex = 10;
 			this.label10.Text = "rel.thick.";
 			this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// factor
 			// 
-			this.factor.Location = new System.Drawing.Point(86, 58);
+			this.factor.Location = new System.Drawing.Point(86, 50);
 			this.factor.Name = "factor";
-			this.factor.Size = new System.Drawing.Size(32, 22);
+			this.factor.Size = new System.Drawing.Size(32, 20);
 			this.factor.TabIndex = 9;
 			this.factor.Text = "0.5";
 			// 
 			// applyButton
 			// 
 			this.applyButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.applyButton.Location = new System.Drawing.Point(6, 90);
+			this.applyButton.Location = new System.Drawing.Point(6, 78);
 			this.applyButton.Name = "applyButton";
-			this.applyButton.Size = new System.Drawing.Size(112, 20);
+			this.applyButton.Size = new System.Drawing.Size(112, 17);
 			this.applyButton.TabIndex = 8;
 			this.applyButton.Text = "apply";
 			this.applyButton.Click += new System.EventHandler(this.ApplyButtonClick);
 			// 
 			// label9
 			// 
-			this.label9.Location = new System.Drawing.Point(8, 144);
+			this.label9.Location = new System.Drawing.Point(8, 125);
 			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(72, 20);
+			this.label9.Size = new System.Drawing.Size(72, 17);
 			this.label9.TabIndex = 6;
 			this.label9.Text = "Pages:";
 			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// barsPerPageBox
 			// 
-			this.barsPerPageBox.Location = new System.Drawing.Point(88, 119);
+			this.barsPerPageBox.Location = new System.Drawing.Point(88, 103);
 			this.barsPerPageBox.Name = "barsPerPageBox";
 			this.barsPerPageBox.ReadOnly = true;
-			this.barsPerPageBox.Size = new System.Drawing.Size(32, 22);
+			this.barsPerPageBox.Size = new System.Drawing.Size(32, 20);
 			this.barsPerPageBox.TabIndex = 5;
 			this.barsPerPageBox.Text = "75";
 			// 
 			// label7
 			// 
-			this.label7.Location = new System.Drawing.Point(6, 117);
+			this.label7.Location = new System.Drawing.Point(6, 101);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(72, 20);
+			this.label7.Size = new System.Drawing.Size(72, 18);
 			this.label7.TabIndex = 4;
 			this.label7.Text = "Bars/Page:";
 			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// barsEdit
 			// 
-			this.barsEdit.Location = new System.Drawing.Point(88, 14);
+			this.barsEdit.Location = new System.Drawing.Point(88, 12);
 			this.barsEdit.Name = "barsEdit";
-			this.barsEdit.Size = new System.Drawing.Size(32, 22);
+			this.barsEdit.Size = new System.Drawing.Size(32, 20);
 			this.barsEdit.TabIndex = 2;
 			this.barsEdit.Text = "13";
 			// 
 			// label6
 			// 
-			this.label6.Location = new System.Drawing.Point(8, 35);
+			this.label6.Location = new System.Drawing.Point(8, 30);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(72, 19);
+			this.label6.Size = new System.Drawing.Size(72, 17);
 			this.label6.TabIndex = 1;
 			this.label6.Text = "Rows/Page:";
 			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// label5
 			// 
-			this.label5.Location = new System.Drawing.Point(8, 14);
+			this.label5.Location = new System.Drawing.Point(8, 12);
 			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(72, 21);
+			this.label5.Size = new System.Drawing.Size(72, 18);
 			this.label5.TabIndex = 0;
 			this.label5.Text = "Bars/Row:";
 			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -843,7 +842,7 @@ namespace ChordQuality
 			this.penaltyBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.penaltyBox.Location = new System.Drawing.Point(816, 0);
 			this.penaltyBox.Name = "penaltyBox";
-			this.penaltyBox.Size = new System.Drawing.Size(64, 130);
+			this.penaltyBox.Size = new System.Drawing.Size(64, 113);
 			this.penaltyBox.TabIndex = 53;
 			this.penaltyBox.TabStop = false;
 			this.penaltyBox.Text = "Penalties";
@@ -857,10 +856,10 @@ namespace ChordQuality
 			this.thresholdUpDown.Items.Add("1/16");
 			this.thresholdUpDown.Items.Add("1/32");
 			this.thresholdUpDown.Items.Add("1/64");
-			this.thresholdUpDown.Location = new System.Drawing.Point(8, 14);
+			this.thresholdUpDown.Location = new System.Drawing.Point(8, 12);
 			this.thresholdUpDown.Name = "thresholdUpDown";
 			this.thresholdUpDown.ReadOnly = true;
-			this.thresholdUpDown.Size = new System.Drawing.Size(48, 22);
+			this.thresholdUpDown.Size = new System.Drawing.Size(48, 20);
 			this.thresholdUpDown.TabIndex = 55;
 			this.thresholdUpDown.Text = "1";
 			this.thresholdUpDown.Wrap = true;
@@ -869,19 +868,19 @@ namespace ChordQuality
 			// penaltyScrollShort
 			// 
 			this.penaltyScrollShort.LargeChange = 1;
-			this.penaltyScrollShort.Location = new System.Drawing.Point(40, 42);
+			this.penaltyScrollShort.Location = new System.Drawing.Point(40, 36);
 			this.penaltyScrollShort.Maximum = 10;
 			this.penaltyScrollShort.Name = "penaltyScrollShort";
-			this.penaltyScrollShort.Size = new System.Drawing.Size(16, 68);
+			this.penaltyScrollShort.Size = new System.Drawing.Size(16, 59);
 			this.penaltyScrollShort.TabIndex = 2;
 			this.penaltyScrollShort.ValueChanged += new System.EventHandler(this.PenaltyScrollShortValueChanged);
 			// 
 			// label3
 			// 
 			this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(8, 110);
+			this.label3.Location = new System.Drawing.Point(8, 95);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(24, 13);
+			this.label3.Size = new System.Drawing.Size(24, 12);
 			this.label3.TabIndex = 1;
 			this.label3.Text = "add";
 			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -889,10 +888,10 @@ namespace ChordQuality
 			// penaltyScrollAdd
 			// 
 			this.penaltyScrollAdd.LargeChange = 1;
-			this.penaltyScrollAdd.Location = new System.Drawing.Point(8, 42);
+			this.penaltyScrollAdd.Location = new System.Drawing.Point(8, 36);
 			this.penaltyScrollAdd.Maximum = 10;
 			this.penaltyScrollAdd.Name = "penaltyScrollAdd";
-			this.penaltyScrollAdd.Size = new System.Drawing.Size(16, 68);
+			this.penaltyScrollAdd.Size = new System.Drawing.Size(16, 59);
 			this.penaltyScrollAdd.TabIndex = 0;
 			this.penaltyScrollAdd.ValueChanged += new System.EventHandler(this.PenaltyScrollAddValueChanged);
 			// 
@@ -906,7 +905,7 @@ namespace ChordQuality
 			this.tuningBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.tuningBox.Location = new System.Drawing.Point(432, 0);
 			this.tuningBox.Name = "tuningBox";
-			this.tuningBox.Size = new System.Drawing.Size(208, 187);
+			this.tuningBox.Size = new System.Drawing.Size(208, 162);
 			this.tuningBox.TabIndex = 50;
 			this.tuningBox.TabStop = false;
 			this.tuningBox.Text = "Tuning";
@@ -915,18 +914,18 @@ namespace ChordQuality
 			// 
 			this.labelCheck.Checked = true;
 			this.labelCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.labelCheck.Location = new System.Drawing.Point(104, 164);
+			this.labelCheck.Location = new System.Drawing.Point(104, 142);
 			this.labelCheck.Name = "labelCheck";
-			this.labelCheck.Size = new System.Drawing.Size(88, 14);
+			this.labelCheck.Size = new System.Drawing.Size(88, 12);
 			this.labelCheck.TabIndex = 49;
 			this.labelCheck.Text = "Show Labels";
 			this.labelCheck.CheckedChanged += new System.EventHandler(this.QualityCheckCheckedChanged);
 			// 
 			// label8
 			// 
-			this.label8.Location = new System.Drawing.Point(16, 150);
+			this.label8.Location = new System.Drawing.Point(16, 130);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(64, 14);
+			this.label8.Size = new System.Drawing.Size(64, 12);
 			this.label8.TabIndex = 48;
 			this.label8.Text = "Transpose:";
 			// 
@@ -935,9 +934,9 @@ namespace ChordQuality
 			this.tuningPanel.AutoScroll = true;
 			this.tuningPanel.BackColor = System.Drawing.Color.White;
 			this.tuningPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tuningPanel.Location = new System.Drawing.Point(8, 14);
+			this.tuningPanel.Location = new System.Drawing.Point(8, 12);
 			this.tuningPanel.Name = "tuningPanel";
-			this.tuningPanel.Size = new System.Drawing.Size(192, 130);
+			this.tuningPanel.Size = new System.Drawing.Size(192, 113);
 			this.tuningPanel.TabIndex = 46;
 			// 
 			// qualityBox
@@ -947,7 +946,7 @@ namespace ChordQuality
 			this.qualityBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
 			this.qualityBox.Location = new System.Drawing.Point(640, 0);
 			this.qualityBox.Name = "qualityBox";
-			this.qualityBox.Size = new System.Drawing.Size(176, 144);
+			this.qualityBox.Size = new System.Drawing.Size(176, 125);
 			this.qualityBox.TabIndex = 51;
 			this.qualityBox.TabStop = false;
 			this.qualityBox.Text = "Quality Weights";
@@ -959,27 +958,27 @@ namespace ChordQuality
 			this.chordBox.Controls.Add(this.label1);
 			this.chordBox.Controls.Add(this.weightScrollCh3);
 			this.chordBox.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-			this.chordBox.Location = new System.Drawing.Point(120, 14);
+			this.chordBox.Location = new System.Drawing.Point(120, 12);
 			this.chordBox.Name = "chordBox";
-			this.chordBox.Size = new System.Drawing.Size(48, 123);
+			this.chordBox.Size = new System.Drawing.Size(48, 107);
 			this.chordBox.TabIndex = 17;
 			this.chordBox.TabStop = false;
 			this.chordBox.Text = "Chords";
 			// 
 			// label2
 			// 
-			this.label2.Location = new System.Drawing.Point(24, 97);
+			this.label2.Location = new System.Drawing.Point(24, 84);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(16, 20);
+			this.label2.Size = new System.Drawing.Size(16, 17);
 			this.label2.TabIndex = 3;
 			this.label2.Text = "3 M";
 			this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(8, 97);
+			this.label1.Location = new System.Drawing.Point(8, 84);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(16, 20);
+			this.label1.Size = new System.Drawing.Size(16, 17);
 			this.label1.TabIndex = 2;
 			this.label1.Text = "5";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -989,9 +988,9 @@ namespace ChordQuality
 			this.trackPanel.AutoScroll = true;
 			this.trackPanel.BackColor = System.Drawing.Color.White;
 			this.trackPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.trackPanel.Location = new System.Drawing.Point(232, 14);
+			this.trackPanel.Location = new System.Drawing.Point(232, 12);
 			this.trackPanel.Name = "trackPanel";
-			this.trackPanel.Size = new System.Drawing.Size(200, 130);
+			this.trackPanel.Size = new System.Drawing.Size(200, 113);
 			this.trackPanel.TabIndex = 47;
 			// 
 			// panel2
@@ -1006,44 +1005,44 @@ namespace ChordQuality
 			this.panel2.Controls.Add(this.hoverBar);
 			this.panel2.Controls.Add(this.noteDisplay);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel2.Location = new System.Drawing.Point(0, 192);
+			this.panel2.Location = new System.Drawing.Point(0, 166);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(1024, 356);
+			this.panel2.Size = new System.Drawing.Size(1024, 382);
 			this.panel2.TabIndex = 46;
 			this.panel2.Resize += new System.EventHandler(this.Panel2Resize);
 			// 
 			// chordNameDisplay
 			// 
 			this.chordNameDisplay.BackColor = System.Drawing.Color.White;
-			this.chordNameDisplay.Location = new System.Drawing.Point(8, 126);
+			this.chordNameDisplay.Location = new System.Drawing.Point(8, 109);
 			this.chordNameDisplay.Name = "chordNameDisplay";
-			this.chordNameDisplay.Size = new System.Drawing.Size(960, 18);
+			this.chordNameDisplay.Size = new System.Drawing.Size(960, 16);
 			this.chordNameDisplay.TabIndex = 46;
 			this.chordNameDisplay.TabStop = false;
 			// 
 			// cursor
 			// 
 			this.cursor.BackColor = System.Drawing.Color.Red;
-			this.cursor.Location = new System.Drawing.Point(8, 7);
+			this.cursor.Location = new System.Drawing.Point(8, 6);
 			this.cursor.Name = "cursor";
-			this.cursor.Size = new System.Drawing.Size(1, 54);
+			this.cursor.Size = new System.Drawing.Size(1, 47);
 			this.cursor.TabIndex = 30;
 			// 
 			// hoverBar
 			// 
 			this.hoverBar.BackColor = System.Drawing.Color.DarkGray;
-			this.hoverBar.Location = new System.Drawing.Point(8, 7);
+			this.hoverBar.Location = new System.Drawing.Point(8, 6);
 			this.hoverBar.Name = "hoverBar";
-			this.hoverBar.Size = new System.Drawing.Size(1, 54);
+			this.hoverBar.Size = new System.Drawing.Size(1, 47);
 			this.hoverBar.TabIndex = 31;
 			this.hoverBar.Visible = false;
 			// 
 			// noteDisplay
 			// 
 			this.noteDisplay.BackColor = System.Drawing.Color.White;
-			this.noteDisplay.Location = new System.Drawing.Point(8, 7);
+			this.noteDisplay.Location = new System.Drawing.Point(8, 6);
 			this.noteDisplay.Name = "noteDisplay";
-			this.noteDisplay.Size = new System.Drawing.Size(960, 54);
+			this.noteDisplay.Size = new System.Drawing.Size(960, 47);
 			this.noteDisplay.TabIndex = 29;
 			this.noteDisplay.TabStop = false;
 			this.noteDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteDisplayMouseDown);
@@ -1174,7 +1173,7 @@ namespace ChordQuality
 			// 
 			// MainForm
 			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 15);
+			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(1024, 548);
 			this.Controls.Add(this.panel2);
 			this.Controls.Add(this.panel1);
@@ -1203,7 +1202,6 @@ namespace ChordQuality
 			this.chordBox.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).EndInit();
-			this.cursor.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).EndInit();
 			this.ResumeLayout(false);
 
