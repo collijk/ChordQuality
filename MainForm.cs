@@ -115,6 +115,7 @@ namespace ChordQuality
 		private Button cutResetBtn;
 		private Panel cutPanel;
 		private Button cutClrBtn;
+		private Panel cutRowCursor;
 		private float rf;
 		public MainForm()
 		{
@@ -240,6 +241,7 @@ namespace ChordQuality
 			this.printDialog1 = new System.Windows.Forms.PrintDialog();
 			this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewControl();
 			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
+			this.cutRowCursor = new System.Windows.Forms.Panel();
 			((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).BeginInit();
 			this.intervalBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).BeginInit();
@@ -257,6 +259,7 @@ namespace ChordQuality
 			this.chordBox.SuspendLayout();
 			this.panel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).BeginInit();
+			this.cursor.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -1257,6 +1260,14 @@ namespace ChordQuality
 			this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem1});
 			// 
+			// cutRowCursor
+			// 
+			this.cutRowCursor.BackColor = System.Drawing.Color.Red;
+			this.cutRowCursor.Location = new System.Drawing.Point(8, 6);
+			this.cutRowCursor.Name = "cutRowCursor";
+			this.cutRowCursor.Size = new System.Drawing.Size(1, 47);
+			this.cutRowCursor.Visible = false;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -1288,6 +1299,7 @@ namespace ChordQuality
 			this.chordBox.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).EndInit();
+			this.cursor.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).EndInit();
 			this.ResumeLayout(false);
 
@@ -1321,8 +1333,10 @@ namespace ChordQuality
 		QualityWeights qw = new QualityWeights();
 		int RowsPerPage = 5, Pages = 0;
 		TrackDisplay trackDisplay = null;
-		double cutFirst = -1, cutSecond = -1;
+
+		//the starting and ending bar for each cut row
 		ArrayList cutRows = new ArrayList();
+		double cutFirst = -1, cutSecond = -1;
 		int cutRowDragX = -1;
 
 		void MainFormLoad(object sender, System.EventArgs e)
@@ -1533,6 +1547,9 @@ namespace ChordQuality
 				{
 					StopPlayback();
 				}
+
+				//place a cursor in the cut rows as well
+				cutRowCursor.Left = cursor.Left;
 			}
 		}
 
@@ -1990,32 +2007,43 @@ namespace ChordQuality
 		{
 			double cutStart = Math.Min(cutFirst, cutSecond);
 			double cutEnd = Math.Max(cutFirst, cutSecond);
+
+			//the bar we're starting on and the number of bars we want
+			int barStart = (int)Math.Round(cutStart);
 			int barDiff = (int)Math.Round(cutEnd - cutStart);
+			int barEnd = barStart + barDiff;
 			if(barDiff == 0)
 			{
+				//make sure we have at least one
 				barDiff = 1;
 			}
+
+			//we're fixing the numer of bars/cut row (=10.0) for now
 			double width = barDiff / 10.0 * noteDisplay.Width;
 			if(cutStart < 0 || cutEnd < 0)
 			{
 				return;
 			}
 
+			//create a new picture box for our cut row
 			PictureBox cutRow = new PictureBox();
 			cutRow.BackColor = System.Drawing.Color.White;
 			cutRow.Location = new System.Drawing.Point(0, cutRows.Count * this.noteDisplay.Height);
 			cutRow.Size = new System.Drawing.Size((int)Math.Round(width), this.noteDisplay.Height);
-			cutRow.MouseDown += new MouseEventHandler(this.cutRow_MouseDown);
-			cutRow.MouseMove += new MouseEventHandler(this.cutRow_MouseMove);
 			cutRow.Cursor = Cursors.SizeWE;
 			cutRow.TabStop = false;
 			cutRow.Image = new Bitmap(cutRow.Width, cutRow.Height);
-			draw_notes_helper(Graphics.FromImage(cutRow.Image), (int)Math.Round(cutStart), 0, 2, barDiff);
-			/*cutRow.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteDisplayMouseDown);
-			cutRow.MouseLeave += new System.EventHandler(this.NoteDisplayOnMouseLeave);
-			cutRow.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NoteDisplayMouseMove);*/
+			cutRows.Add(new Tuple<int, int>(barStart, barEnd));
+
+			//we need to listen to these events so we can perform left/right dragging
+			cutRow.MouseDown += new MouseEventHandler(this.cutRow_MouseDown);
+			cutRow.MouseMove += new MouseEventHandler(this.cutRow_MouseMove);
+
+			//draw note in our cut row
+			draw_notes(Graphics.FromImage(cutRow.Image), barStart, 0, 2, barDiff);
+
+			//add to our cut panel so it can be showed
 			cutPanel.Controls.Add(cutRow);
-			cutRows.Add(cutRow);
 
 			//then reset
 			cutResetBtn_Click(sender, e);
@@ -2076,6 +2104,7 @@ namespace ChordQuality
 		/***** Note Display Event Handlers Begin *****/
 		private void NoteDisplayOnMouseLeave(object sender, EventArgs e)
 		{
+			//hide the hover bar when the mouse is not in range
 			this.hoverBar.Visible = false;
 		}
 
@@ -2088,7 +2117,9 @@ namespace ChordQuality
 			}
 			else if (e.Button == MouseButtons.Right)
 			{
-				//perform a cut
+				//save the locations of our cuts
+				//we're naming them first and second as opposed to
+				//begin and end because first can come after second
 				if (cutFirst < 0)
 				{
 					cutFirst = ((double)e.X * zoomScroll.Value) / noteDisplay.Width + offsetScroll.Value;
@@ -2149,6 +2180,7 @@ namespace ChordQuality
 		{
 			if (e.Button == MouseButtons.Left)
 			{
+				//this will be the point where we start out dragging
 				cutRowDragX = e.X;
 			}
 		}
@@ -2158,6 +2190,7 @@ namespace ChordQuality
 			PictureBox p = sender as PictureBox;
 			if (p != null && e.Button == MouseButtons.Left && cutRowDragX > 0)
 			{
+				//perform the dragging
 				int newLeft = p.Left + (e.X - cutRowDragX);
 				if(newLeft > 0 && newLeft + p.Width < p.Parent.Right)
 				{
@@ -2264,10 +2297,10 @@ namespace ChordQuality
 		// draw piano roll, starting at bar offset
 		void draw_notes(Graphics gr, int offset, int y0, int vscale)
 		{
-			draw_notes_helper(gr, offset, y0, vscale, zoomScroll.Value);
+			draw_notes(gr, offset, y0, vscale, zoomScroll.Value);
 		}
 
-		void draw_notes_helper(Graphics gr, int offset, int y0, int vscale, int zoomValue)
+		void draw_notes(Graphics gr, int offset, int y0, int vscale, int zoomValue)
 		{
 			int grw = (int)(gr.VisibleClipBounds.Width);
 			int grh = vscale * (f.max_note - f.min_note);
@@ -2397,6 +2430,13 @@ namespace ChordQuality
 			outputBox.Enabled = true;
 			timer1.Enabled = false;
 			cursor.Left = noteDisplay.Left;
+
+			///get rid of the cut row cursor
+			this.cutRowCursor.Visible = false;
+			foreach(PictureBox p in this.cutPanel.Controls)
+			{
+				
+			}
 		}
 	}
 
