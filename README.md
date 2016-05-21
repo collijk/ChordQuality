@@ -27,7 +27,7 @@ solution for it yet: when running the program you will run into visual studio er
 working.  If more people could try to build the solution it may actually be helpful in resolving this - I don't
 know why it seems to come up on my computer in particular.
 
-The program offers several functions to manipulate how the track is played and viewed:
+	The program offers several functions to manipulate how the track is played and viewed:
 
 1) Printing Layout
 
@@ -84,8 +84,9 @@ the midi file as a .txt file, and an 'info' option that gives you the timing, te
 of the midi file, as well as the number of separate tracks in the file, the octaves spanned by the file and the tracks. 
 The marker and analysis tools 
 
-Those are the functions offered right now by the Chord Quality Program.  Here is information from the old read-me file
-on the purposes of several methods in the code:
+Those are the functions offered right now by the Chord Quality Program.  
+	
+	Here is information from the old read-me file on the purposes of several methods in the code:
 
 ManagedMIDI.vcproj:
 This is the main project file for VC++ projects generated using an Application Wizard. 
