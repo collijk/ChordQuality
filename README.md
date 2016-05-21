@@ -9,8 +9,8 @@ An aim of the program is to create a midi-track display that reads more like she
 
 To get the program to build / work on the program: 
 
-Building the program is pretty straightforward but there are some issues you may run into.The 
-program should build in visual studio 2013 or 2015, both have free versions you can easily find online.  
+Building the program is pretty straightforward but there are some issues you may run into. 
+The program should build in visual studio 2013 or 2015, both have free versions you can easily find online.  
 To work on the program in visual studio you may need to download Microsoft SDK, which may or may not install 
 automatically when you download visual studio.  You need to make sure visual studio is targeting the right 
 version of .NET when you try to build the code.  For visual studio 2013 this should be 4.5 and should happen
