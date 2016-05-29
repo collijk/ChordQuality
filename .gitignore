@@ -51,3 +51,6 @@ Debug/
 *.ncb
 *.v12.suo
 *.opensdf
+.vs/
+*.VC.VC.opendb
+*.VC.db
