@@ -77,6 +77,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controls\ControlPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\ControlPanel.Designer.cs">
+      <DependentUpon>ControlPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\FileTransposeControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\FileTransposeControl.Designer.cs">
+      <DependentUpon>FileTransposeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\CutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\CutControl.Designer.cs">
+      <DependentUpon>CutControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\PenaltiesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\PenaltiesControl.Designer.cs">
+      <DependentUpon>PenaltiesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\PrintingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\PrintingControl.Designer.cs">
+      <DependentUpon>PrintingControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TrackControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TrackControl.Designer.cs">
+      <DependentUpon>TrackControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\TuningControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\TuningControl.Designer.cs">
+      <DependentUpon>TuningControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\QualityWeightsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\QualityWeightsControl.Designer.cs">
+      <DependentUpon>QualityWeightsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,8 +138,32 @@
     <Compile Include="controls\PlaybackControl.Designer.cs">
       <DependentUpon>PlaybackControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="controls\ControlPanel.resx">
+      <DependentUpon>ControlPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\PenaltiesControl.resx">
+      <DependentUpon>PenaltiesControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="controls\PlaybackControl.resx">
       <DependentUpon>PlaybackControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\FileTransposeControl.resx">
+      <DependentUpon>FileTransposeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\CutControl.resx">
+      <DependentUpon>CutControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\PrintingControl.resx">
+      <DependentUpon>PrintingControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\QualityWeightsControl.resx">
+      <DependentUpon>QualityWeightsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\TrackControl.resx">
+      <DependentUpon>TrackControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\TuningControl.resx">
+      <DependentUpon>TuningControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FileInfoForm.resx">
       <DependentUpon>FileInfoForm.cs</DependentUpon>

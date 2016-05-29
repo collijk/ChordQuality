@@ -141,7 +141,7 @@ namespace ChordQuality
             this.weightScroll6Maj = new System.Windows.Forms.VScrollBar();
             this.menuItemInfo = new System.Windows.Forms.MenuItem();
             this.zoomScroll = new System.Windows.Forms.VScrollBar();
-            this.chordDisplay = new PictureBox();
+            this.chordDisplay = new System.Windows.Forms.PictureBox();
             this.intervalBox = new System.Windows.Forms.GroupBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -158,12 +158,12 @@ namespace ChordQuality
             this.weightScrollCh5 = new System.Windows.Forms.VScrollBar();
             this.label20 = new System.Windows.Forms.Label();
             this.weightScrollCh3 = new System.Windows.Forms.VScrollBar();
-            this.qualityCheck = new CheckBox();
+            this.qualityCheck = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.instrBox = new ComboBox();
+            this.instrBox = new System.Windows.Forms.ComboBox();
             this.menuItemExport = new System.Windows.Forms.MenuItem();
-            this.openMidFileDialog = new OpenFileDialog();
-            this.offsetScroll = new HScrollBar();
+            this.openMidFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.offsetScroll = new System.Windows.Forms.HScrollBar();
             this.rowsEdit = new System.Windows.Forms.TextBox();
             this.tempoLabel = new System.Windows.Forms.Label();
             this.menuItem1 = new System.Windows.Forms.MenuItem();
@@ -175,12 +175,12 @@ namespace ChordQuality
             this.playbackBox = new System.Windows.Forms.GroupBox();
             this.stopButton = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
-            this.volumeBar = new TrackBar();
+            this.volumeBar = new System.Windows.Forms.TrackBar();
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.outputBox = new ComboBox();
+            this.outputBox = new System.Windows.Forms.ComboBox();
             this.pauseButton = new System.Windows.Forms.Button();
-            this.tempoBar = new TrackBar();
+            this.tempoBar = new System.Windows.Forms.TrackBar();
             this.offsetLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -203,7 +203,7 @@ namespace ChordQuality
             this.label3 = new System.Windows.Forms.Label();
             this.penaltyScrollAdd = new System.Windows.Forms.VScrollBar();
             this.tuningBox = new System.Windows.Forms.GroupBox();
-            this.labelCheck = new CheckBox();
+            this.labelCheck = new System.Windows.Forms.CheckBox();
             this.label8 = new System.Windows.Forms.Label();
             this.tuningPanel = new System.Windows.Forms.Panel();
             this.qualityBox = new System.Windows.Forms.GroupBox();
@@ -213,20 +213,17 @@ namespace ChordQuality
             this.trackPanel = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cutPanel = new System.Windows.Forms.Panel();
-            this.cutBarSecond = new ChordQuality.TransparentPanel();
-            this.cutBarFirst = new ChordQuality.TransparentPanel();
-            this.chordNameDisplay = new PictureBox();
+            this.chordNameDisplay = new System.Windows.Forms.PictureBox();
             this.cursor = new System.Windows.Forms.Panel();
-            this.hoverBar = new ChordQuality.TransparentPanel();
-            this.noteDisplay = new PictureBox();
-            this.saveMidFileDialog = new SaveFileDialog();
-            this.colorDialog1 = new ColorDialog();
+            this.noteDisplay = new System.Windows.Forms.PictureBox();
+            this.saveMidFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.menuItemMidi2Txt = new System.Windows.Forms.MenuItem();
-            this.saveTxtFileDialog = new SaveFileDialog();
+            this.saveTxtFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuItemMarkers = new System.Windows.Forms.MenuItem();
             this.menuItemAdd = new System.Windows.Forms.MenuItem();
             this.menuItemRemove = new System.Windows.Forms.MenuItem();
-            this.mainMenu1 = new MainMenu(this.components);
+            this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
             this.menuItemFile = new System.Windows.Forms.MenuItem();
             this.menuItemOpen = new System.Windows.Forms.MenuItem();
             this.menuItemPrintPreview = new System.Windows.Forms.MenuItem();
@@ -240,6 +237,9 @@ namespace ChordQuality
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewControl();
             this.contextMenu1 = new System.Windows.Forms.ContextMenu();
             this.cutRowCursor = new System.Windows.Forms.Panel();
+            this.cutBarSecond = new ChordQuality.TransparentPanel();
+            this.cutBarFirst = new ChordQuality.TransparentPanel();
+            this.hoverBar = new ChordQuality.TransparentPanel();
             ((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).BeginInit();
             this.intervalBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).BeginInit();
@@ -1068,7 +1068,7 @@ namespace ChordQuality
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 200);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1049, 413);
+            this.panel2.Size = new System.Drawing.Size(1049, 287);
             this.panel2.TabIndex = 46;
             this.panel2.Resize += new System.EventHandler(this.Panel2Resize);
             // 
@@ -1078,24 +1078,6 @@ namespace ChordQuality
             this.cutPanel.Name = "cutPanel";
             this.cutPanel.Size = new System.Drawing.Size(976, 235);
             this.cutPanel.TabIndex = 47;
-            // 
-            // cutBarSecond
-            // 
-            this.cutBarSecond.BackColor = System.Drawing.Color.BlueViolet;
-            this.cutBarSecond.Location = new System.Drawing.Point(8, 6);
-            this.cutBarSecond.Name = "cutBarSecond";
-            this.cutBarSecond.Size = new System.Drawing.Size(1, 47);
-            this.cutBarSecond.TabIndex = 31;
-            this.cutBarSecond.Visible = false;
-            // 
-            // cutBarFirst
-            // 
-            this.cutBarFirst.BackColor = System.Drawing.Color.BlueViolet;
-            this.cutBarFirst.Location = new System.Drawing.Point(8, 6);
-            this.cutBarFirst.Name = "cutBarFirst";
-            this.cutBarFirst.Size = new System.Drawing.Size(1, 47);
-            this.cutBarFirst.TabIndex = 31;
-            this.cutBarFirst.Visible = false;
             // 
             // chordNameDisplay
             // 
@@ -1113,15 +1095,6 @@ namespace ChordQuality
             this.cursor.Name = "cursor";
             this.cursor.Size = new System.Drawing.Size(1, 47);
             this.cursor.TabIndex = 30;
-            // 
-            // hoverBar
-            // 
-            this.hoverBar.BackColor = System.Drawing.Color.DarkGray;
-            this.hoverBar.Location = new System.Drawing.Point(8, 6);
-            this.hoverBar.Name = "hoverBar";
-            this.hoverBar.Size = new System.Drawing.Size(1, 47);
-            this.hoverBar.TabIndex = 31;
-            this.hoverBar.Visible = false;
             // 
             // noteDisplay
             // 
@@ -1266,10 +1239,37 @@ namespace ChordQuality
             this.cutRowCursor.TabIndex = 0;
             this.cutRowCursor.Visible = false;
             // 
+            // cutBarSecond
+            // 
+            this.cutBarSecond.BackColor = System.Drawing.Color.BlueViolet;
+            this.cutBarSecond.Location = new System.Drawing.Point(8, 6);
+            this.cutBarSecond.Name = "cutBarSecond";
+            this.cutBarSecond.Size = new System.Drawing.Size(1, 47);
+            this.cutBarSecond.TabIndex = 31;
+            this.cutBarSecond.Visible = false;
+            // 
+            // cutBarFirst
+            // 
+            this.cutBarFirst.BackColor = System.Drawing.Color.BlueViolet;
+            this.cutBarFirst.Location = new System.Drawing.Point(8, 6);
+            this.cutBarFirst.Name = "cutBarFirst";
+            this.cutBarFirst.Size = new System.Drawing.Size(1, 47);
+            this.cutBarFirst.TabIndex = 31;
+            this.cutBarFirst.Visible = false;
+            // 
+            // hoverBar
+            // 
+            this.hoverBar.BackColor = System.Drawing.Color.DarkGray;
+            this.hoverBar.Location = new System.Drawing.Point(8, 6);
+            this.hoverBar.Name = "hoverBar";
+            this.hoverBar.Size = new System.Drawing.Size(1, 47);
+            this.hoverBar.TabIndex = 31;
+            this.hoverBar.Visible = false;
+            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(1049, 613);
+            this.ClientSize = new System.Drawing.Size(1049, 487);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Menu = this.mainMenu1;

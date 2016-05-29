@@ -29,21 +29,21 @@
         private void InitializeComponent()
         {
             this.playbackGroup = new System.Windows.Forms.GroupBox();
-            this.playButton = new System.Windows.Forms.Button();
-            this.pauseButton = new System.Windows.Forms.Button();
-            this.stopButton = new System.Windows.Forms.Button();
-            this.volumeTrackBar = new System.Windows.Forms.TrackBar();
-            this.volumeLabel = new System.Windows.Forms.Label();
-            this.midiOutLabel = new System.Windows.Forms.Label();
-            this.instrumentLabel = new System.Windows.Forms.Label();
-            this.midiOutComboBox = new System.Windows.Forms.ComboBox();
-            this.instrumentComboBox = new System.Windows.Forms.ComboBox();
-            this.tempoTrackBar = new System.Windows.Forms.TrackBar();
-            this.tempoLabel = new System.Windows.Forms.Label();
             this.bpmLabel = new System.Windows.Forms.Label();
+            this.tempoLabel = new System.Windows.Forms.Label();
+            this.tempoTrackBar = new System.Windows.Forms.TrackBar();
+            this.instrumentComboBox = new System.Windows.Forms.ComboBox();
+            this.midiOutComboBox = new System.Windows.Forms.ComboBox();
+            this.instrumentLabel = new System.Windows.Forms.Label();
+            this.midiOutLabel = new System.Windows.Forms.Label();
+            this.volumeLabel = new System.Windows.Forms.Label();
+            this.volumeTrackBar = new System.Windows.Forms.TrackBar();
+            this.stopButton = new System.Windows.Forms.Button();
+            this.pauseButton = new System.Windows.Forms.Button();
+            this.playButton = new System.Windows.Forms.Button();
             this.playbackGroup.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tempoTrackBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // playbackGroup
@@ -67,32 +67,78 @@
             this.playbackGroup.TabStop = false;
             this.playbackGroup.Text = "Playback";
             // 
-            // playButton
+            // bpmLabel
             // 
-            this.playButton.Location = new System.Drawing.Point(3, 19);
-            this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(75, 23);
-            this.playButton.TabIndex = 0;
-            this.playButton.Text = "Play";
-            this.playButton.UseVisualStyleBackColor = true;
+            this.bpmLabel.AutoSize = true;
+            this.bpmLabel.Location = new System.Drawing.Point(16, 176);
+            this.bpmLabel.Name = "bpmLabel";
+            this.bpmLabel.Size = new System.Drawing.Size(48, 13);
+            this.bpmLabel.TabIndex = 62;
+            this.bpmLabel.Text = "120 bpm";
             // 
-            // pauseButton
+            // tempoLabel
             // 
-            this.pauseButton.Location = new System.Drawing.Point(84, 19);
-            this.pauseButton.Name = "pauseButton";
-            this.pauseButton.Size = new System.Drawing.Size(75, 23);
-            this.pauseButton.TabIndex = 1;
-            this.pauseButton.Text = "Pause";
-            this.pauseButton.UseVisualStyleBackColor = true;
+            this.tempoLabel.AutoSize = true;
+            this.tempoLabel.Location = new System.Drawing.Point(16, 154);
+            this.tempoLabel.Name = "tempoLabel";
+            this.tempoLabel.Size = new System.Drawing.Size(43, 13);
+            this.tempoLabel.TabIndex = 61;
+            this.tempoLabel.Text = "Tempo:";
             // 
-            // stopButton
+            // tempoTrackBar
             // 
-            this.stopButton.Location = new System.Drawing.Point(165, 19);
-            this.stopButton.Name = "stopButton";
-            this.stopButton.Size = new System.Drawing.Size(75, 23);
-            this.stopButton.TabIndex = 2;
-            this.stopButton.Text = "Stop";
-            this.stopButton.UseVisualStyleBackColor = true;
+            this.tempoTrackBar.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.tempoTrackBar.Location = new System.Drawing.Point(65, 154);
+            this.tempoTrackBar.Maximum = 200;
+            this.tempoTrackBar.Minimum = 40;
+            this.tempoTrackBar.Name = "tempoTrackBar";
+            this.tempoTrackBar.Size = new System.Drawing.Size(226, 45);
+            this.tempoTrackBar.TabIndex = 57;
+            this.tempoTrackBar.TickFrequency = 10;
+            this.tempoTrackBar.Value = 120;
+            // 
+            // instrumentComboBox
+            // 
+            this.instrumentComboBox.FormattingEnabled = true;
+            this.instrumentComboBox.Location = new System.Drawing.Point(9, 127);
+            this.instrumentComboBox.Name = "instrumentComboBox";
+            this.instrumentComboBox.Size = new System.Drawing.Size(231, 21);
+            this.instrumentComboBox.TabIndex = 60;
+            // 
+            // midiOutComboBox
+            // 
+            this.midiOutComboBox.FormattingEnabled = true;
+            this.midiOutComboBox.Location = new System.Drawing.Point(9, 87);
+            this.midiOutComboBox.Name = "midiOutComboBox";
+            this.midiOutComboBox.Size = new System.Drawing.Size(231, 21);
+            this.midiOutComboBox.TabIndex = 59;
+            // 
+            // instrumentLabel
+            // 
+            this.instrumentLabel.AutoSize = true;
+            this.instrumentLabel.Location = new System.Drawing.Point(6, 111);
+            this.instrumentLabel.Name = "instrumentLabel";
+            this.instrumentLabel.Size = new System.Drawing.Size(59, 13);
+            this.instrumentLabel.TabIndex = 58;
+            this.instrumentLabel.Text = "Instrument:";
+            // 
+            // midiOutLabel
+            // 
+            this.midiOutLabel.AutoSize = true;
+            this.midiOutLabel.Location = new System.Drawing.Point(6, 71);
+            this.midiOutLabel.Name = "midiOutLabel";
+            this.midiOutLabel.Size = new System.Drawing.Size(53, 13);
+            this.midiOutLabel.TabIndex = 57;
+            this.midiOutLabel.Text = "MIDI Out:";
+            // 
+            // volumeLabel
+            // 
+            this.volumeLabel.AutoSize = true;
+            this.volumeLabel.Location = new System.Drawing.Point(249, 24);
+            this.volumeLabel.Name = "volumeLabel";
+            this.volumeLabel.Size = new System.Drawing.Size(42, 13);
+            this.volumeLabel.TabIndex = 56;
+            this.volumeLabel.Text = "Volume";
             // 
             // volumeTrackBar
             // 
@@ -107,91 +153,46 @@
             this.volumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.volumeTrackBar.Value = 100;
             // 
-            // volumeLabel
+            // stopButton
             // 
-            this.volumeLabel.AutoSize = true;
-            this.volumeLabel.Location = new System.Drawing.Point(249, 24);
-            this.volumeLabel.Name = "volumeLabel";
-            this.volumeLabel.Size = new System.Drawing.Size(42, 13);
-            this.volumeLabel.TabIndex = 56;
-            this.volumeLabel.Text = "Volume";
+            this.stopButton.Location = new System.Drawing.Point(165, 19);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(75, 23);
+            this.stopButton.TabIndex = 2;
+            this.stopButton.Text = "Stop";
+            this.stopButton.UseVisualStyleBackColor = true;
             // 
-            // midiOutLabel
+            // pauseButton
             // 
-            this.midiOutLabel.AutoSize = true;
-            this.midiOutLabel.Location = new System.Drawing.Point(6, 71);
-            this.midiOutLabel.Name = "midiOutLabel";
-            this.midiOutLabel.Size = new System.Drawing.Size(53, 13);
-            this.midiOutLabel.TabIndex = 57;
-            this.midiOutLabel.Text = "MIDI Out:";
+            this.pauseButton.Location = new System.Drawing.Point(84, 19);
+            this.pauseButton.Name = "pauseButton";
+            this.pauseButton.Size = new System.Drawing.Size(75, 23);
+            this.pauseButton.TabIndex = 1;
+            this.pauseButton.Text = "Pause";
+            this.pauseButton.UseVisualStyleBackColor = true;
             // 
-            // instrumentLabel
+            // playButton
             // 
-            this.instrumentLabel.AutoSize = true;
-            this.instrumentLabel.Location = new System.Drawing.Point(6, 111);
-            this.instrumentLabel.Name = "instrumentLabel";
-            this.instrumentLabel.Size = new System.Drawing.Size(59, 13);
-            this.instrumentLabel.TabIndex = 58;
-            this.instrumentLabel.Text = "Instrument:";
-            // 
-            // midiOutComboBox
-            // 
-            this.midiOutComboBox.FormattingEnabled = true;
-            this.midiOutComboBox.Location = new System.Drawing.Point(9, 87);
-            this.midiOutComboBox.Name = "midiOutComboBox";
-            this.midiOutComboBox.Size = new System.Drawing.Size(231, 21);
-            this.midiOutComboBox.TabIndex = 59;
-            // 
-            // instrumentComboBox
-            // 
-            this.instrumentComboBox.FormattingEnabled = true;
-            this.instrumentComboBox.Location = new System.Drawing.Point(9, 127);
-            this.instrumentComboBox.Name = "instrumentComboBox";
-            this.instrumentComboBox.Size = new System.Drawing.Size(231, 21);
-            this.instrumentComboBox.TabIndex = 60;
-            // 
-            // tempoTrackBar
-            // 
-            this.tempoTrackBar.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.tempoTrackBar.Location = new System.Drawing.Point(65, 154);
-            this.tempoTrackBar.Maximum = 200;
-            this.tempoTrackBar.Minimum = 40;
-            this.tempoTrackBar.Name = "tempoTrackBar";
-            this.tempoTrackBar.Size = new System.Drawing.Size(226, 45);
-            this.tempoTrackBar.TabIndex = 57;
-            this.tempoTrackBar.TickFrequency = 10;
-            this.tempoTrackBar.Value = 120;
-            // 
-            // tempoLabel
-            // 
-            this.tempoLabel.AutoSize = true;
-            this.tempoLabel.Location = new System.Drawing.Point(16, 154);
-            this.tempoLabel.Name = "tempoLabel";
-            this.tempoLabel.Size = new System.Drawing.Size(43, 13);
-            this.tempoLabel.TabIndex = 61;
-            this.tempoLabel.Text = "Tempo:";
-            // 
-            // bpmLabel
-            // 
-            this.bpmLabel.AutoSize = true;
-            this.bpmLabel.Location = new System.Drawing.Point(16, 176);
-            this.bpmLabel.Name = "bpmLabel";
-            this.bpmLabel.Size = new System.Drawing.Size(48, 13);
-            this.bpmLabel.TabIndex = 62;
-            this.bpmLabel.Text = "120 bpm";
+            this.playButton.Location = new System.Drawing.Point(3, 19);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(75, 23);
+            this.playButton.TabIndex = 0;
+            this.playButton.Text = "Play";
+            this.playButton.UseVisualStyleBackColor = true;
             // 
             // PlaybackControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.playbackGroup);
             this.Name = "PlaybackControl";
             this.Size = new System.Drawing.Size(303, 208);
             this.playbackGroup.ResumeLayout(false);
             this.playbackGroup.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tempoTrackBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeTrackBar)).EndInit();
             this.ResumeLayout(false);
 
         }
