@@ -118,9 +118,8 @@ namespace ChordQuality
 
 		public MainForm()
 		{
-			//
-			// The InitializeComponent() call is required for Windows Forms designer support.
-			//
+            // The InitializeComponent() call is required for 
+            // Windows Forms designer support.
 			InitializeComponent();
 		}
 
@@ -1307,8 +1306,18 @@ namespace ChordQuality
 		#endregion
 
 		MidiFile f = null;
-		Color[] colors = new Color[19] { Color.Black, Color.Red, Color.Green, Color.Orange, Color.Blue, Color.Black, Color.Black, Color.Black, Color.Black, Color.Magenta, Color.Cyan, Color.Pink, Color.LightBlue, Color.Brown, Color.Gold, Color.Silver, Color.Black, Color.Black, Color.Black };
-		Color[] trackColors = new Color[19] { Color.Black, Color.Red, Color.Green, Color.Orange, Color.Blue, Color.Black, Color.Black, Color.Black, Color.Black, Color.Magenta, Color.Cyan, Color.Pink, Color.LightBlue, Color.Brown, Color.Gold, Color.Silver, Color.Black, Color.Black, Color.Black };
+		Color[] colors = new Color[19] {
+            Color.Black, Color.Red, Color.Green, Color.Orange,
+            Color.Blue, Color.Black, Color.Black, Color.Black,
+            Color.Black, Color.Magenta, Color.Cyan, Color.Pink,
+            Color.LightBlue, Color.Brown, Color.Gold, Color.Silver,
+            Color.Black, Color.Black, Color.Black };
+		Color[] trackColors = new Color[19] {
+            Color.Black, Color.Red, Color.Green, Color.Orange,
+            Color.Blue, Color.Black, Color.Black, Color.Black,
+            Color.Black, Color.Magenta, Color.Cyan, Color.Pink,
+            Color.LightBlue, Color.Brown, Color.Gold, Color.Silver,
+            Color.Black, Color.Black, Color.Black };
 		Color selectColor = Color.FromArgb(32, 0, 0, 255);
 		Pen pen = new Pen(Color.Black, 2);
 		Pen barpen = new Pen(Color.LightGray, 1);
@@ -1328,7 +1337,7 @@ namespace ChordQuality
 		PrintDocument pd;
 		int pages_printed;
 		MenuItem[] menuItems, menuItemsRem;
-		QualityWeights qw = new QualityWeights();
+		QualityWeights qualityWeights = new QualityWeights();
 		int RowsPerPage = 5, Pages = 0;
 		TrackDisplay trackDisplay = null;
 
@@ -1337,7 +1346,7 @@ namespace ChordQuality
 		double cutFirst = -1, cutSecond = -1;
 		int cutRowDragX = -1;
 
-		void MainFormLoad(object sender, System.EventArgs e)
+		void MainFormLoad(object sender, EventArgs e)
 		{
 			// misc init.'s
 			orientpen.DashStyle = DashStyle.Dot;
@@ -1513,7 +1522,7 @@ namespace ChordQuality
 			offsetScroll.Value = 0;
 
 			//
-			QualityCheckCheckedChanged(this, new System.EventArgs());
+			QualityCheckCheckedChanged(this, new EventArgs());
 			applyButton.PerformClick();
 
 			//place cut panel below
@@ -1521,7 +1530,7 @@ namespace ChordQuality
 			//redraw();
 		}
 
-		void Timer1Tick(object sender, System.EventArgs e)
+		void Timer1Tick(object sender, EventArgs e)
 		{
 			double p = pl.Position;
 			if (p < 0) return;
@@ -1551,13 +1560,13 @@ namespace ChordQuality
 			}
 		}
 
-		void OffsetScrollValueChanged(object sender, System.EventArgs e)
+		void OffsetScrollValueChanged(object sender, EventArgs e)
 		{
 			offsetLabel.Text = "offset: " + offsetScroll.Value.ToString() + " bars";
 			redraw();
 		}
 
-		void ZoomScrollValueChanged(object sender, System.EventArgs e)
+		void ZoomScrollValueChanged(object sender, EventArgs e)
 		{
 			barsEdit.Text = zoomScroll.Value.ToString();
 			applyButton.PerformClick();
@@ -1568,7 +1577,7 @@ namespace ChordQuality
 			}
 		}
 
-		void MainFormClosed(object sender, System.EventArgs e)
+		void MainFormClosed(object sender, EventArgs e)
 		{
 			if (stopButton.Enabled)
 			{
@@ -1576,12 +1585,12 @@ namespace ChordQuality
 			}
 		}
 
-		void InstrCheckCheckedChanged(object sender, System.EventArgs e)
+		void InstrCheckCheckedChanged(object sender, EventArgs e)
 		{
 			if (pl != null) pl.Instrument = instrBox.SelectedIndex;
 		}
 
-		void InstrBoxSelectedIndexChanged(object sender, System.EventArgs e)
+		void InstrBoxSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (pl != null) pl.Instrument = instrBox.SelectedIndex;
 		}
@@ -1627,7 +1636,7 @@ namespace ChordQuality
 			}
 		}
 
-		void TempoBarValueChanged(object sender, System.EventArgs e)
+		void TempoBarValueChanged(object sender, EventArgs e)
 		{
 			if (pl != null) pl.Tempo = tempoBar.Value;
 			tempoLabel.Text = "tempo: " + tempoBar.Value.ToString() + " bpm";
@@ -1639,7 +1648,7 @@ namespace ChordQuality
 			fw.Write(f, saveMidFileDialog.FileName);
 		}
 
-		void TransposeTuningUpDownValueChanged(object sender, System.EventArgs e)
+		void TransposeTuningUpDownValueChanged(object sender, EventArgs e)
 		{
 			for (int i = 0; i < tunings.Length; i++)
 				tunings[i].Transpose = (int)transposeTuningUpDown.Value;
@@ -1656,7 +1665,7 @@ namespace ChordQuality
 			}
 		}
 
-		void QualityCheckCheckedChanged(object sender, System.EventArgs e)
+		void QualityCheckCheckedChanged(object sender, EventArgs e)
 		{
 			chordDisplay.Visible = qualityCheck.Checked;
 			chordNameDisplay.Visible = labelCheck.Checked;
@@ -1680,7 +1689,7 @@ namespace ChordQuality
 			if (f != null) redraw();
 		}
 
-		void Panel2Resize(object sender, System.EventArgs e)
+		void Panel2Resize(object sender, EventArgs e)
 		{
 			if (panel2.Width > 0)
 			{
@@ -1696,44 +1705,44 @@ namespace ChordQuality
 			}
 		}
 
-		void WeightScroll6MajValueChanged(object sender, System.EventArgs e)
+		void WeightScroll6MajValueChanged(object sender, EventArgs e)
 		{
-			qw.M6 = (20 - weightScroll6Maj.Value) / 10.0;
+			qualityWeights.M6 = (20 - weightScroll6Maj.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
 
-		void WeightScroll6minValueChanged(object sender, System.EventArgs e)
+		void WeightScroll6minValueChanged(object sender, EventArgs e)
 		{
-			qw.m6 = (20 - weightScroll6min.Value) / 10.0;
+			qualityWeights.m6 = (20 - weightScroll6min.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
 
-		void WeightScroll5ValueChanged(object sender, System.EventArgs e)
+		void WeightScroll5ValueChanged(object sender, EventArgs e)
 		{
-			qw.fifth = (20 - weightScroll5.Value) / 10.0;
+			qualityWeights.fifth = (20 - weightScroll5.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
 
-		void WeightScroll4ValueChanged(object sender, System.EventArgs e)
+		void WeightScroll4ValueChanged(object sender, EventArgs e)
 		{
-			qw.fourth = (20 - weightScroll4.Value) / 10.0;
+			qualityWeights.fourth = (20 - weightScroll4.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
 
-		void WeightScroll3MajValueChanged(object sender, System.EventArgs e)
+		void WeightScroll3MajValueChanged(object sender, EventArgs e)
 		{
-			qw.M3 = (20 - weightScroll3Maj.Value) / 10.0;
+			qualityWeights.M3 = (20 - weightScroll3Maj.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
 
-		void WeightScroll3minValueChanged(object sender, System.EventArgs e)
+		void WeightScroll3minValueChanged(object sender, EventArgs e)
 		{
-			qw.m3 = (20 - weightScroll3min.Value) / 10.0;
+			qualityWeights.m3 = (20 - weightScroll3min.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
@@ -1744,27 +1753,27 @@ namespace ChordQuality
 			w.WriteTracks(f, (int)transposeFileUpDown.Value);
 			w.WriteTunings(tunings);
 			w.WriteTuningTranspose((int)transposeTuningUpDown.Value);
-			w.WriteWeights(qw, thresholdUpDown);
-			w.WriteChords(chords, f, tunings, qw);
+			w.WriteWeights(qualityWeights, thresholdUpDown);
+			w.WriteChords(chords, f, tunings, qualityWeights);
 			w.Close();
 			Shell.Execute(saveTxtFileDialog.FileName);
 		}
 
-		void WeightScrollCh5ValueChanged(object sender, System.EventArgs e)
+		void WeightScrollCh5ValueChanged(object sender, EventArgs e)
 		{
-			qw.Ch5 = (20 - weightScrollCh5.Value) / 10.0;
+			qualityWeights.Ch5 = (20 - weightScrollCh5.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
 
-		void WeightScrollCh3ValueChanged(object sender, System.EventArgs e)
+		void WeightScrollCh3ValueChanged(object sender, EventArgs e)
 		{
-			qw.Ch3 = (20 - weightScrollCh3.Value) / 10.0;
+			qualityWeights.Ch3 = (20 - weightScrollCh3.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
 
-		void TransposeFileUpDownValueChanged(object sender, System.EventArgs e)
+		void TransposeFileUpDownValueChanged(object sender, EventArgs e)
 		{
 			if (f != null)
 			{
@@ -1776,26 +1785,26 @@ namespace ChordQuality
 
 		}
 
-		void PenaltyScrollAddValueChanged(object sender, System.EventArgs e)
+		void PenaltyScrollAddValueChanged(object sender, EventArgs e)
 		{
-			qw.Add = (10 - penaltyScrollAdd.Value) / 10.0;
+			qualityWeights.Add = (10 - penaltyScrollAdd.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
 
-		void ThresholdUpDownSelectedItemChanged(object sender, System.EventArgs e)
+		void ThresholdUpDownSelectedItemChanged(object sender, EventArgs e)
 		{
 			if (f != null)
 			{
 				switch (thresholdUpDown.SelectedIndex)
 				{
-					case 0: qw.Threshold = 4 * f.timing; break;
-					case 1: qw.Threshold = 4 * f.timing / 2.0; break;
-					case 2: qw.Threshold = 4 * f.timing / 4.0; break;
-					case 3: qw.Threshold = 4 * f.timing / 8.0; break;
-					case 4: qw.Threshold = 4 * f.timing / 16.0; break;
-					case 5: qw.Threshold = 4 * f.timing / 32.0; break;
-					case 6: qw.Threshold = 4 * f.timing / 64.0; break;
+					case 0: qualityWeights.Threshold = 4 * f.timing; break;
+					case 1: qualityWeights.Threshold = 4 * f.timing / 2.0; break;
+					case 2: qualityWeights.Threshold = 4 * f.timing / 4.0; break;
+					case 3: qualityWeights.Threshold = 4 * f.timing / 8.0; break;
+					case 4: qualityWeights.Threshold = 4 * f.timing / 16.0; break;
+					case 5: qualityWeights.Threshold = 4 * f.timing / 32.0; break;
+					case 6: qualityWeights.Threshold = 4 * f.timing / 64.0; break;
 				}
 				update_tuning_avg();
 				redraw_chords();
@@ -1808,7 +1817,7 @@ namespace ChordQuality
 
 		}
 
-		private void MenuItem1Click(object sender, System.EventArgs e)
+		private void MenuItem1Click(object sender, EventArgs e)
 		{
 			for (int i = 0; i < f.tracks.Length; i++)
 				if (contextMenu1.SourceControl == trackChecks[i])
@@ -1823,7 +1832,7 @@ namespace ChordQuality
 			redraw();
 		}
 
-		private void MenuItemClick(object sender, System.EventArgs e)
+		private void MenuItemClick(object sender, EventArgs e)
 		{
 			for (int i = 0; i < f.tracks.Length; i++)
 				if (sender == menuItems[i])
@@ -1837,7 +1846,7 @@ namespace ChordQuality
 			redraw();
 		}
 
-		private void MenuItemRemClick(object sender, System.EventArgs e)
+		private void MenuItemRemClick(object sender, EventArgs e)
 		{
 			for (int i = 0; i < f.tracks.Length; i++)
 				if (sender == menuItemsRem[i])
@@ -1853,22 +1862,22 @@ namespace ChordQuality
 			redraw();
 		}
 
-		private void MenuItemOpenClick(object sender, System.EventArgs e)
+		private void MenuItemOpenClick(object sender, EventArgs e)
 		{
 			openMidFileDialog.ShowDialog();
 		}
 
-		private void MenuItemSaveClick(object sender, System.EventArgs e)
+		private void MenuItemSaveClick(object sender, EventArgs e)
 		{
 			saveMidFileDialog.ShowDialog();
 		}
 
-		private void MenuItemExitClick(object sender, System.EventArgs e)
+		private void MenuItemExitClick(object sender, EventArgs e)
 		{
 			Close();
 		}
 
-		private void MenuItemPrintClick(object sender, System.EventArgs e)
+		private void MenuItemPrintClick(object sender, EventArgs e)
 		{
 			pd = new PrintDocument();
 			pd.DefaultPageSettings.Landscape = true;
@@ -1892,13 +1901,13 @@ namespace ChordQuality
 			}
 		}
 
-		private void MenuItemInfoClick(object sender, System.EventArgs e)
+		private void MenuItemInfoClick(object sender, EventArgs e)
 		{
 			FileInfoForm fif = new FileInfoForm(f);
 			fif.Show();
 		}
 
-		private void MenuItemMidi2TxtClick(object sender, System.EventArgs e)
+		private void MenuItemMidi2TxtClick(object sender, EventArgs e)
 		{
 			if (f == null) return;
 			string fn = openMidFileDialog.FileName;
@@ -1914,7 +1923,7 @@ namespace ChordQuality
 			Shell.Execute(fn);
 		}
 
-		private void MenuItemBestClick(object sender, System.EventArgs e)
+		private void MenuItemBestClick(object sender, EventArgs e)
 		{
 			int mini = 0, minj = 0;
 			double q, minq = 100;
@@ -1922,7 +1931,7 @@ namespace ChordQuality
 				for (int j = 0; j < 12; j++)
 				{
 					tunings[i].Transpose = j;
-					q = tunings[i].AvgQuality(chords, qw);
+					q = tunings[i].AvgQuality(chords, qualityWeights);
 					if (q < minq)
 					{
 						minq = q;
@@ -1935,7 +1944,7 @@ namespace ChordQuality
 			TransposeTuningUpDownValueChanged(this, null);
 		}
 
-		private void MenuItemExportClick(object sender, System.EventArgs e)
+		private void MenuItemExportClick(object sender, EventArgs e)
 		{
 			saveTxtFileDialog.FileName = Path.ChangeExtension(f.name, null);
 			saveTxtFileDialog.FileName += "_analysis.txt";
@@ -1943,7 +1952,7 @@ namespace ChordQuality
 		}
 
 		/***** Playback Event Handlers Begin *****/
-		private void PlayButtonClick(object sender, System.EventArgs e)
+		private void PlayButtonClick(object sender, EventArgs e)
 		{
 			playButton.Enabled = false;
 			pauseButton.Enabled = true;
@@ -1956,12 +1965,12 @@ namespace ChordQuality
 			timer1.Enabled = true;
 		}
 
-		private void StopButtonClick(object sender, System.EventArgs e)
+		private void StopButtonClick(object sender, EventArgs e)
 		{
 			StopPlayback();
 		}
 
-		private void PauseButtonClick(object sender, System.EventArgs e)
+		private void PauseButtonClick(object sender, EventArgs e)
 		{
 			pl.Pause();
 			playButton.Enabled = true;
@@ -1969,14 +1978,14 @@ namespace ChordQuality
 			timer1.Enabled = false;
 		}
 
-		private void VolumeBarScroll(object sender, System.EventArgs e)
+		private void VolumeBarScroll(object sender, EventArgs e)
 		{
 			if (pl != null)
 				pl.Volume = ((double)volumeBar.Value) / volumeBar.Maximum;
 		}
 
 		/***** Tracks Event Handlers Begin *****/
-		void TrackCheckedChanged(object sender, System.EventArgs e)
+		void TrackCheckedChanged(object sender, EventArgs e)
 		{
 			if (f != null)
 			{
@@ -2054,7 +2063,7 @@ namespace ChordQuality
 		}
 
 		/***** Tunning Event Handlers Begin *****/
-		void TuningCheckedChanged(object sender, System.EventArgs e)
+		void TuningCheckedChanged(object sender, EventArgs e)
 		{
 			if (f != null)
 			{
@@ -2064,7 +2073,7 @@ namespace ChordQuality
 			}
 		}
 
-		void TuningRadioCheckedChanged(object sender, System.EventArgs e)
+		void TuningRadioCheckedChanged(object sender, EventArgs e)
 		{
 			if (pl != null)
 			{
@@ -2075,15 +2084,15 @@ namespace ChordQuality
 		}
 
 		/***** Penalties Event Handlers Begin *****/
-		private void PenaltyScrollShortValueChanged(object sender, System.EventArgs e)
+		private void PenaltyScrollShortValueChanged(object sender, EventArgs e)
 		{
-			qw.Short = (10 - penaltyScrollShort.Value) / 10.0;
+			qualityWeights.Short = (10 - penaltyScrollShort.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
 		}
 
 		/***** Print Layout Event Handlers Begin *****/
-		private void ApplyButtonClick(object sender, System.EventArgs e)
+		private void ApplyButtonClick(object sender, EventArgs e)
 		{
 			int bars = Int32.Parse(barsEdit.Text);
 			RowsPerPage = Int32.Parse(rowsEdit.Text);
@@ -2267,7 +2276,7 @@ namespace ChordQuality
 			if (chords == null) return;
 			for (int i = 0; i < tunings.Length; i++)
 			{
-				double q = Math.Round(tunings[i].AvgQuality(chords, qw), 1);
+				double q = Math.Round(tunings[i].AvgQuality(chords, qualityWeights), 1);
 				tuningChecks[i].Text = tunings[i].Name + " (" + q.ToString() + ")";
 			}
 		}
@@ -2374,11 +2383,11 @@ namespace ChordQuality
 					foreach (TimeInfo c in chords)
 					{
 						if (c.Time > maxtime) break;
-						if (c.Time >= mintime && qw.enabled(c))
+						if (c.Time >= mintime && qualityWeights.enabled(c))
 						{
 							x1 = grw * (c.Time - 4 * offset * f.timing) / f.timing / 4 / zoomScroll.Value;
 							x2 = grw * (c.Time + c.Duration - 4 * offset * f.timing) / f.timing / 4 / zoomScroll.Value;
-							q = (int)tunings[i].Quality(c, qw);
+							q = (int)tunings[i].Quality(c, qualityWeights);
 							y = y0 + grh - 1 - 2 * q;
 							if (c.IsChord) gr.DrawLine(pen, x1, y, x2, y);
 							else gr.DrawLine(thinpen, x1, y, x2, y);
@@ -2399,7 +2408,7 @@ namespace ChordQuality
 			foreach (TimeInfo c in chords)
 			{
 				if (c.Time > maxtime) break;
-				if (c.Time >= mintime && qw.enabled(c))
+				if (c.Time >= mintime && qualityWeights.enabled(c))
 				{
 					s = c.Name;
 					x = grw * (c.Time - 4 * offset * f.timing) / f.timing / 4 / zoomScroll.Value;

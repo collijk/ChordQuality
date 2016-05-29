@@ -84,6 +84,15 @@
     <Compile Include="FileInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="controls\PlaybackControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\PlaybackControl.Designer.cs">
+      <DependentUpon>PlaybackControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="controls\PlaybackControl.resx">
+      <DependentUpon>PlaybackControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileInfoForm.resx">
       <DependentUpon>FileInfoForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -219,7 +219,7 @@ namespace ChordQuality
 		
 		MidiFile f;
 		
-		void FileInfoFormLoad(object sender, System.EventArgs e)
+		void FileInfoFormLoad(object sender, EventArgs e)
 		{
 			textBox4.Text=f.tracks.Length.ToString();
 			textBox5.Text=f.timing.ToString();
