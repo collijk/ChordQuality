@@ -52,15 +52,19 @@ namespace Janus
 			void* Data;
 			int BufferLength;
 			int BytesRecorded;
-			int User;
+			IntPtr User;
 			int Flags;
-			int Next;
-			int Reserved;
+			IntPtr Next;
+			IntPtr Reserved;
 			int Offset;
-			int Reserved1;
-			int Reserved2;
-			int Reserved3;
-			int Reserved4;
+			IntPtr Reserved1;
+			IntPtr Reserved2;
+			IntPtr Reserved3;
+			IntPtr Reserved4;
+			IntPtr Reserved5;
+			IntPtr Reserved6;
+			IntPtr Reserved7;
+			IntPtr Reserved8;
 		};
 		
 		struct MidiProp
@@ -77,7 +81,7 @@ namespace Janus
 			int Ticks;
 		};
 
-		public delegate void Callback(int MidiInHandle,int Message,int Instance,int dw1,int dw2);
+		public delegate void Callback(IntPtr MidiInHandle, int Message, int Instance, int dw1, int dw2);
 
 		// MIDI functions from winmm.dll
 		
@@ -86,31 +90,31 @@ namespace Janus
 		[DllImport("winmm.dll")] extern int midiOutGetNumDevs();
 		[DllImport("winmm.dll")] extern int midiOutGetDevCaps(int uDeviceID,MidiOutCaps* lpCaps, int uSize);
 		
-		[DllImport("winmm.dll")] extern int midiInOpen(interior_ptr<int> lphMidiIn,int uDeviceID,Callback^ dwCallback,int dwInstance,int dwFlags);
-		[DllImport("winmm.dll")] extern int midiInOpen(interior_ptr<int> lphMidiIn,int uDeviceID,int dwCallback,int dwInstance,int dwFlags);
-		[DllImport("winmm.dll")] extern int midiInClose(int hMidiIn);
-		[DllImport("winmm.dll")] extern int midiInStart(int hMidiIn);
-		[DllImport("winmm.dll")] extern int midiInStop(int hMidiIn);
-		[DllImport("winmm.dll")] extern int midiInReset(int hMidiIn);
+		[DllImport("winmm.dll")] extern int midiInOpen(interior_ptr<IntPtr> lphMidiIn, int uDeviceID, Callback^ dwCallback, int dwInstance, int dwFlags);
+		[DllImport("winmm.dll")] extern int midiInOpen(interior_ptr<IntPtr> lphMidiIn, int uDeviceID, int dwCallback, int dwInstance, int dwFlags);
+		[DllImport("winmm.dll")] extern int midiInClose(IntPtr hMidiIn);
+		[DllImport("winmm.dll")] extern int midiInStart(IntPtr hMidiIn);
+		[DllImport("winmm.dll")] extern int midiInStop(IntPtr hMidiIn);
+		[DllImport("winmm.dll")] extern int midiInReset(IntPtr hMidiIn);
 		
-		[DllImport("winmm.dll")] extern int midiOutOpen(interior_ptr<int> lphMidiOut, int uDeviceID, int dwCallback, int dwInstance, int dwFlags);
-		[DllImport("winmm.dll")] extern int midiOutClose(int hMidiOut);
-		[DllImport("winmm.dll")] extern int midiOutReset(int hMidiOut);
-		[DllImport("winmm.dll")] extern int midiOutShortMsg(int hMidiOut, int dwMsg);
-		[DllImport("winmm.dll")] extern int midiOutLongMsg(int hMidiOut,MidiHdr* h,int size);
-		[DllImport("winmm.dll")] extern int midiOutPrepareHeader(int hMidiOut,MidiHdr* h,int size);
-		[DllImport("winmm.dll")] extern int midiOutUnprepareHeader(int hMidiOut,MidiHdr* h,int size);
-		[DllImport("winmm.dll")] extern int midiOutGetVolume(int hMidiOut,unsigned int* volume);
-		[DllImport("winmm.dll")] extern int midiOutSetVolume(int hMidiOut,unsigned int volume);
+		[DllImport("winmm.dll")] extern int midiOutOpen(interior_ptr<IntPtr> lphMidiOut, int uDeviceID, int dwCallback, int dwInstance, int dwFlags);
+		[DllImport("winmm.dll")] extern int midiOutClose(IntPtr hMidiOut);
+		[DllImport("winmm.dll")] extern int midiOutReset(IntPtr hMidiOut);
+		[DllImport("winmm.dll")] extern int midiOutShortMsg(IntPtr hMidiOut, int dwMsg);
+		[DllImport("winmm.dll")] extern int midiOutLongMsg(IntPtr hMidiOut, MidiHdr* h, int size);
+		[DllImport("winmm.dll")] extern int midiOutPrepareHeader(IntPtr hMidiOut,MidiHdr* h,int size);
+		[DllImport("winmm.dll")] extern int midiOutUnprepareHeader(IntPtr hMidiOut,MidiHdr* h,int size);
+		[DllImport("winmm.dll")] extern int midiOutGetVolume(IntPtr hMidiOut,unsigned int* volume);
+		[DllImport("winmm.dll")] extern int midiOutSetVolume(IntPtr hMidiOut,unsigned int volume);
 		
-		[DllImport("winmm.dll")] extern int midiStreamOpen(interior_ptr<int> hMidiOut,int* DeviceID,int cMidi,int dwCallback, int dwInstance, int fdwOpen);
-		[DllImport("winmm.dll")] extern int midiStreamClose(int hMidiOut);
-		[DllImport("winmm.dll")] extern int midiStreamOut(int hMidiOut,MidiHdr* hdr,int Size);
-		[DllImport("winmm.dll")] extern int midiStreamRestart(int hMidiOut);
-		[DllImport("winmm.dll")] extern int midiStreamPause(int hMidiOut);
-		[DllImport("winmm.dll")] extern int midiStreamStop(int hMidiOut);
-		[DllImport("winmm.dll")] extern int midiStreamProperty(int hMidiOut,MidiProp* lpPropData,unsigned int Property);
-		[DllImport("winmm.dll")] extern int midiStreamPosition(int hMidiOut,MMTime* mmt,int Size);
+		[DllImport("winmm.dll")] extern int midiStreamOpen(interior_ptr<IntPtr> hMidiOut, int* DeviceID, int cMidi, int dwCallback, int dwInstance, int fdwOpen);
+		[DllImport("winmm.dll")] extern int midiStreamClose(IntPtr hMidiOut);
+		[DllImport("winmm.dll")] extern int midiStreamOut(IntPtr hMidiOut,MidiHdr* hdr,int Size);
+		[DllImport("winmm.dll")] extern int midiStreamRestart(IntPtr hMidiOut);
+		[DllImport("winmm.dll")] extern int midiStreamPause(IntPtr hMidiOut);
+		[DllImport("winmm.dll")] extern int midiStreamStop(IntPtr hMidiOut);
+		[DllImport("winmm.dll")] extern int midiStreamProperty(IntPtr hMidiOut,MidiProp* lpPropData,unsigned int Property);
+		[DllImport("winmm.dll")] extern int midiStreamPosition(IntPtr hMidiOut,MMTime* mmt,int Size);
 		
 		[DllImport("kernel32.dll")] extern int CreateEvent(int attr,int bManualReset,int bInitialState,String^ lpName);
 		[DllImport("kernel32.dll")] extern int ResetEvent(int evt);
@@ -593,7 +597,7 @@ namespace Janus
 				if (err != 0) MessageBox::Show(Error::ToString(err),"midiInReset");
 			}
 		private:
-			int Handle;
+			IntPtr Handle;
 			int err;
 		};
 
@@ -667,7 +671,7 @@ namespace Janus
 			}
 		protected:
 			int DeviceID;
-			int Handle;
+			IntPtr Handle;
 			int err;
 		};
 
@@ -718,7 +722,7 @@ namespace Janus
 			{
 				err = midiStreamClose(Handle);
 				if (err != 0) MessageBox::Show(Error::ToString(err),"midiStreamClose");
-				Handle = 0;
+				Handle = IntPtr(0);
 			}
 
 			property bool Stopped{ bool get(){ return stopped; } }
