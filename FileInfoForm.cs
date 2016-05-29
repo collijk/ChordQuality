@@ -8,31 +8,30 @@
  */
 
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 using Janus.ManagedMIDI;
 
 namespace ChordQuality
 {
-	/// <summary>
-	/// Description of FileInfoForm.
-	/// </summary>
-	public class FileInfoForm : System.Windows.Forms.Form
-	{
-		private System.Windows.Forms.TextBox textBox10;
+    /// <summary>
+    /// Description of FileInfoForm.
+    /// </summary>
+    public class FileInfoForm : Form
+    {
+		private TextBox textBox10;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TextBox textBox8;
-		private System.Windows.Forms.TextBox textBox5;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.TextBox textBox7;
-		private System.Windows.Forms.TextBox textBox6;
+		private TextBox textBox8;
+		private TextBox textBox5;
+		private TextBox textBox4;
+		private TextBox textBox7;
+		private TextBox textBox6;
 		private System.Windows.Forms.Label label21;
-		private System.Windows.Forms.TextBox textBox9;
+		private TextBox textBox9;
 		
 		public FileInfoForm(MidiFile _f)
 		{
@@ -49,20 +48,20 @@ namespace ChordQuality
 		/// not be able to load this method if it was changed manually.
 		/// </summary>
 		private void InitializeComponent() {
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.textBox9 = new TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.textBox6 = new TextBox();
+            this.textBox7 = new TextBox();
+            this.textBox4 = new TextBox();
+            this.textBox5 = new TextBox();
+            this.textBox8 = new TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.textBox10 = new TextBox();
             this.SuspendLayout();
             // 
             // textBox9

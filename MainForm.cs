@@ -5,107 +5,105 @@ using System.Drawing.Drawing2D;
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using Microsoft.VisualBasic;
 
 using Janus.ManagedMIDI;
 using Janus.Misc;
 
 namespace ChordQuality
 {
-	public class MainForm : System.Windows.Forms.Form
-	{
+    public class MainForm : Form
+    {
 		private System.ComponentModel.IContainer components;
-		private System.Windows.Forms.MenuItem menuItemOpen;
-		private System.Windows.Forms.NumericUpDown transposeFileUpDown;
-		private System.Windows.Forms.GroupBox layoutBox;
-		private System.Windows.Forms.GroupBox chordBox;
-		private System.Windows.Forms.ContextMenu contextMenu1;
-		private System.Windows.Forms.Button applyButton;
-		private System.Windows.Forms.GroupBox qualityBox;
-		private System.Windows.Forms.MenuItem menuItemExit;
-		private System.Windows.Forms.Label label12;
-		private System.Windows.Forms.MenuItem menuItemRemove;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.Button pauseButton;
-		private System.Windows.Forms.MenuItem menuItemFile;
-		private System.Windows.Forms.GroupBox tuningBox;
-		private System.Windows.Forms.MenuItem menuItemAnalysis;
-		private System.Windows.Forms.Button stopButton;
-		private System.Windows.Forms.TextBox barsPerPageBox;
-		private System.Windows.Forms.VScrollBar weightScroll4;
-		private System.Windows.Forms.VScrollBar weightScroll5;
-		private System.Windows.Forms.MenuItem menuItemAdd;
-		private System.Windows.Forms.PrintDialog printDialog1;
-		private System.Windows.Forms.PrintPreviewControl printPreviewDialog1;
-		private System.Windows.Forms.VScrollBar penaltyScrollAdd;
-		private System.Windows.Forms.MenuItem menuItemPrint;
-		private System.Windows.Forms.MenuItem menuItemBest;
-		private System.Windows.Forms.Timer timer1;
-		private System.Windows.Forms.Panel tuningPanel;
-		private System.Windows.Forms.DomainUpDown thresholdUpDown;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Panel trackPanel;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label label15;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.Label label19;
-		private System.Windows.Forms.ToolTip toolTip1;
-		private System.Windows.Forms.MainMenu mainMenu1;
-		private System.Windows.Forms.VScrollBar penaltyScrollShort;
-		private System.Windows.Forms.GroupBox penaltyBox;
-		private System.Windows.Forms.MenuItem menuItemMarkers;
-		private System.Windows.Forms.VScrollBar weightScroll6min;
-		private System.Windows.Forms.CheckBox labelCheck;
-		private System.Windows.Forms.PictureBox chordNameDisplay;
-		private System.Windows.Forms.VScrollBar weightScroll3Maj;
-		private System.Windows.Forms.Panel cursor;
-		private System.Windows.Forms.TextBox barsEdit;
-		private System.Windows.Forms.PictureBox noteDisplay;
-		private System.Windows.Forms.TrackBar volumeBar;
-		private System.Windows.Forms.SaveFileDialog saveTxtFileDialog;
-		private System.Windows.Forms.MenuItem menuItemMidi2Txt;
-		private System.Windows.Forms.ComboBox outputBox;
-		private System.Windows.Forms.ColorDialog colorDialog1;
-		private System.Windows.Forms.TrackBar tempoBar;
-		private System.Windows.Forms.SaveFileDialog saveMidFileDialog;
-		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Panel panel1;
-		private System.Windows.Forms.Label offsetLabel;
-		private System.Windows.Forms.GroupBox playbackBox;
-		private System.Windows.Forms.GroupBox transposeBox;
-		private System.Windows.Forms.Button playButton;
-		private System.Windows.Forms.MenuItem menuItemSave;
-		private System.Windows.Forms.NumericUpDown transposeTuningUpDown;
-		private System.Windows.Forms.VScrollBar weightScroll3min;
-		private System.Windows.Forms.MenuItem menuItem1;
-		private System.Windows.Forms.Label tempoLabel;
-		private System.Windows.Forms.TextBox rowsEdit;
-		private System.Windows.Forms.HScrollBar offsetScroll;
-		private System.Windows.Forms.OpenFileDialog openMidFileDialog;
-		private System.Windows.Forms.MenuItem menuItemExport;
-		private System.Windows.Forms.ComboBox instrBox;
-		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.CheckBox qualityCheck;
-		private System.Windows.Forms.VScrollBar weightScrollCh3;
-		private System.Windows.Forms.Label label20;
-		private System.Windows.Forms.Label label22;
-		private System.Windows.Forms.VScrollBar weightScrollCh5;
-		private System.Windows.Forms.TextBox pagesBox;
-		private System.Windows.Forms.GroupBox intervalBox;
-		private System.Windows.Forms.PictureBox chordDisplay;
-		private System.Windows.Forms.VScrollBar zoomScroll;
-		private System.Windows.Forms.MenuItem menuItemInfo;
-		private System.Windows.Forms.VScrollBar weightScroll6Maj;
+		private MenuItem menuItemOpen;
+		private NumericUpDown transposeFileUpDown;
+		private GroupBox layoutBox;
+		private GroupBox chordBox;
+		private ContextMenu contextMenu1;
+		private Button applyButton;
+		private GroupBox qualityBox;
+		private MenuItem menuItemExit;
+		private Label label12;
+		private MenuItem menuItemRemove;
+		private Label label16;
+		private Label label17;
+		private Button pauseButton;
+		private MenuItem menuItemFile;
+		private GroupBox tuningBox;
+		private MenuItem menuItemAnalysis;
+		private Button stopButton;
+		private TextBox barsPerPageBox;
+		private VScrollBar weightScroll4;
+		private VScrollBar weightScroll5;
+		private MenuItem menuItemAdd;
+		private PrintDialog printDialog1;
+		private PrintPreviewControl printPreviewDialog1;
+		private VScrollBar penaltyScrollAdd;
+		private MenuItem menuItemPrint;
+		private MenuItem menuItemBest;
+		private Timer timer1;
+		private Panel tuningPanel;
+		private DomainUpDown thresholdUpDown;
+		private Label label3;
+		private Label label2;
+		private Label label1;
+		private Label label13;
+		private Label label7;
+		private Label label6;
+		private Label label5;
+		private Panel trackPanel;
+		private Label label14;
+		private Label label15;
+		private Label label9;
+		private Label label8;
+		private Label label18;
+		private Label label19;
+		private ToolTip toolTip1;
+		private MainMenu mainMenu1;
+		private VScrollBar penaltyScrollShort;
+		private GroupBox penaltyBox;
+		private MenuItem menuItemMarkers;
+		private VScrollBar weightScroll6min;
+		private CheckBox labelCheck;
+		private PictureBox chordNameDisplay;
+		private VScrollBar weightScroll3Maj;
+		private Panel cursor;
+		private TextBox barsEdit;
+		private PictureBox noteDisplay;
+		private TrackBar volumeBar;
+		private SaveFileDialog saveTxtFileDialog;
+		private MenuItem menuItemMidi2Txt;
+		private ComboBox outputBox;
+		private ColorDialog colorDialog1;
+		private TrackBar tempoBar;
+		private SaveFileDialog saveMidFileDialog;
+		private Panel panel2;
+		private Panel panel1;
+		private Label offsetLabel;
+		private GroupBox playbackBox;
+		private GroupBox transposeBox;
+		private Button playButton;
+		private MenuItem menuItemSave;
+		private NumericUpDown transposeTuningUpDown;
+		private VScrollBar weightScroll3min;
+		private MenuItem menuItem1;
+		private Label tempoLabel;
+		private TextBox rowsEdit;
+		private HScrollBar offsetScroll;
+		private OpenFileDialog openMidFileDialog;
+		private MenuItem menuItemExport;
+		private ComboBox instrBox;
+		private Label label4;
+		private CheckBox qualityCheck;
+		private VScrollBar weightScrollCh3;
+		private Label label20;
+		private Label label22;
+		private VScrollBar weightScrollCh5;
+		private TextBox pagesBox;
+		private GroupBox intervalBox;
+		private PictureBox chordDisplay;
+		private VScrollBar zoomScroll;
+		private MenuItem menuItemInfo;
+		private VScrollBar weightScroll6Maj;
 		private MenuItem menuItemPrintPreview;
 		private TransparentPanel hoverBar;
 		private TransparentPanel cutBarFirst;
@@ -117,6 +115,7 @@ namespace ChordQuality
 		private Button cutClrBtn;
 		private Panel cutRowCursor;
 		private float rf;
+
 		public MainForm()
 		{
 			//
@@ -139,1068 +138,1055 @@ namespace ChordQuality
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			this.weightScroll6Maj = new System.Windows.Forms.VScrollBar();
-			this.menuItemInfo = new System.Windows.Forms.MenuItem();
-			this.zoomScroll = new System.Windows.Forms.VScrollBar();
-			this.chordDisplay = new System.Windows.Forms.PictureBox();
-			this.intervalBox = new System.Windows.Forms.GroupBox();
-			this.label22 = new System.Windows.Forms.Label();
-			this.label16 = new System.Windows.Forms.Label();
-			this.weightScroll6min = new System.Windows.Forms.VScrollBar();
-			this.weightScroll3min = new System.Windows.Forms.VScrollBar();
-			this.weightScroll3Maj = new System.Windows.Forms.VScrollBar();
-			this.weightScroll4 = new System.Windows.Forms.VScrollBar();
-			this.weightScroll5 = new System.Windows.Forms.VScrollBar();
-			this.label15 = new System.Windows.Forms.Label();
-			this.label14 = new System.Windows.Forms.Label();
-			this.label13 = new System.Windows.Forms.Label();
-			this.label12 = new System.Windows.Forms.Label();
-			this.pagesBox = new System.Windows.Forms.TextBox();
-			this.weightScrollCh5 = new System.Windows.Forms.VScrollBar();
-			this.label20 = new System.Windows.Forms.Label();
-			this.weightScrollCh3 = new System.Windows.Forms.VScrollBar();
-			this.qualityCheck = new System.Windows.Forms.CheckBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.instrBox = new System.Windows.Forms.ComboBox();
-			this.menuItemExport = new System.Windows.Forms.MenuItem();
-			this.openMidFileDialog = new System.Windows.Forms.OpenFileDialog();
-			this.offsetScroll = new System.Windows.Forms.HScrollBar();
-			this.rowsEdit = new System.Windows.Forms.TextBox();
-			this.tempoLabel = new System.Windows.Forms.Label();
-			this.menuItem1 = new System.Windows.Forms.MenuItem();
-			this.transposeTuningUpDown = new System.Windows.Forms.NumericUpDown();
-			this.menuItemSave = new System.Windows.Forms.MenuItem();
-			this.playButton = new System.Windows.Forms.Button();
-			this.transposeBox = new System.Windows.Forms.GroupBox();
-			this.transposeFileUpDown = new System.Windows.Forms.NumericUpDown();
-			this.playbackBox = new System.Windows.Forms.GroupBox();
-			this.stopButton = new System.Windows.Forms.Button();
-			this.label19 = new System.Windows.Forms.Label();
-			this.volumeBar = new System.Windows.Forms.TrackBar();
-			this.label18 = new System.Windows.Forms.Label();
-			this.label17 = new System.Windows.Forms.Label();
-			this.outputBox = new System.Windows.Forms.ComboBox();
-			this.pauseButton = new System.Windows.Forms.Button();
-			this.tempoBar = new System.Windows.Forms.TrackBar();
-			this.offsetLabel = new System.Windows.Forms.Label();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.cutClrBtn = new System.Windows.Forms.Button();
-			this.cutCutBtn = new System.Windows.Forms.Button();
-			this.cutResetBtn = new System.Windows.Forms.Button();
-			this.layoutBox = new System.Windows.Forms.GroupBox();
-			this.label10 = new System.Windows.Forms.Label();
-			this.factor = new System.Windows.Forms.TextBox();
-			this.applyButton = new System.Windows.Forms.Button();
-			this.label9 = new System.Windows.Forms.Label();
-			this.barsPerPageBox = new System.Windows.Forms.TextBox();
-			this.label7 = new System.Windows.Forms.Label();
-			this.barsEdit = new System.Windows.Forms.TextBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.penaltyBox = new System.Windows.Forms.GroupBox();
-			this.thresholdUpDown = new System.Windows.Forms.DomainUpDown();
-			this.penaltyScrollShort = new System.Windows.Forms.VScrollBar();
-			this.label3 = new System.Windows.Forms.Label();
-			this.penaltyScrollAdd = new System.Windows.Forms.VScrollBar();
-			this.tuningBox = new System.Windows.Forms.GroupBox();
-			this.labelCheck = new System.Windows.Forms.CheckBox();
-			this.label8 = new System.Windows.Forms.Label();
-			this.tuningPanel = new System.Windows.Forms.Panel();
-			this.qualityBox = new System.Windows.Forms.GroupBox();
-			this.chordBox = new System.Windows.Forms.GroupBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.trackPanel = new System.Windows.Forms.Panel();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.cutPanel = new System.Windows.Forms.Panel();
-			this.cutBarSecond = new ChordQuality.TransparentPanel();
-			this.cutBarFirst = new ChordQuality.TransparentPanel();
-			this.chordNameDisplay = new System.Windows.Forms.PictureBox();
-			this.cursor = new System.Windows.Forms.Panel();
-			this.hoverBar = new ChordQuality.TransparentPanel();
-			this.noteDisplay = new System.Windows.Forms.PictureBox();
-			this.saveMidFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-			this.menuItemMidi2Txt = new System.Windows.Forms.MenuItem();
-			this.saveTxtFileDialog = new System.Windows.Forms.SaveFileDialog();
-			this.menuItemMarkers = new System.Windows.Forms.MenuItem();
-			this.menuItemAdd = new System.Windows.Forms.MenuItem();
-			this.menuItemRemove = new System.Windows.Forms.MenuItem();
-			this.mainMenu1 = new System.Windows.Forms.MainMenu(this.components);
-			this.menuItemFile = new System.Windows.Forms.MenuItem();
-			this.menuItemOpen = new System.Windows.Forms.MenuItem();
-			this.menuItemPrintPreview = new System.Windows.Forms.MenuItem();
-			this.menuItemPrint = new System.Windows.Forms.MenuItem();
-			this.menuItemExit = new System.Windows.Forms.MenuItem();
-			this.menuItemAnalysis = new System.Windows.Forms.MenuItem();
-			this.menuItemBest = new System.Windows.Forms.MenuItem();
-			this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-			this.timer1 = new System.Windows.Forms.Timer(this.components);
-			this.printDialog1 = new System.Windows.Forms.PrintDialog();
-			this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewControl();
-			this.contextMenu1 = new System.Windows.Forms.ContextMenu();
-			this.cutRowCursor = new System.Windows.Forms.Panel();
-			((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).BeginInit();
-			this.intervalBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).BeginInit();
-			this.transposeBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.transposeFileUpDown)).BeginInit();
-			this.playbackBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.tempoBar)).BeginInit();
-			this.panel1.SuspendLayout();
-			this.groupBox1.SuspendLayout();
-			this.layoutBox.SuspendLayout();
-			this.penaltyBox.SuspendLayout();
-			this.tuningBox.SuspendLayout();
-			this.qualityBox.SuspendLayout();
-			this.chordBox.SuspendLayout();
-			this.panel2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).BeginInit();
-			this.cursor.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// Scroll bar object deals with major 6 scroll bar
-            // under quality weights > intervals
-			// 
-			this.weightScroll6Maj.LargeChange = 1;
-			this.weightScroll6Maj.Location = new System.Drawing.Point(8, 12);
-			this.weightScroll6Maj.Maximum = 20;
-			this.weightScroll6Maj.Name = "weightScroll6Maj";
-			this.weightScroll6Maj.Size = new System.Drawing.Size(16, 72);
-			this.weightScroll6Maj.TabIndex = 24;
-			this.weightScroll6Maj.Value = 10;
-			this.weightScroll6Maj.ValueChanged += new System.EventHandler(this.WeightScroll6MajValueChanged);
-			// 
-			// Object deals with menu option file > info
-			// 
-			this.menuItemInfo.Enabled = false;
-			this.menuItemInfo.Index = 2;
-			this.menuItemInfo.Text = "Info ...";
-			this.menuItemInfo.Click += new System.EventHandler(this.MenuItemInfoClick);
-			// 
-			// zoom Scroll verticle scroll bar object deals with 
-			// parameters pertaining to scroll bar on right side of track
-            // display
-            //
-			this.zoomScroll.LargeChange = 1;
-			this.zoomScroll.Location = new System.Drawing.Point(968, 6);
-			this.zoomScroll.Maximum = 60;
-			this.zoomScroll.Minimum = 1;
-			this.zoomScroll.Name = "zoomScroll";
-			this.zoomScroll.Size = new System.Drawing.Size(16, 114);
-			this.zoomScroll.TabIndex = 44;
-			this.zoomScroll.Value = 15;
-			this.zoomScroll.ValueChanged += new System.EventHandler(this.ZoomScrollValueChanged);
-			// 
-			// Deals with graphical area under midi track display 
-			// That displays black lines based on tuning
-            //
-			this.chordDisplay.BackColor = System.Drawing.Color.White;
-			this.chordDisplay.Location = new System.Drawing.Point(8, 56);
-			this.chordDisplay.Name = "chordDisplay";
-			this.chordDisplay.Size = new System.Drawing.Size(960, 48);
-			this.chordDisplay.TabIndex = 42;
-			this.chordDisplay.TabStop = false;
-			this.chordDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ChordDisplayMouseMove);
-			// 
-			// Deals with box containing interval scroll bars and labels
-			// 
-			this.intervalBox.Controls.Add(this.label22);
-			this.intervalBox.Controls.Add(this.label16);
-			this.intervalBox.Controls.Add(this.weightScroll6min);
-			this.intervalBox.Controls.Add(this.weightScroll6Maj);
-			this.intervalBox.Controls.Add(this.weightScroll3min);
-			this.intervalBox.Controls.Add(this.weightScroll3Maj);
-			this.intervalBox.Controls.Add(this.weightScroll4);
-			this.intervalBox.Controls.Add(this.weightScroll5);
-			this.intervalBox.Controls.Add(this.label15);
-			this.intervalBox.Controls.Add(this.label14);
-			this.intervalBox.Controls.Add(this.label13);
-			this.intervalBox.Controls.Add(this.label12);
-			this.intervalBox.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-			this.intervalBox.Location = new System.Drawing.Point(8, 12);
-			this.intervalBox.Name = "intervalBox";
-			this.intervalBox.Size = new System.Drawing.Size(120, 110);
-			this.intervalBox.TabIndex = 16;
-			this.intervalBox.TabStop = false;
-			this.intervalBox.Text = "Intervals";
-			// 
-			// Label for minor 6th interval
-			// 
-			this.label22.Location = new System.Drawing.Point(24, 84);
-			this.label22.Name = "label22";
-			this.label22.Size = new System.Drawing.Size(16, 22);
-			this.label22.TabIndex = 27;
-			this.label22.Text = "6 m";
-			this.label22.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// Label for Major 6th interval
-			// 
-			this.label16.Location = new System.Drawing.Point(8, 84);
-			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(16, 22);
-			this.label16.TabIndex = 26;
-			this.label16.Text = "6 M";
-			this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// Scroll bar for tuning minor 6th interval
-			// 
-			this.weightScroll6min.LargeChange = 1;
-			this.weightScroll6min.Location = new System.Drawing.Point(24, 12);
-			this.weightScroll6min.Maximum = 20;
-			this.weightScroll6min.Name = "weightScroll6min";
-			this.weightScroll6min.Size = new System.Drawing.Size(16, 72);
-			this.weightScroll6min.TabIndex = 25;
-			this.weightScroll6min.Value = 10;
-			this.weightScroll6min.ValueChanged += new System.EventHandler(this.WeightScroll6minValueChanged);
-			// 
-			// Scroll bar for tuning minor 3rd interval
-			// 
-			this.weightScroll3min.LargeChange = 1;
-			this.weightScroll3min.Location = new System.Drawing.Point(88, 12);
-			this.weightScroll3min.Maximum = 20;
-			this.weightScroll3min.Name = "weightScroll3min";
-			this.weightScroll3min.Size = new System.Drawing.Size(16, 72);
-			this.weightScroll3min.TabIndex = 23;
-			this.weightScroll3min.Value = 10;
-			this.weightScroll3min.ValueChanged += new System.EventHandler(this.WeightScroll3minValueChanged);
-			// 
-			// Scrol bar for major third interval
-			// 
-			this.weightScroll3Maj.LargeChange = 1;
-			this.weightScroll3Maj.Location = new System.Drawing.Point(72, 12);
-			this.weightScroll3Maj.Maximum = 20;
-			this.weightScroll3Maj.Name = "weightScroll3Maj";
-			this.weightScroll3Maj.Size = new System.Drawing.Size(16, 72);
-			this.weightScroll3Maj.TabIndex = 22;
-			this.weightScroll3Maj.Value = 10;
-			this.weightScroll3Maj.ValueChanged += new System.EventHandler(this.WeightScroll3MajValueChanged);
-			// 
-			// Scroll bar for fourth interval
-			// 
-			this.weightScroll4.LargeChange = 1;
-			this.weightScroll4.Location = new System.Drawing.Point(56, 12);
-			this.weightScroll4.Maximum = 20;
-			this.weightScroll4.Name = "weightScroll4";
-			this.weightScroll4.Size = new System.Drawing.Size(16, 72);
-			this.weightScroll4.TabIndex = 21;
-			this.weightScroll4.Value = 10;
-			this.weightScroll4.ValueChanged += new System.EventHandler(this.WeightScroll4ValueChanged);
-			// 
-			// Scroll bar for fifth interval
-			// 
-			this.weightScroll5.LargeChange = 1;
-			this.weightScroll5.Location = new System.Drawing.Point(40, 12);
-			this.weightScroll5.Maximum = 20;
-			this.weightScroll5.Name = "weightScroll5";
-			this.weightScroll5.Size = new System.Drawing.Size(16, 72);
-			this.weightScroll5.TabIndex = 20;
-			this.weightScroll5.Value = 10;
-			this.weightScroll5.ValueChanged += new System.EventHandler(this.WeightScroll5ValueChanged);
-			// 
-			// Label for fourth interval
-			// 
-			this.label15.Location = new System.Drawing.Point(56, 84);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(16, 17);
-			this.label15.TabIndex = 19;
-			this.label15.Text = "4";
-			this.label15.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// Label for minor third interval
-			// 
-			this.label14.Location = new System.Drawing.Point(88, 84);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(16, 22);
-			this.label14.TabIndex = 18;
-			this.label14.Text = "3 m";
-			this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// Label for major third interval
-			// 
-			this.label13.Location = new System.Drawing.Point(72, 84);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(16, 22);
-			this.label13.TabIndex = 17;
-			this.label13.Text = "3 M";
-			this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// Label for fifth interval
-			// 
-			this.label12.Location = new System.Drawing.Point(40, 84);
-			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(16, 17);
-			this.label12.TabIndex = 16;
-			this.label12.Text = "5";
-			this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// Deals with 'pages' box under printing layout
-			// 
-			this.pagesBox.Location = new System.Drawing.Point(88, 127);
-			this.pagesBox.Name = "pagesBox";
-			this.pagesBox.ReadOnly = true;
-			this.pagesBox.Size = new System.Drawing.Size(32, 20);
-			this.pagesBox.TabIndex = 7;
-			this.pagesBox.Text = "0";
-			// 
-			// Deals with 5 chord scroll bar
-			// 
-			this.weightScrollCh5.LargeChange = 1;
-			this.weightScrollCh5.Location = new System.Drawing.Point(8, 12);
-			this.weightScrollCh5.Maximum = 20;
-			this.weightScrollCh5.Name = "weightScrollCh5";
-			this.weightScrollCh5.Size = new System.Drawing.Size(16, 72);
-			this.weightScrollCh5.TabIndex = 0;
-			this.weightScrollCh5.Value = 10;
-			this.weightScrollCh5.ValueChanged += new System.EventHandler(this.WeightScrollCh5ValueChanged);
-			// 
-			// "Tracks" label above box detailing tracks in midi sequence
-			// 
-			this.label20.Location = new System.Drawing.Point(233, 0);
-			this.label20.Name = "label20";
-			this.label20.Size = new System.Drawing.Size(48, 12);
-			this.label20.TabIndex = 48;
-			this.label20.Text = "Tracks:";
-			this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// Scroll bar for Major 3rd Chords
-			// 
-			this.weightScrollCh3.LargeChange = 1;
-			this.weightScrollCh3.Location = new System.Drawing.Point(24, 12);
-			this.weightScrollCh3.Maximum = 20;
-			this.weightScrollCh3.Name = "weightScrollCh3";
-			this.weightScrollCh3.Size = new System.Drawing.Size(16, 72);
-			this.weightScrollCh3.TabIndex = 1;
-			this.weightScrollCh3.Value = 10;
-			this.weightScrollCh3.ValueChanged += new System.EventHandler(this.WeightScrollCh3ValueChanged);
-			// 
-			// qualityCheck
-			// 
-			this.qualityCheck.Checked = true;
-			this.qualityCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.qualityCheck.Location = new System.Drawing.Point(104, 130);
-			this.qualityCheck.Name = "qualityCheck";
-			this.qualityCheck.Size = new System.Drawing.Size(90, 21);
-			this.qualityCheck.TabIndex = 50;
-			this.qualityCheck.Text = "Show Quality";
-			this.qualityCheck.CheckedChanged += new System.EventHandler(this.QualityCheckCheckedChanged);
-			// 
-			// 'short' scroll bar label in penalties box
-			// 
-			this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-			this.label4.Location = new System.Drawing.Point(32, 95);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(24, 12);
-			this.label4.TabIndex = 3;
-			this.label4.Text = "short";
-			this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// instrBox implemented as 'combo' box so it contains drop down menu of
-			// 'instruments' from midi file 
-            //
-			this.instrBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.instrBox.Location = new System.Drawing.Point(8, 85);
-			this.instrBox.MaxDropDownItems = 32;
-			this.instrBox.Name = "instrBox";
-			this.instrBox.Size = new System.Drawing.Size(168, 21);
-			this.instrBox.TabIndex = 6;
-			this.instrBox.SelectedIndexChanged += new System.EventHandler(this.InstrBoxSelectedIndexChanged);
-			// 
-			// Export to file option under analysis tool
-			// 
-			this.menuItemExport.Index = 1;
-			this.menuItemExport.Text = "Export to File ...";
-			this.menuItemExport.Click += new System.EventHandler(this.MenuItemExportClick);
-			// 
-			// Under file, open midi file... only lets you select a midi file
-			// 
-			this.openMidFileDialog.Filter = "MIDI-Files|*.mid";
-			this.openMidFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog1FileOk);
-			// 
-			// Horizontal lower scroll bar object, lets you scroll through midi tracks
-			// 
-			this.offsetScroll.LargeChange = 1;
-			this.offsetScroll.Location = new System.Drawing.Point(8, 125);
-			this.offsetScroll.Maximum = 0;
-			this.offsetScroll.Name = "offsetScroll";
-			this.offsetScroll.Size = new System.Drawing.Size(960, 12);
-			this.offsetScroll.TabIndex = 41;
-			this.offsetScroll.ValueChanged += new System.EventHandler(this.OffsetScrollValueChanged);
-			// 
-			// rows/page edit box under printing layout
-			// 
-			this.rowsEdit.Location = new System.Drawing.Point(88, 30);
-			this.rowsEdit.Name = "rowsEdit";
-			this.rowsEdit.Size = new System.Drawing.Size(32, 20);
-			this.rowsEdit.TabIndex = 3;
-			this.rowsEdit.Text = "3";
-			// 
-			// tempoLabel object is a windows forms label object 
-			// that denotes the tempo the peice is being played at
-            //
-			this.tempoLabel.Location = new System.Drawing.Point(4, 107);
-			this.tempoLabel.Name = "tempoLabel";
-			this.tempoLabel.Size = new System.Drawing.Size(60, 30);
-			this.tempoLabel.TabIndex = 58;
-			this.tempoLabel.Text = "tempo: 120 bpm";
-			this.tempoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// If you right click on a track you can change the color it 
-			// is listed as.  This is the menu option for that
-            //
-			this.menuItem1.Index = 0;
-			this.menuItem1.Text = "Color...";
-			this.menuItem1.Click += new System.EventHandler(this.MenuItem1Click);
-			// 
-			// TransposeTurningUpDown lets manages the 'transpose' box in the application
-            //
-			this.transposeTuningUpDown.Location = new System.Drawing.Point(28, 148);
-			this.transposeTuningUpDown.Maximum = new decimal(new int[] {
-            12,
-            0,
-            0,
-            0});
-			this.transposeTuningUpDown.Minimum = new decimal(new int[] {
-            12,
-            0,
-            0,
-            -2147483648});
-			this.transposeTuningUpDown.Name = "transposeTuningUpDown";
-			this.transposeTuningUpDown.Size = new System.Drawing.Size(40, 20);
-			this.transposeTuningUpDown.TabIndex = 47;
-			this.transposeTuningUpDown.ValueChanged += new System.EventHandler(this.TransposeTuningUpDownValueChanged);
-			// 
-			// manages the 'save' menu item
-			// 
-			this.menuItemSave.Enabled = false;
-			this.menuItemSave.Index = 1;
-			this.menuItemSave.Text = "Save...";
-			this.menuItemSave.Click += new System.EventHandler(this.MenuItemSaveClick);
-			// 
-			// manages the play button
-			// 
-			this.playButton.BackColor = System.Drawing.SystemColors.Control;
-			this.playButton.Enabled = false;
-			this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.playButton.Location = new System.Drawing.Point(8, 15);
-			this.playButton.Name = "playButton";
-			this.playButton.Size = new System.Drawing.Size(56, 18);
-			this.playButton.TabIndex = 2;
-			this.playButton.Text = "Play";
-			this.playButton.UseVisualStyleBackColor = false;
-			this.playButton.Click += new System.EventHandler(this.PlayButtonClick);
-			// 
-			// Box for the 'transpose file' option to transpose/change the key the midi
-			// track is displayed in
-            //
-			this.transposeBox.Controls.Add(this.transposeFileUpDown);
-			this.transposeBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.transposeBox.Location = new System.Drawing.Point(8, 156);
-			this.transposeBox.Name = "transposeBox";
-			this.transposeBox.Size = new System.Drawing.Size(88, 44);
-			this.transposeBox.TabIndex = 52;
-			this.transposeBox.TabStop = false;
-			this.transposeBox.Text = "Transpose File";
-			// 
-			// Manage scroll options for the transpose file options
-			// 
-			this.transposeFileUpDown.Location = new System.Drawing.Point(16, 15);
-			this.transposeFileUpDown.Maximum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-			this.transposeFileUpDown.Minimum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            -2147483648});
-			this.transposeFileUpDown.Name = "transposeFileUpDown";
-			this.transposeFileUpDown.Size = new System.Drawing.Size(56, 20);
-			this.transposeFileUpDown.TabIndex = 0;
-			this.transposeFileUpDown.ValueChanged += new System.EventHandler(this.TransposeFileUpDownValueChanged);
-			// 
-			// Playback box that contains play, pause, stop buttons.  Midi out, 
-			// Instrument, tempo, and volume
-            //
-			this.playbackBox.Controls.Add(this.stopButton);
-			this.playbackBox.Controls.Add(this.label19);
-			this.playbackBox.Controls.Add(this.tempoLabel);
-			this.playbackBox.Controls.Add(this.volumeBar);
-			this.playbackBox.Controls.Add(this.label18);
-			this.playbackBox.Controls.Add(this.instrBox);
-			this.playbackBox.Controls.Add(this.label17);
-			this.playbackBox.Controls.Add(this.outputBox);
-			this.playbackBox.Controls.Add(this.pauseButton);
-			this.playbackBox.Controls.Add(this.playButton);
-			this.playbackBox.Controls.Add(this.tempoBar);
-			this.playbackBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.playbackBox.Location = new System.Drawing.Point(8, 0);
-			this.playbackBox.Name = "playbackBox";
-			this.playbackBox.Size = new System.Drawing.Size(224, 154);
-			this.playbackBox.TabIndex = 15;
-			this.playbackBox.TabStop = false;
-			this.playbackBox.Text = "Playback";
-			// 
-			// Button to stop track completely and reset the track/bar that follows
-			// track as it is played 
-            //
-			this.stopButton.BackColor = System.Drawing.SystemColors.Control;
-			this.stopButton.Enabled = false;
-			this.stopButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.stopButton.Location = new System.Drawing.Point(120, 15);
-			this.stopButton.Name = "stopButton";
-			this.stopButton.Size = new System.Drawing.Size(56, 18);
-			this.stopButton.TabIndex = 4;
-			this.stopButton.Text = "Stop";
-			this.stopButton.UseVisualStyleBackColor = false;
-			this.stopButton.Click += new System.EventHandler(this.StopButtonClick);
-			// 
-			// label for the volume adjustment tool
-			// 
-			this.label19.Location = new System.Drawing.Point(168, 13);
-			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(48, 12);
-			this.label19.TabIndex = 56;
-			this.label19.Text = "Volume";
-			this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// bar tool for adjusting volume
-			// 
-			this.volumeBar.Location = new System.Drawing.Point(176, 20);
-			this.volumeBar.Maximum = 100;
-			this.volumeBar.Name = "volumeBar";
-			this.volumeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
-			this.volumeBar.Size = new System.Drawing.Size(45, 83);
-			this.volumeBar.TabIndex = 55;
-			this.volumeBar.TickFrequency = 20;
-			this.volumeBar.TickStyle = System.Windows.Forms.TickStyle.Both;
-			this.volumeBar.Value = 100;
-			this.volumeBar.Scroll += new System.EventHandler(this.VolumeBarScroll);
-			// 
-			// 'instrument' label under playback box
-			// 
-			this.label18.Location = new System.Drawing.Point(8, 69);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(64, 12);
-			this.label18.TabIndex = 54;
-			this.label18.Text = "Instrument:";
-			this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// 'MIDI out' label under playback box
-			// 
-			this.label17.Location = new System.Drawing.Point(8, 35);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(64, 12);
-			this.label17.TabIndex = 51;
-			this.label17.Text = "MIDI Out:";
-			this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// box under label 'MIDI out'
-			// 
-			this.outputBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.outputBox.Location = new System.Drawing.Point(8, 48);
-			this.outputBox.MaxDropDownItems = 12;
-			this.outputBox.Name = "outputBox";
-			this.outputBox.Size = new System.Drawing.Size(168, 21);
-			this.outputBox.TabIndex = 5;
-			// 
-			// button to pause track (remembering placement)
-			// 
-			this.pauseButton.Enabled = false;
-			this.pauseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.pauseButton.Location = new System.Drawing.Point(64, 15);
-			this.pauseButton.Name = "pauseButton";
-			this.pauseButton.Size = new System.Drawing.Size(56, 18);
-			this.pauseButton.TabIndex = 3;
-			this.pauseButton.Text = "Pause";
-			this.pauseButton.Click += new System.EventHandler(this.PauseButtonClick);
-			// 
-			// bar that can be used to adjust tempo song is being played at
-			// 
-			this.tempoBar.Location = new System.Drawing.Point(64, 107);
-			this.tempoBar.Maximum = 200;
-			this.tempoBar.Minimum = 40;
-			this.tempoBar.Name = "tempoBar";
-			this.tempoBar.Size = new System.Drawing.Size(152, 45);
-			this.tempoBar.TabIndex = 57;
-			this.tempoBar.TickFrequency = 10;
-			this.tempoBar.Value = 120;
-			this.tempoBar.ValueChanged += new System.EventHandler(this.TempoBarValueChanged);
-			// 
-			// Manages 'offset' label, which essentially tracks how many bars to the
-			// right you have scrolled 
-            //
-			this.offsetLabel.Location = new System.Drawing.Point(102, 161);
-			this.offsetLabel.Name = "offsetLabel";
-			this.offsetLabel.Size = new System.Drawing.Size(88, 12);
-			this.offsetLabel.TabIndex = 43;
-			this.offsetLabel.Text = "offset: 0 bars";
-			this.offsetLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// 'panel1' contains a bunch of major boxes
-			// 
-			this.panel1.AutoScroll = true;
-			this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.panel1.Controls.Add(this.groupBox1);
-			this.panel1.Controls.Add(this.playbackBox);
-			this.panel1.Controls.Add(this.layoutBox);
-			this.panel1.Controls.Add(this.penaltyBox);
-			this.panel1.Controls.Add(this.offsetLabel);
-			this.panel1.Controls.Add(this.transposeBox);
-			this.panel1.Controls.Add(this.tuningBox);
-			this.panel1.Controls.Add(this.qualityBox);
-			this.panel1.Controls.Add(this.label20);
-			this.panel1.Controls.Add(this.trackPanel);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.panel1.Location = new System.Drawing.Point(0, 0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(1049, 200);
-			this.panel1.TabIndex = 45;
-			// 
-			// Box containing cut tools
-			// 
-			this.groupBox1.Controls.Add(this.cutClrBtn);
-			this.groupBox1.Controls.Add(this.cutCutBtn);
-			this.groupBox1.Controls.Add(this.cutResetBtn);
-			this.groupBox1.Location = new System.Drawing.Point(236, 131);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(200, 60);
-			this.groupBox1.TabIndex = 55;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Cut";
-			// 
-			// Clear button for cut tool
-			// 
-			this.cutClrBtn.Location = new System.Drawing.Point(133, 17);
-			this.cutClrBtn.Name = "cutClrBtn";
-			this.cutClrBtn.Size = new System.Drawing.Size(56, 37);
-			this.cutClrBtn.TabIndex = 2;
-			this.cutClrBtn.Text = "Clear\r\nDisplay";
-			this.cutClrBtn.UseVisualStyleBackColor = true;
-			this.cutClrBtn.Click += new System.EventHandler(this.cutClrBtn_Click);
-			// 
-			// Cut button for cut tool
-			// 
-			this.cutCutBtn.Location = new System.Drawing.Point(70, 17);
-			this.cutCutBtn.Name = "cutCutBtn";
-			this.cutCutBtn.Size = new System.Drawing.Size(56, 37);
-			this.cutCutBtn.TabIndex = 1;
-			this.cutCutBtn.Text = "Cut";
-			this.cutCutBtn.UseVisualStyleBackColor = true;
-			this.cutCutBtn.Click += new System.EventHandler(this.cutCutBtn_Click);
-			// 
-			// Reset button for cut tool
-			// 
-			this.cutResetBtn.Location = new System.Drawing.Point(8, 17);
-			this.cutResetBtn.Name = "cutResetBtn";
-			this.cutResetBtn.Size = new System.Drawing.Size(56, 37);
-			this.cutResetBtn.TabIndex = 0;
-			this.cutResetBtn.Text = "Reset\r\nMarker";
-			this.cutResetBtn.UseVisualStyleBackColor = true;
-			this.cutResetBtn.Click += new System.EventHandler(this.cutResetBtn_Click);
-			// 
-			// Printing layout option box
-			// 
-			this.layoutBox.Controls.Add(this.label10);
-			this.layoutBox.Controls.Add(this.factor);
-			this.layoutBox.Controls.Add(this.applyButton);
-			this.layoutBox.Controls.Add(this.pagesBox);
-			this.layoutBox.Controls.Add(this.label9);
-			this.layoutBox.Controls.Add(this.barsPerPageBox);
-			this.layoutBox.Controls.Add(this.label7);
-			this.layoutBox.Controls.Add(this.rowsEdit);
-			this.layoutBox.Controls.Add(this.barsEdit);
-			this.layoutBox.Controls.Add(this.label6);
-			this.layoutBox.Controls.Add(this.label5);
-			this.layoutBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.layoutBox.Location = new System.Drawing.Point(909, 0);
-			this.layoutBox.Name = "layoutBox";
-			this.layoutBox.Size = new System.Drawing.Size(132, 151);
-			this.layoutBox.TabIndex = 54;
-			this.layoutBox.TabStop = false;
-			this.layoutBox.Text = "Printing Layout";
-			// 
-			// rel.thick label under printing layout
-			// 
-			this.label10.Location = new System.Drawing.Point(6, 47);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(72, 19);
-			this.label10.TabIndex = 10;
-			this.label10.Text = "rel.thick.";
-			this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// rel.thick value
-			// 
-			this.factor.Location = new System.Drawing.Point(88, 50);
-			this.factor.Name = "factor";
-			this.factor.Size = new System.Drawing.Size(32, 20);
-			this.factor.TabIndex = 9;
-			this.factor.Text = ".5";
-			// 
-			// Button to apply new printing values
-			// 
-			this.applyButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.applyButton.Location = new System.Drawing.Point(6, 78);
-			this.applyButton.Name = "applyButton";
-			this.applyButton.Size = new System.Drawing.Size(112, 17);
-			this.applyButton.TabIndex = 8;
-			this.applyButton.Text = "apply";
-			this.applyButton.Click += new System.EventHandler(this.ApplyButtonClick);
-			// 
-			// Pages label, for how many pages when printed
-			// 
-			this.label9.Location = new System.Drawing.Point(8, 125);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(72, 17);
-			this.label9.TabIndex = 6;
-			this.label9.Text = "Pages:";
-			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// bars/page value
-			// 
-			this.barsPerPageBox.Location = new System.Drawing.Point(88, 103);
-			this.barsPerPageBox.Name = "barsPerPageBox";
-			this.barsPerPageBox.ReadOnly = true;
-			this.barsPerPageBox.Size = new System.Drawing.Size(32, 20);
-			this.barsPerPageBox.TabIndex = 5;
-			this.barsPerPageBox.Text = "75";
-			// 
-			// bars/page label
-			// 
-			this.label7.Location = new System.Drawing.Point(6, 101);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(72, 18);
-			this.label7.TabIndex = 4;
-			this.label7.Text = "Bars/Page:";
-			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// bars/row value
-			// 
-			this.barsEdit.Location = new System.Drawing.Point(88, 12);
-			this.barsEdit.Name = "barsEdit";
-			this.barsEdit.Size = new System.Drawing.Size(32, 20);
-			this.barsEdit.TabIndex = 2;
-			this.barsEdit.Text = "13";
-			// 
-			// rows/page label
-			// 
-			this.label6.Location = new System.Drawing.Point(8, 30);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(72, 17);
-			this.label6.TabIndex = 1;
-			this.label6.Text = "Rows/Page:";
-			this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// bars/row label
-			// 
-			this.label5.Location = new System.Drawing.Point(8, 12);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(72, 18);
-			this.label5.TabIndex = 0;
-			this.label5.Text = "Bars/Row:";
-			this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// Penatly box, contains add/short scroll bars and penalties value
-			// 
-			this.penaltyBox.Controls.Add(this.thresholdUpDown);
-			this.penaltyBox.Controls.Add(this.penaltyScrollShort);
-			this.penaltyBox.Controls.Add(this.label4);
-			this.penaltyBox.Controls.Add(this.label3);
-			this.penaltyBox.Controls.Add(this.penaltyScrollAdd);
-			this.penaltyBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.penaltyBox.Location = new System.Drawing.Point(843, 0);
-			this.penaltyBox.Name = "penaltyBox";
-			this.penaltyBox.Size = new System.Drawing.Size(64, 113);
-			this.penaltyBox.TabIndex = 53;
-			this.penaltyBox.TabStop = false;
-			this.penaltyBox.Text = "Penalties";
-			// 
-			// thresholdUpDown ???
-			// 
-			this.thresholdUpDown.Items.Add("1");
-			this.thresholdUpDown.Items.Add("1/2");
-			this.thresholdUpDown.Items.Add("1/4");
-			this.thresholdUpDown.Items.Add("1/8");
-			this.thresholdUpDown.Items.Add("1/16");
-			this.thresholdUpDown.Items.Add("1/32");
-			this.thresholdUpDown.Items.Add("1/64");
-			this.thresholdUpDown.Location = new System.Drawing.Point(8, 12);
-			this.thresholdUpDown.Name = "thresholdUpDown";
-			this.thresholdUpDown.ReadOnly = true;
-			this.thresholdUpDown.Size = new System.Drawing.Size(48, 20);
-			this.thresholdUpDown.TabIndex = 55;
-			this.thresholdUpDown.Text = "1";
-			this.thresholdUpDown.Wrap = true;
-			this.thresholdUpDown.SelectedItemChanged += new System.EventHandler(this.ThresholdUpDownSelectedItemChanged);
-			// 
-			// 'short' scroll bar under penalties box
-			// 
-			this.penaltyScrollShort.LargeChange = 1;
-			this.penaltyScrollShort.Location = new System.Drawing.Point(40, 36);
-			this.penaltyScrollShort.Maximum = 10;
-			this.penaltyScrollShort.Name = "penaltyScrollShort";
-			this.penaltyScrollShort.Size = new System.Drawing.Size(16, 59);
-			this.penaltyScrollShort.TabIndex = 2;
-			this.penaltyScrollShort.ValueChanged += new System.EventHandler(this.PenaltyScrollShortValueChanged);
-			// 
-			// 'add' bar label
-			// 
-			this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(8, 95);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(24, 12);
-			this.label3.TabIndex = 1;
-			this.label3.Text = "add";
-			this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// 'add' scroll bar under penalties box
-			// 
-			this.penaltyScrollAdd.LargeChange = 1;
-			this.penaltyScrollAdd.Location = new System.Drawing.Point(8, 36);
-			this.penaltyScrollAdd.Maximum = 10;
-			this.penaltyScrollAdd.Name = "penaltyScrollAdd";
-			this.penaltyScrollAdd.Size = new System.Drawing.Size(16, 59);
-			this.penaltyScrollAdd.TabIndex = 0;
-			this.penaltyScrollAdd.ValueChanged += new System.EventHandler(this.PenaltyScrollAddValueChanged);
-			// 
-			// Setup of 'tuning' box
-			// 
-			this.tuningBox.Controls.Add(this.qualityCheck);
-			this.tuningBox.Controls.Add(this.labelCheck);
-			this.tuningBox.Controls.Add(this.label8);
-			this.tuningBox.Controls.Add(this.transposeTuningUpDown);
-			this.tuningBox.Controls.Add(this.tuningPanel);
-			this.tuningBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.tuningBox.Location = new System.Drawing.Point(442, 0);
-			this.tuningBox.Name = "tuningBox";
-			this.tuningBox.Size = new System.Drawing.Size(208, 176);
-			this.tuningBox.TabIndex = 50;
-			this.tuningBox.TabStop = false;
-			this.tuningBox.Text = "Tuning";
-			// 
-			// 'show labels'checkbox under the tuning box
-			// 
-			this.labelCheck.Checked = true;
-			this.labelCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.labelCheck.Location = new System.Drawing.Point(104, 151);
-			this.labelCheck.Name = "labelCheck";
-			this.labelCheck.Size = new System.Drawing.Size(88, 22);
-			this.labelCheck.TabIndex = 49;
-			this.labelCheck.Text = "Show Labels";
-			this.labelCheck.CheckedChanged += new System.EventHandler(this.QualityCheckCheckedChanged);
-			// 
-			// transpose label under tuning box
-			// 
-			this.label8.Location = new System.Drawing.Point(19, 131);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(64, 12);
-			this.label8.TabIndex = 48;
-			this.label8.Text = "Transpose:";
-			// 
-			// panel in tuning box containing 'equal' checkbox
-			// 
-			this.tuningPanel.AutoScroll = true;
-			this.tuningPanel.BackColor = System.Drawing.Color.White;
-			this.tuningPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tuningPanel.Location = new System.Drawing.Point(8, 12);
-			this.tuningPanel.Name = "tuningPanel";
-			this.tuningPanel.Size = new System.Drawing.Size(192, 113);
-			this.tuningPanel.TabIndex = 46;
-			// 
-			// Quality weights box containing boxes with chord qualities and interval qualities
-			// 
-			this.qualityBox.Controls.Add(this.chordBox);
-			this.qualityBox.Controls.Add(this.intervalBox);
-			this.qualityBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-			this.qualityBox.Location = new System.Drawing.Point(653, 0);
-			this.qualityBox.Name = "qualityBox";
-			this.qualityBox.Size = new System.Drawing.Size(184, 127);
-			this.qualityBox.TabIndex = 51;
-			this.qualityBox.TabStop = false;
-			this.qualityBox.Text = "Quality Weights";
-			// 
-			// Deals with box containing chord (3rd and 5th)
+            this.components = new System.ComponentModel.Container();
+            this.weightScroll6Maj = new System.Windows.Forms.VScrollBar();
+            this.menuItemInfo = new System.Windows.Forms.MenuItem();
+            this.zoomScroll = new System.Windows.Forms.VScrollBar();
+            this.chordDisplay = new PictureBox();
+            this.intervalBox = new System.Windows.Forms.GroupBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.weightScroll6min = new System.Windows.Forms.VScrollBar();
+            this.weightScroll3min = new System.Windows.Forms.VScrollBar();
+            this.weightScroll3Maj = new System.Windows.Forms.VScrollBar();
+            this.weightScroll4 = new System.Windows.Forms.VScrollBar();
+            this.weightScroll5 = new System.Windows.Forms.VScrollBar();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.pagesBox = new System.Windows.Forms.TextBox();
+            this.weightScrollCh5 = new System.Windows.Forms.VScrollBar();
+            this.label20 = new System.Windows.Forms.Label();
+            this.weightScrollCh3 = new System.Windows.Forms.VScrollBar();
+            this.qualityCheck = new CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.instrBox = new ComboBox();
+            this.menuItemExport = new System.Windows.Forms.MenuItem();
+            this.openMidFileDialog = new OpenFileDialog();
+            this.offsetScroll = new HScrollBar();
+            this.rowsEdit = new System.Windows.Forms.TextBox();
+            this.tempoLabel = new System.Windows.Forms.Label();
+            this.menuItem1 = new System.Windows.Forms.MenuItem();
+            this.transposeTuningUpDown = new System.Windows.Forms.NumericUpDown();
+            this.menuItemSave = new System.Windows.Forms.MenuItem();
+            this.playButton = new System.Windows.Forms.Button();
+            this.transposeBox = new System.Windows.Forms.GroupBox();
+            this.transposeFileUpDown = new System.Windows.Forms.NumericUpDown();
+            this.playbackBox = new System.Windows.Forms.GroupBox();
+            this.stopButton = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.volumeBar = new TrackBar();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.outputBox = new ComboBox();
+            this.pauseButton = new System.Windows.Forms.Button();
+            this.tempoBar = new TrackBar();
+            this.offsetLabel = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cutClrBtn = new System.Windows.Forms.Button();
+            this.cutCutBtn = new System.Windows.Forms.Button();
+            this.cutResetBtn = new System.Windows.Forms.Button();
+            this.layoutBox = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.factor = new System.Windows.Forms.TextBox();
+            this.applyButton = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
+            this.barsPerPageBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.barsEdit = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.penaltyBox = new System.Windows.Forms.GroupBox();
+            this.thresholdUpDown = new System.Windows.Forms.DomainUpDown();
+            this.penaltyScrollShort = new System.Windows.Forms.VScrollBar();
+            this.label3 = new System.Windows.Forms.Label();
+            this.penaltyScrollAdd = new System.Windows.Forms.VScrollBar();
+            this.tuningBox = new System.Windows.Forms.GroupBox();
+            this.labelCheck = new CheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tuningPanel = new System.Windows.Forms.Panel();
+            this.qualityBox = new System.Windows.Forms.GroupBox();
+            this.chordBox = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.trackPanel = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.cutPanel = new System.Windows.Forms.Panel();
+            this.cutBarSecond = new ChordQuality.TransparentPanel();
+            this.cutBarFirst = new ChordQuality.TransparentPanel();
+            this.chordNameDisplay = new PictureBox();
+            this.cursor = new System.Windows.Forms.Panel();
+            this.hoverBar = new ChordQuality.TransparentPanel();
+            this.noteDisplay = new PictureBox();
+            this.saveMidFileDialog = new SaveFileDialog();
+            this.colorDialog1 = new ColorDialog();
+            this.menuItemMidi2Txt = new System.Windows.Forms.MenuItem();
+            this.saveTxtFileDialog = new SaveFileDialog();
+            this.menuItemMarkers = new System.Windows.Forms.MenuItem();
+            this.menuItemAdd = new System.Windows.Forms.MenuItem();
+            this.menuItemRemove = new System.Windows.Forms.MenuItem();
+            this.mainMenu1 = new MainMenu(this.components);
+            this.menuItemFile = new System.Windows.Forms.MenuItem();
+            this.menuItemOpen = new System.Windows.Forms.MenuItem();
+            this.menuItemPrintPreview = new System.Windows.Forms.MenuItem();
+            this.menuItemPrint = new System.Windows.Forms.MenuItem();
+            this.menuItemExit = new System.Windows.Forms.MenuItem();
+            this.menuItemAnalysis = new System.Windows.Forms.MenuItem();
+            this.menuItemBest = new System.Windows.Forms.MenuItem();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewControl();
+            this.contextMenu1 = new System.Windows.Forms.ContextMenu();
+            this.cutRowCursor = new System.Windows.Forms.Panel();
+            ((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).BeginInit();
+            this.intervalBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).BeginInit();
+            this.transposeBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.transposeFileUpDown)).BeginInit();
+            this.playbackBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tempoBar)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.layoutBox.SuspendLayout();
+            this.penaltyBox.SuspendLayout();
+            this.tuningBox.SuspendLayout();
+            this.qualityBox.SuspendLayout();
+            this.chordBox.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).BeginInit();
+            this.SuspendLayout();
             // 
-			// 
-			this.chordBox.Controls.Add(this.weightScrollCh5);
-			this.chordBox.Controls.Add(this.label2);
-			this.chordBox.Controls.Add(this.label1);
-			this.chordBox.Controls.Add(this.weightScrollCh3);
-			this.chordBox.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
-			this.chordBox.Location = new System.Drawing.Point(131, 12);
-			this.chordBox.Name = "chordBox";
-			this.chordBox.Size = new System.Drawing.Size(48, 110);
-			this.chordBox.TabIndex = 17;
-			this.chordBox.TabStop = false;
-			this.chordBox.Text = "Chords";
-			// 
-			// Major third chord label
-			// 
-			this.label2.Location = new System.Drawing.Point(24, 84);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(16, 22);
-			this.label2.TabIndex = 3;
-			this.label2.Text = "3 M";
-			this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// 5th chord label
-			// 
-			this.label1.Location = new System.Drawing.Point(8, 84);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(16, 17);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "5";
-			this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			// 
-			// panel containing list of tracks from MIDI file
-			// 
-			this.trackPanel.AutoScroll = true;
-			this.trackPanel.BackColor = System.Drawing.Color.White;
-			this.trackPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.trackPanel.Location = new System.Drawing.Point(236, 14);
-			this.trackPanel.Name = "trackPanel";
-			this.trackPanel.Size = new System.Drawing.Size(200, 113);
-			this.trackPanel.TabIndex = 47;
-			// 
-			// Another panel that contains several important boxes
-			// 
-			this.panel2.BackColor = System.Drawing.SystemColors.ControlLight;
-			this.panel2.Controls.Add(this.cutPanel);
-			this.panel2.Controls.Add(this.cutBarSecond);
-			this.panel2.Controls.Add(this.cutBarFirst);
-			this.panel2.Controls.Add(this.chordNameDisplay);
-			this.panel2.Controls.Add(this.zoomScroll);
-			this.panel2.Controls.Add(this.chordDisplay);
-			this.panel2.Controls.Add(this.offsetScroll);
-			this.panel2.Controls.Add(this.cursor);
-			this.panel2.Controls.Add(this.hoverBar);
-			this.panel2.Controls.Add(this.noteDisplay);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel2.Location = new System.Drawing.Point(0, 200);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(1049, 413);
-			this.panel2.TabIndex = 46;
-			this.panel2.Resize += new System.EventHandler(this.Panel2Resize);
-			// 
-			// Panel cut portions of midi track are sent to
-			// 
-			this.cutPanel.Location = new System.Drawing.Point(8, 196);
-			this.cutPanel.Name = "cutPanel";
-			this.cutPanel.Size = new System.Drawing.Size(976, 235);
-			this.cutPanel.TabIndex = 47;
-			// 
-			// 'Cut bar': bar on border of cut to be made ?
-			// 
-			this.cutBarSecond.BackColor = System.Drawing.Color.BlueViolet;
-			this.cutBarSecond.Location = new System.Drawing.Point(8, 6);
-			this.cutBarSecond.Name = "cutBarSecond";
-			this.cutBarSecond.Size = new System.Drawing.Size(1, 47);
-			this.cutBarSecond.TabIndex = 31;
-			this.cutBarSecond.Visible = false;
-			// 
-			// another cut bar
-			// 
-			this.cutBarFirst.BackColor = System.Drawing.Color.BlueViolet;
-			this.cutBarFirst.Location = new System.Drawing.Point(8, 6);
-			this.cutBarFirst.Name = "cutBarFirst";
-			this.cutBarFirst.Size = new System.Drawing.Size(1, 47);
-			this.cutBarFirst.TabIndex = 31;
-			this.cutBarFirst.Visible = false;
-			// 
-			// Display of chord names 
-			// 
-			this.chordNameDisplay.BackColor = System.Drawing.Color.White;
-			this.chordNameDisplay.Location = new System.Drawing.Point(8, 109);
-			this.chordNameDisplay.Name = "chordNameDisplay";
-			this.chordNameDisplay.Size = new System.Drawing.Size(960, 16);
-			this.chordNameDisplay.TabIndex = 46;
-			this.chordNameDisplay.TabStop = false;
-			// 
-			// cursor
-			// 
-			this.cursor.BackColor = System.Drawing.Color.Red;
-			this.cursor.Location = new System.Drawing.Point(8, 6);
-			this.cursor.Name = "cursor";
-			this.cursor.Size = new System.Drawing.Size(1, 47);
-			this.cursor.TabIndex = 30;
-			// 
-			// hoverBar
-			// 
-			this.hoverBar.BackColor = System.Drawing.Color.DarkGray;
-			this.hoverBar.Location = new System.Drawing.Point(8, 6);
-			this.hoverBar.Name = "hoverBar";
-			this.hoverBar.Size = new System.Drawing.Size(1, 47);
-			this.hoverBar.TabIndex = 31;
-			this.hoverBar.Visible = false;
-			// 
-			// noteDisplay
-			// 
-			this.noteDisplay.BackColor = System.Drawing.Color.White;
-			this.noteDisplay.Location = new System.Drawing.Point(8, 6);
-			this.noteDisplay.Name = "noteDisplay";
-			this.noteDisplay.Size = new System.Drawing.Size(960, 47);
-			this.noteDisplay.TabIndex = 29;
-			this.noteDisplay.TabStop = false;
-			this.noteDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteDisplayMouseDown);
-			this.noteDisplay.MouseLeave += new System.EventHandler(this.NoteDisplayOnMouseLeave);
-			this.noteDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NoteDisplayMouseMove);
-			// 
-			// Save file as MIDI
-			// 
-			this.saveMidFileDialog.DefaultExt = "mid";
-			this.saveMidFileDialog.Filter = "MIDI-Files|*.mid";
-			this.saveMidFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialog1FileOk);
-			// 
-			// Midi to text option under file
-			// 
-			this.menuItemMidi2Txt.Enabled = false;
-			this.menuItemMidi2Txt.Index = 5;
-			this.menuItemMidi2Txt.Text = "MIDI 2 TXT";
-			this.menuItemMidi2Txt.Click += new System.EventHandler(this.MenuItemMidi2TxtClick);
-			// 
-			// Save as .txt doc OK
-			// 
-			this.saveTxtFileDialog.DefaultExt = "txt";
-			this.saveTxtFileDialog.Filter = "TXT-Files|*.txt";
-			this.saveTxtFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveTxtFileDialogFileOk);
-			// 
-			// 'Markers' menu option
-			// 
-			this.menuItemMarkers.Enabled = false;
-			this.menuItemMarkers.Index = 1;
-			this.menuItemMarkers.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            // weightScroll6Maj
+            // 
+            this.weightScroll6Maj.LargeChange = 1;
+            this.weightScroll6Maj.Location = new System.Drawing.Point(8, 12);
+            this.weightScroll6Maj.Maximum = 20;
+            this.weightScroll6Maj.Name = "weightScroll6Maj";
+            this.weightScroll6Maj.Size = new System.Drawing.Size(16, 72);
+            this.weightScroll6Maj.TabIndex = 24;
+            this.weightScroll6Maj.Value = 10;
+            this.weightScroll6Maj.ValueChanged += new System.EventHandler(this.WeightScroll6MajValueChanged);
+            // 
+            // menuItemInfo
+            // 
+            this.menuItemInfo.Enabled = false;
+            this.menuItemInfo.Index = 2;
+            this.menuItemInfo.Text = "Info ...";
+            this.menuItemInfo.Click += new System.EventHandler(this.MenuItemInfoClick);
+            // 
+            // zoomScroll
+            // 
+            this.zoomScroll.LargeChange = 1;
+            this.zoomScroll.Location = new System.Drawing.Point(968, 6);
+            this.zoomScroll.Maximum = 60;
+            this.zoomScroll.Minimum = 1;
+            this.zoomScroll.Name = "zoomScroll";
+            this.zoomScroll.Size = new System.Drawing.Size(16, 114);
+            this.zoomScroll.TabIndex = 44;
+            this.zoomScroll.Value = 15;
+            this.zoomScroll.ValueChanged += new System.EventHandler(this.ZoomScrollValueChanged);
+            // 
+            // chordDisplay
+            // 
+            this.chordDisplay.BackColor = System.Drawing.Color.White;
+            this.chordDisplay.Location = new System.Drawing.Point(8, 56);
+            this.chordDisplay.Name = "chordDisplay";
+            this.chordDisplay.Size = new System.Drawing.Size(960, 48);
+            this.chordDisplay.TabIndex = 42;
+            this.chordDisplay.TabStop = false;
+            this.chordDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ChordDisplayMouseMove);
+            // 
+            // intervalBox
+            // 
+            this.intervalBox.Controls.Add(this.label22);
+            this.intervalBox.Controls.Add(this.label16);
+            this.intervalBox.Controls.Add(this.weightScroll6min);
+            this.intervalBox.Controls.Add(this.weightScroll6Maj);
+            this.intervalBox.Controls.Add(this.weightScroll3min);
+            this.intervalBox.Controls.Add(this.weightScroll3Maj);
+            this.intervalBox.Controls.Add(this.weightScroll4);
+            this.intervalBox.Controls.Add(this.weightScroll5);
+            this.intervalBox.Controls.Add(this.label15);
+            this.intervalBox.Controls.Add(this.label14);
+            this.intervalBox.Controls.Add(this.label13);
+            this.intervalBox.Controls.Add(this.label12);
+            this.intervalBox.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.intervalBox.Location = new System.Drawing.Point(8, 12);
+            this.intervalBox.Name = "intervalBox";
+            this.intervalBox.Size = new System.Drawing.Size(120, 110);
+            this.intervalBox.TabIndex = 16;
+            this.intervalBox.TabStop = false;
+            this.intervalBox.Text = "Intervals";
+            // 
+            // label22
+            // 
+            this.label22.Location = new System.Drawing.Point(24, 84);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(16, 22);
+            this.label22.TabIndex = 27;
+            this.label22.Text = "6 m";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label16
+            // 
+            this.label16.Location = new System.Drawing.Point(8, 84);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(16, 22);
+            this.label16.TabIndex = 26;
+            this.label16.Text = "6 M";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // weightScroll6min
+            // 
+            this.weightScroll6min.LargeChange = 1;
+            this.weightScroll6min.Location = new System.Drawing.Point(24, 12);
+            this.weightScroll6min.Maximum = 20;
+            this.weightScroll6min.Name = "weightScroll6min";
+            this.weightScroll6min.Size = new System.Drawing.Size(16, 72);
+            this.weightScroll6min.TabIndex = 25;
+            this.weightScroll6min.Value = 10;
+            this.weightScroll6min.ValueChanged += new System.EventHandler(this.WeightScroll6minValueChanged);
+            // 
+            // weightScroll3min
+            // 
+            this.weightScroll3min.LargeChange = 1;
+            this.weightScroll3min.Location = new System.Drawing.Point(88, 12);
+            this.weightScroll3min.Maximum = 20;
+            this.weightScroll3min.Name = "weightScroll3min";
+            this.weightScroll3min.Size = new System.Drawing.Size(16, 72);
+            this.weightScroll3min.TabIndex = 23;
+            this.weightScroll3min.Value = 10;
+            this.weightScroll3min.ValueChanged += new System.EventHandler(this.WeightScroll3minValueChanged);
+            // 
+            // weightScroll3Maj
+            // 
+            this.weightScroll3Maj.LargeChange = 1;
+            this.weightScroll3Maj.Location = new System.Drawing.Point(72, 12);
+            this.weightScroll3Maj.Maximum = 20;
+            this.weightScroll3Maj.Name = "weightScroll3Maj";
+            this.weightScroll3Maj.Size = new System.Drawing.Size(16, 72);
+            this.weightScroll3Maj.TabIndex = 22;
+            this.weightScroll3Maj.Value = 10;
+            this.weightScroll3Maj.ValueChanged += new System.EventHandler(this.WeightScroll3MajValueChanged);
+            // 
+            // weightScroll4
+            // 
+            this.weightScroll4.LargeChange = 1;
+            this.weightScroll4.Location = new System.Drawing.Point(56, 12);
+            this.weightScroll4.Maximum = 20;
+            this.weightScroll4.Name = "weightScroll4";
+            this.weightScroll4.Size = new System.Drawing.Size(16, 72);
+            this.weightScroll4.TabIndex = 21;
+            this.weightScroll4.Value = 10;
+            this.weightScroll4.ValueChanged += new System.EventHandler(this.WeightScroll4ValueChanged);
+            // 
+            // weightScroll5
+            // 
+            this.weightScroll5.LargeChange = 1;
+            this.weightScroll5.Location = new System.Drawing.Point(40, 12);
+            this.weightScroll5.Maximum = 20;
+            this.weightScroll5.Name = "weightScroll5";
+            this.weightScroll5.Size = new System.Drawing.Size(16, 72);
+            this.weightScroll5.TabIndex = 20;
+            this.weightScroll5.Value = 10;
+            this.weightScroll5.ValueChanged += new System.EventHandler(this.WeightScroll5ValueChanged);
+            // 
+            // label15
+            // 
+            this.label15.Location = new System.Drawing.Point(56, 84);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(16, 17);
+            this.label15.TabIndex = 19;
+            this.label15.Text = "4";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label14
+            // 
+            this.label14.Location = new System.Drawing.Point(88, 84);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(16, 22);
+            this.label14.TabIndex = 18;
+            this.label14.Text = "3 m";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label13
+            // 
+            this.label13.Location = new System.Drawing.Point(72, 84);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(16, 22);
+            this.label13.TabIndex = 17;
+            this.label13.Text = "3 M";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label12
+            // 
+            this.label12.Location = new System.Drawing.Point(40, 84);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(16, 17);
+            this.label12.TabIndex = 16;
+            this.label12.Text = "5";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // pagesBox
+            // 
+            this.pagesBox.Location = new System.Drawing.Point(88, 127);
+            this.pagesBox.Name = "pagesBox";
+            this.pagesBox.ReadOnly = true;
+            this.pagesBox.Size = new System.Drawing.Size(32, 20);
+            this.pagesBox.TabIndex = 7;
+            this.pagesBox.Text = "0";
+            // 
+            // weightScrollCh5
+            // 
+            this.weightScrollCh5.LargeChange = 1;
+            this.weightScrollCh5.Location = new System.Drawing.Point(8, 12);
+            this.weightScrollCh5.Maximum = 20;
+            this.weightScrollCh5.Name = "weightScrollCh5";
+            this.weightScrollCh5.Size = new System.Drawing.Size(16, 72);
+            this.weightScrollCh5.TabIndex = 0;
+            this.weightScrollCh5.Value = 10;
+            this.weightScrollCh5.ValueChanged += new System.EventHandler(this.WeightScrollCh5ValueChanged);
+            // 
+            // label20
+            // 
+            this.label20.Location = new System.Drawing.Point(233, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(48, 12);
+            this.label20.TabIndex = 48;
+            this.label20.Text = "Tracks:";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // weightScrollCh3
+            // 
+            this.weightScrollCh3.LargeChange = 1;
+            this.weightScrollCh3.Location = new System.Drawing.Point(24, 12);
+            this.weightScrollCh3.Maximum = 20;
+            this.weightScrollCh3.Name = "weightScrollCh3";
+            this.weightScrollCh3.Size = new System.Drawing.Size(16, 72);
+            this.weightScrollCh3.TabIndex = 1;
+            this.weightScrollCh3.Value = 10;
+            this.weightScrollCh3.ValueChanged += new System.EventHandler(this.WeightScrollCh3ValueChanged);
+            // 
+            // qualityCheck
+            // 
+            this.qualityCheck.Checked = true;
+            this.qualityCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.qualityCheck.Location = new System.Drawing.Point(104, 130);
+            this.qualityCheck.Name = "qualityCheck";
+            this.qualityCheck.Size = new System.Drawing.Size(90, 21);
+            this.qualityCheck.TabIndex = 50;
+            this.qualityCheck.Text = "Show Quality";
+            this.qualityCheck.CheckedChanged += new System.EventHandler(this.QualityCheckCheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.label4.Location = new System.Drawing.Point(32, 95);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 12);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "short";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // instrBox
+            // 
+            this.instrBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.instrBox.Location = new System.Drawing.Point(8, 85);
+            this.instrBox.MaxDropDownItems = 32;
+            this.instrBox.Name = "instrBox";
+            this.instrBox.Size = new System.Drawing.Size(168, 21);
+            this.instrBox.TabIndex = 6;
+            this.instrBox.SelectedIndexChanged += new System.EventHandler(this.InstrBoxSelectedIndexChanged);
+            // 
+            // menuItemExport
+            // 
+            this.menuItemExport.Index = 1;
+            this.menuItemExport.Text = "Export to File ...";
+            this.menuItemExport.Click += new System.EventHandler(this.MenuItemExportClick);
+            // 
+            // openMidFileDialog
+            // 
+            this.openMidFileDialog.Filter = "MIDI-Files|*.mid";
+            this.openMidFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialog1FileOk);
+            // 
+            // offsetScroll
+            // 
+            this.offsetScroll.LargeChange = 1;
+            this.offsetScroll.Location = new System.Drawing.Point(8, 125);
+            this.offsetScroll.Maximum = 0;
+            this.offsetScroll.Name = "offsetScroll";
+            this.offsetScroll.Size = new System.Drawing.Size(960, 12);
+            this.offsetScroll.TabIndex = 41;
+            this.offsetScroll.ValueChanged += new System.EventHandler(this.OffsetScrollValueChanged);
+            // 
+            // rowsEdit
+            // 
+            this.rowsEdit.Location = new System.Drawing.Point(88, 30);
+            this.rowsEdit.Name = "rowsEdit";
+            this.rowsEdit.Size = new System.Drawing.Size(32, 20);
+            this.rowsEdit.TabIndex = 3;
+            this.rowsEdit.Text = "3";
+            // 
+            // tempoLabel
+            // 
+            this.tempoLabel.Location = new System.Drawing.Point(4, 107);
+            this.tempoLabel.Name = "tempoLabel";
+            this.tempoLabel.Size = new System.Drawing.Size(60, 30);
+            this.tempoLabel.TabIndex = 58;
+            this.tempoLabel.Text = "tempo: 120 bpm";
+            this.tempoLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // menuItem1
+            // 
+            this.menuItem1.Index = 0;
+            this.menuItem1.Text = "Color...";
+            this.menuItem1.Click += new System.EventHandler(this.MenuItem1Click);
+            // 
+            // transposeTuningUpDown
+            // 
+            this.transposeTuningUpDown.Location = new System.Drawing.Point(28, 148);
+            this.transposeTuningUpDown.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.transposeTuningUpDown.Minimum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            -2147483648});
+            this.transposeTuningUpDown.Name = "transposeTuningUpDown";
+            this.transposeTuningUpDown.Size = new System.Drawing.Size(40, 20);
+            this.transposeTuningUpDown.TabIndex = 47;
+            this.transposeTuningUpDown.ValueChanged += new System.EventHandler(this.TransposeTuningUpDownValueChanged);
+            // 
+            // menuItemSave
+            // 
+            this.menuItemSave.Enabled = false;
+            this.menuItemSave.Index = 1;
+            this.menuItemSave.Text = "Save...";
+            this.menuItemSave.Click += new System.EventHandler(this.MenuItemSaveClick);
+            // 
+            // playButton
+            // 
+            this.playButton.BackColor = System.Drawing.SystemColors.Control;
+            this.playButton.Enabled = false;
+            this.playButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.playButton.Location = new System.Drawing.Point(8, 15);
+            this.playButton.Name = "playButton";
+            this.playButton.Size = new System.Drawing.Size(56, 18);
+            this.playButton.TabIndex = 2;
+            this.playButton.Text = "Play";
+            this.playButton.UseVisualStyleBackColor = false;
+            this.playButton.Click += new System.EventHandler(this.PlayButtonClick);
+            // 
+            // transposeBox
+            // 
+            this.transposeBox.Controls.Add(this.transposeFileUpDown);
+            this.transposeBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.transposeBox.Location = new System.Drawing.Point(8, 156);
+            this.transposeBox.Name = "transposeBox";
+            this.transposeBox.Size = new System.Drawing.Size(88, 44);
+            this.transposeBox.TabIndex = 52;
+            this.transposeBox.TabStop = false;
+            this.transposeBox.Text = "Transpose File";
+            // 
+            // transposeFileUpDown
+            // 
+            this.transposeFileUpDown.Location = new System.Drawing.Point(16, 15);
+            this.transposeFileUpDown.Maximum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            0});
+            this.transposeFileUpDown.Minimum = new decimal(new int[] {
+            24,
+            0,
+            0,
+            -2147483648});
+            this.transposeFileUpDown.Name = "transposeFileUpDown";
+            this.transposeFileUpDown.Size = new System.Drawing.Size(56, 20);
+            this.transposeFileUpDown.TabIndex = 0;
+            this.transposeFileUpDown.ValueChanged += new System.EventHandler(this.TransposeFileUpDownValueChanged);
+            // 
+            // playbackBox
+            // 
+            this.playbackBox.Controls.Add(this.stopButton);
+            this.playbackBox.Controls.Add(this.label19);
+            this.playbackBox.Controls.Add(this.tempoLabel);
+            this.playbackBox.Controls.Add(this.volumeBar);
+            this.playbackBox.Controls.Add(this.label18);
+            this.playbackBox.Controls.Add(this.instrBox);
+            this.playbackBox.Controls.Add(this.label17);
+            this.playbackBox.Controls.Add(this.outputBox);
+            this.playbackBox.Controls.Add(this.pauseButton);
+            this.playbackBox.Controls.Add(this.playButton);
+            this.playbackBox.Controls.Add(this.tempoBar);
+            this.playbackBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.playbackBox.Location = new System.Drawing.Point(8, 0);
+            this.playbackBox.Name = "playbackBox";
+            this.playbackBox.Size = new System.Drawing.Size(224, 154);
+            this.playbackBox.TabIndex = 15;
+            this.playbackBox.TabStop = false;
+            this.playbackBox.Text = "Playback";
+            // 
+            // stopButton
+            // 
+            this.stopButton.BackColor = System.Drawing.SystemColors.Control;
+            this.stopButton.Enabled = false;
+            this.stopButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.stopButton.Location = new System.Drawing.Point(120, 15);
+            this.stopButton.Name = "stopButton";
+            this.stopButton.Size = new System.Drawing.Size(56, 18);
+            this.stopButton.TabIndex = 4;
+            this.stopButton.Text = "Stop";
+            this.stopButton.UseVisualStyleBackColor = false;
+            this.stopButton.Click += new System.EventHandler(this.StopButtonClick);
+            // 
+            // label19
+            // 
+            this.label19.Location = new System.Drawing.Point(168, 13);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(48, 12);
+            this.label19.TabIndex = 56;
+            this.label19.Text = "Volume";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // volumeBar
+            // 
+            this.volumeBar.Location = new System.Drawing.Point(176, 20);
+            this.volumeBar.Maximum = 100;
+            this.volumeBar.Name = "volumeBar";
+            this.volumeBar.Orientation = System.Windows.Forms.Orientation.Vertical;
+            this.volumeBar.Size = new System.Drawing.Size(45, 83);
+            this.volumeBar.TabIndex = 55;
+            this.volumeBar.TickFrequency = 20;
+            this.volumeBar.TickStyle = System.Windows.Forms.TickStyle.Both;
+            this.volumeBar.Value = 100;
+            this.volumeBar.Scroll += new System.EventHandler(this.VolumeBarScroll);
+            // 
+            // label18
+            // 
+            this.label18.Location = new System.Drawing.Point(8, 69);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(64, 12);
+            this.label18.TabIndex = 54;
+            this.label18.Text = "Instrument:";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label17
+            // 
+            this.label17.Location = new System.Drawing.Point(8, 35);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(64, 12);
+            this.label17.TabIndex = 51;
+            this.label17.Text = "MIDI Out:";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // outputBox
+            // 
+            this.outputBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.outputBox.Location = new System.Drawing.Point(8, 48);
+            this.outputBox.MaxDropDownItems = 12;
+            this.outputBox.Name = "outputBox";
+            this.outputBox.Size = new System.Drawing.Size(168, 21);
+            this.outputBox.TabIndex = 5;
+            // 
+            // pauseButton
+            // 
+            this.pauseButton.Enabled = false;
+            this.pauseButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.pauseButton.Location = new System.Drawing.Point(64, 15);
+            this.pauseButton.Name = "pauseButton";
+            this.pauseButton.Size = new System.Drawing.Size(56, 18);
+            this.pauseButton.TabIndex = 3;
+            this.pauseButton.Text = "Pause";
+            this.pauseButton.Click += new System.EventHandler(this.PauseButtonClick);
+            // 
+            // tempoBar
+            // 
+            this.tempoBar.Location = new System.Drawing.Point(64, 107);
+            this.tempoBar.Maximum = 200;
+            this.tempoBar.Minimum = 40;
+            this.tempoBar.Name = "tempoBar";
+            this.tempoBar.Size = new System.Drawing.Size(152, 45);
+            this.tempoBar.TabIndex = 57;
+            this.tempoBar.TickFrequency = 10;
+            this.tempoBar.Value = 120;
+            this.tempoBar.ValueChanged += new System.EventHandler(this.TempoBarValueChanged);
+            // 
+            // offsetLabel
+            // 
+            this.offsetLabel.Location = new System.Drawing.Point(102, 161);
+            this.offsetLabel.Name = "offsetLabel";
+            this.offsetLabel.Size = new System.Drawing.Size(88, 12);
+            this.offsetLabel.TabIndex = 43;
+            this.offsetLabel.Text = "offset: 0 bars";
+            this.offsetLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel1.Controls.Add(this.groupBox1);
+            this.panel1.Controls.Add(this.playbackBox);
+            this.panel1.Controls.Add(this.layoutBox);
+            this.panel1.Controls.Add(this.penaltyBox);
+            this.panel1.Controls.Add(this.offsetLabel);
+            this.panel1.Controls.Add(this.transposeBox);
+            this.panel1.Controls.Add(this.tuningBox);
+            this.panel1.Controls.Add(this.qualityBox);
+            this.panel1.Controls.Add(this.label20);
+            this.panel1.Controls.Add(this.trackPanel);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1049, 200);
+            this.panel1.TabIndex = 45;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.cutClrBtn);
+            this.groupBox1.Controls.Add(this.cutCutBtn);
+            this.groupBox1.Controls.Add(this.cutResetBtn);
+            this.groupBox1.Location = new System.Drawing.Point(236, 131);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 60);
+            this.groupBox1.TabIndex = 55;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Cut";
+            // 
+            // cutClrBtn
+            // 
+            this.cutClrBtn.Location = new System.Drawing.Point(133, 17);
+            this.cutClrBtn.Name = "cutClrBtn";
+            this.cutClrBtn.Size = new System.Drawing.Size(56, 37);
+            this.cutClrBtn.TabIndex = 2;
+            this.cutClrBtn.Text = "Clear\r\nDisplay";
+            this.cutClrBtn.UseVisualStyleBackColor = true;
+            this.cutClrBtn.Click += new System.EventHandler(this.cutClrBtn_Click);
+            // 
+            // cutCutBtn
+            // 
+            this.cutCutBtn.Location = new System.Drawing.Point(70, 17);
+            this.cutCutBtn.Name = "cutCutBtn";
+            this.cutCutBtn.Size = new System.Drawing.Size(56, 37);
+            this.cutCutBtn.TabIndex = 1;
+            this.cutCutBtn.Text = "Cut";
+            this.cutCutBtn.UseVisualStyleBackColor = true;
+            this.cutCutBtn.Click += new System.EventHandler(this.cutCutBtn_Click);
+            // 
+            // cutResetBtn
+            // 
+            this.cutResetBtn.Location = new System.Drawing.Point(8, 17);
+            this.cutResetBtn.Name = "cutResetBtn";
+            this.cutResetBtn.Size = new System.Drawing.Size(56, 37);
+            this.cutResetBtn.TabIndex = 0;
+            this.cutResetBtn.Text = "Reset\r\nMarker";
+            this.cutResetBtn.UseVisualStyleBackColor = true;
+            this.cutResetBtn.Click += new System.EventHandler(this.cutResetBtn_Click);
+            // 
+            // layoutBox
+            // 
+            this.layoutBox.Controls.Add(this.label10);
+            this.layoutBox.Controls.Add(this.factor);
+            this.layoutBox.Controls.Add(this.applyButton);
+            this.layoutBox.Controls.Add(this.pagesBox);
+            this.layoutBox.Controls.Add(this.label9);
+            this.layoutBox.Controls.Add(this.barsPerPageBox);
+            this.layoutBox.Controls.Add(this.label7);
+            this.layoutBox.Controls.Add(this.rowsEdit);
+            this.layoutBox.Controls.Add(this.barsEdit);
+            this.layoutBox.Controls.Add(this.label6);
+            this.layoutBox.Controls.Add(this.label5);
+            this.layoutBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.layoutBox.Location = new System.Drawing.Point(909, 0);
+            this.layoutBox.Name = "layoutBox";
+            this.layoutBox.Size = new System.Drawing.Size(132, 151);
+            this.layoutBox.TabIndex = 54;
+            this.layoutBox.TabStop = false;
+            this.layoutBox.Text = "Printing Layout";
+            // 
+            // label10
+            // 
+            this.label10.Location = new System.Drawing.Point(6, 47);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(72, 19);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "rel.thick.";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // factor
+            // 
+            this.factor.Location = new System.Drawing.Point(88, 50);
+            this.factor.Name = "factor";
+            this.factor.Size = new System.Drawing.Size(32, 20);
+            this.factor.TabIndex = 9;
+            this.factor.Text = ".5";
+            // 
+            // applyButton
+            // 
+            this.applyButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.applyButton.Location = new System.Drawing.Point(6, 78);
+            this.applyButton.Name = "applyButton";
+            this.applyButton.Size = new System.Drawing.Size(112, 17);
+            this.applyButton.TabIndex = 8;
+            this.applyButton.Text = "apply";
+            this.applyButton.Click += new System.EventHandler(this.ApplyButtonClick);
+            // 
+            // label9
+            // 
+            this.label9.Location = new System.Drawing.Point(8, 125);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(72, 17);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "Pages:";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // barsPerPageBox
+            // 
+            this.barsPerPageBox.Location = new System.Drawing.Point(88, 103);
+            this.barsPerPageBox.Name = "barsPerPageBox";
+            this.barsPerPageBox.ReadOnly = true;
+            this.barsPerPageBox.Size = new System.Drawing.Size(32, 20);
+            this.barsPerPageBox.TabIndex = 5;
+            this.barsPerPageBox.Text = "75";
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(6, 101);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(72, 18);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Bars/Page:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // barsEdit
+            // 
+            this.barsEdit.Location = new System.Drawing.Point(88, 12);
+            this.barsEdit.Name = "barsEdit";
+            this.barsEdit.Size = new System.Drawing.Size(32, 20);
+            this.barsEdit.TabIndex = 2;
+            this.barsEdit.Text = "13";
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(8, 30);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 17);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Rows/Page:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(8, 12);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(72, 18);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Bars/Row:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // penaltyBox
+            // 
+            this.penaltyBox.Controls.Add(this.thresholdUpDown);
+            this.penaltyBox.Controls.Add(this.penaltyScrollShort);
+            this.penaltyBox.Controls.Add(this.label4);
+            this.penaltyBox.Controls.Add(this.label3);
+            this.penaltyBox.Controls.Add(this.penaltyScrollAdd);
+            this.penaltyBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.penaltyBox.Location = new System.Drawing.Point(843, 0);
+            this.penaltyBox.Name = "penaltyBox";
+            this.penaltyBox.Size = new System.Drawing.Size(64, 113);
+            this.penaltyBox.TabIndex = 53;
+            this.penaltyBox.TabStop = false;
+            this.penaltyBox.Text = "Penalties";
+            // 
+            // thresholdUpDown
+            // 
+            this.thresholdUpDown.Items.Add("1");
+            this.thresholdUpDown.Items.Add("1/2");
+            this.thresholdUpDown.Items.Add("1/4");
+            this.thresholdUpDown.Items.Add("1/8");
+            this.thresholdUpDown.Items.Add("1/16");
+            this.thresholdUpDown.Items.Add("1/32");
+            this.thresholdUpDown.Items.Add("1/64");
+            this.thresholdUpDown.Location = new System.Drawing.Point(8, 12);
+            this.thresholdUpDown.Name = "thresholdUpDown";
+            this.thresholdUpDown.ReadOnly = true;
+            this.thresholdUpDown.Size = new System.Drawing.Size(48, 20);
+            this.thresholdUpDown.TabIndex = 55;
+            this.thresholdUpDown.Text = "1";
+            this.thresholdUpDown.Wrap = true;
+            this.thresholdUpDown.SelectedItemChanged += new System.EventHandler(this.ThresholdUpDownSelectedItemChanged);
+            // 
+            // penaltyScrollShort
+            // 
+            this.penaltyScrollShort.LargeChange = 1;
+            this.penaltyScrollShort.Location = new System.Drawing.Point(40, 36);
+            this.penaltyScrollShort.Maximum = 10;
+            this.penaltyScrollShort.Name = "penaltyScrollShort";
+            this.penaltyScrollShort.Size = new System.Drawing.Size(16, 59);
+            this.penaltyScrollShort.TabIndex = 2;
+            this.penaltyScrollShort.ValueChanged += new System.EventHandler(this.PenaltyScrollShortValueChanged);
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(8, 95);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(24, 12);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "add";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // penaltyScrollAdd
+            // 
+            this.penaltyScrollAdd.LargeChange = 1;
+            this.penaltyScrollAdd.Location = new System.Drawing.Point(8, 36);
+            this.penaltyScrollAdd.Maximum = 10;
+            this.penaltyScrollAdd.Name = "penaltyScrollAdd";
+            this.penaltyScrollAdd.Size = new System.Drawing.Size(16, 59);
+            this.penaltyScrollAdd.TabIndex = 0;
+            this.penaltyScrollAdd.ValueChanged += new System.EventHandler(this.PenaltyScrollAddValueChanged);
+            // 
+            // tuningBox
+            // 
+            this.tuningBox.Controls.Add(this.qualityCheck);
+            this.tuningBox.Controls.Add(this.labelCheck);
+            this.tuningBox.Controls.Add(this.label8);
+            this.tuningBox.Controls.Add(this.transposeTuningUpDown);
+            this.tuningBox.Controls.Add(this.tuningPanel);
+            this.tuningBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.tuningBox.Location = new System.Drawing.Point(442, 0);
+            this.tuningBox.Name = "tuningBox";
+            this.tuningBox.Size = new System.Drawing.Size(208, 176);
+            this.tuningBox.TabIndex = 50;
+            this.tuningBox.TabStop = false;
+            this.tuningBox.Text = "Tuning";
+            // 
+            // labelCheck
+            // 
+            this.labelCheck.Checked = true;
+            this.labelCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.labelCheck.Location = new System.Drawing.Point(104, 151);
+            this.labelCheck.Name = "labelCheck";
+            this.labelCheck.Size = new System.Drawing.Size(88, 22);
+            this.labelCheck.TabIndex = 49;
+            this.labelCheck.Text = "Show Labels";
+            this.labelCheck.CheckedChanged += new System.EventHandler(this.QualityCheckCheckedChanged);
+            // 
+            // label8
+            // 
+            this.label8.Location = new System.Drawing.Point(19, 131);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(64, 12);
+            this.label8.TabIndex = 48;
+            this.label8.Text = "Transpose:";
+            // 
+            // tuningPanel
+            // 
+            this.tuningPanel.AutoScroll = true;
+            this.tuningPanel.BackColor = System.Drawing.Color.White;
+            this.tuningPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tuningPanel.Location = new System.Drawing.Point(8, 12);
+            this.tuningPanel.Name = "tuningPanel";
+            this.tuningPanel.Size = new System.Drawing.Size(192, 113);
+            this.tuningPanel.TabIndex = 46;
+            // 
+            // qualityBox
+            // 
+            this.qualityBox.Controls.Add(this.chordBox);
+            this.qualityBox.Controls.Add(this.intervalBox);
+            this.qualityBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.qualityBox.Location = new System.Drawing.Point(653, 0);
+            this.qualityBox.Name = "qualityBox";
+            this.qualityBox.Size = new System.Drawing.Size(184, 127);
+            this.qualityBox.TabIndex = 51;
+            this.qualityBox.TabStop = false;
+            this.qualityBox.Text = "Quality Weights";
+            // 
+            // chordBox
+            // 
+            this.chordBox.Controls.Add(this.weightScrollCh5);
+            this.chordBox.Controls.Add(this.label2);
+            this.chordBox.Controls.Add(this.label1);
+            this.chordBox.Controls.Add(this.weightScrollCh3);
+            this.chordBox.Font = new System.Drawing.Font("Tahoma", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.chordBox.Location = new System.Drawing.Point(131, 12);
+            this.chordBox.Name = "chordBox";
+            this.chordBox.Size = new System.Drawing.Size(48, 110);
+            this.chordBox.TabIndex = 17;
+            this.chordBox.TabStop = false;
+            this.chordBox.Text = "Chords";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(24, 84);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(16, 22);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "3 M";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(8, 84);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(16, 17);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "5";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // trackPanel
+            // 
+            this.trackPanel.AutoScroll = true;
+            this.trackPanel.BackColor = System.Drawing.Color.White;
+            this.trackPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.trackPanel.Location = new System.Drawing.Point(236, 14);
+            this.trackPanel.Name = "trackPanel";
+            this.trackPanel.Size = new System.Drawing.Size(200, 113);
+            this.trackPanel.TabIndex = 47;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel2.Controls.Add(this.cutPanel);
+            this.panel2.Controls.Add(this.cutBarSecond);
+            this.panel2.Controls.Add(this.cutBarFirst);
+            this.panel2.Controls.Add(this.chordNameDisplay);
+            this.panel2.Controls.Add(this.zoomScroll);
+            this.panel2.Controls.Add(this.chordDisplay);
+            this.panel2.Controls.Add(this.offsetScroll);
+            this.panel2.Controls.Add(this.cursor);
+            this.panel2.Controls.Add(this.hoverBar);
+            this.panel2.Controls.Add(this.noteDisplay);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 200);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1049, 413);
+            this.panel2.TabIndex = 46;
+            this.panel2.Resize += new System.EventHandler(this.Panel2Resize);
+            // 
+            // cutPanel
+            // 
+            this.cutPanel.Location = new System.Drawing.Point(8, 196);
+            this.cutPanel.Name = "cutPanel";
+            this.cutPanel.Size = new System.Drawing.Size(976, 235);
+            this.cutPanel.TabIndex = 47;
+            // 
+            // cutBarSecond
+            // 
+            this.cutBarSecond.BackColor = System.Drawing.Color.BlueViolet;
+            this.cutBarSecond.Location = new System.Drawing.Point(8, 6);
+            this.cutBarSecond.Name = "cutBarSecond";
+            this.cutBarSecond.Size = new System.Drawing.Size(1, 47);
+            this.cutBarSecond.TabIndex = 31;
+            this.cutBarSecond.Visible = false;
+            // 
+            // cutBarFirst
+            // 
+            this.cutBarFirst.BackColor = System.Drawing.Color.BlueViolet;
+            this.cutBarFirst.Location = new System.Drawing.Point(8, 6);
+            this.cutBarFirst.Name = "cutBarFirst";
+            this.cutBarFirst.Size = new System.Drawing.Size(1, 47);
+            this.cutBarFirst.TabIndex = 31;
+            this.cutBarFirst.Visible = false;
+            // 
+            // chordNameDisplay
+            // 
+            this.chordNameDisplay.BackColor = System.Drawing.Color.White;
+            this.chordNameDisplay.Location = new System.Drawing.Point(8, 109);
+            this.chordNameDisplay.Name = "chordNameDisplay";
+            this.chordNameDisplay.Size = new System.Drawing.Size(960, 16);
+            this.chordNameDisplay.TabIndex = 46;
+            this.chordNameDisplay.TabStop = false;
+            // 
+            // cursor
+            // 
+            this.cursor.BackColor = System.Drawing.Color.Red;
+            this.cursor.Location = new System.Drawing.Point(8, 6);
+            this.cursor.Name = "cursor";
+            this.cursor.Size = new System.Drawing.Size(1, 47);
+            this.cursor.TabIndex = 30;
+            // 
+            // hoverBar
+            // 
+            this.hoverBar.BackColor = System.Drawing.Color.DarkGray;
+            this.hoverBar.Location = new System.Drawing.Point(8, 6);
+            this.hoverBar.Name = "hoverBar";
+            this.hoverBar.Size = new System.Drawing.Size(1, 47);
+            this.hoverBar.TabIndex = 31;
+            this.hoverBar.Visible = false;
+            // 
+            // noteDisplay
+            // 
+            this.noteDisplay.BackColor = System.Drawing.Color.White;
+            this.noteDisplay.Location = new System.Drawing.Point(8, 6);
+            this.noteDisplay.Name = "noteDisplay";
+            this.noteDisplay.Size = new System.Drawing.Size(960, 47);
+            this.noteDisplay.TabIndex = 29;
+            this.noteDisplay.TabStop = false;
+            this.noteDisplay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.NoteDisplayMouseDown);
+            this.noteDisplay.MouseLeave += new System.EventHandler(this.NoteDisplayOnMouseLeave);
+            this.noteDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.NoteDisplayMouseMove);
+            // 
+            // saveMidFileDialog
+            // 
+            this.saveMidFileDialog.DefaultExt = "mid";
+            this.saveMidFileDialog.Filter = "MIDI-Files|*.mid";
+            this.saveMidFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialog1FileOk);
+            // 
+            // menuItemMidi2Txt
+            // 
+            this.menuItemMidi2Txt.Enabled = false;
+            this.menuItemMidi2Txt.Index = 5;
+            this.menuItemMidi2Txt.Text = "MIDI 2 TXT";
+            this.menuItemMidi2Txt.Click += new System.EventHandler(this.MenuItemMidi2TxtClick);
+            // 
+            // saveTxtFileDialog
+            // 
+            this.saveTxtFileDialog.DefaultExt = "txt";
+            this.saveTxtFileDialog.Filter = "TXT-Files|*.txt";
+            this.saveTxtFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveTxtFileDialogFileOk);
+            // 
+            // menuItemMarkers
+            // 
+            this.menuItemMarkers.Enabled = false;
+            this.menuItemMarkers.Index = 1;
+            this.menuItemMarkers.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemAdd,
             this.menuItemRemove});
-			this.menuItemMarkers.Text = "Markers";
-			// 
-			// 'add' menu item under markers
-			// 
-			this.menuItemAdd.Enabled = false;
-			this.menuItemAdd.Index = 0;
-			this.menuItemAdd.Text = "Add";
-			this.menuItemAdd.Click += new System.EventHandler(this.menuItemAdd_Click);
-			// 
-			// 'remove' menu item under markers
-			// 
-			this.menuItemRemove.Index = 1;
-			this.menuItemRemove.Text = "Remove";
-			// 
-			// Top menu containing file, markers, analysis
-			// 
-			this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemMarkers.Text = "Markers";
+            // 
+            // menuItemAdd
+            // 
+            this.menuItemAdd.Enabled = false;
+            this.menuItemAdd.Index = 0;
+            this.menuItemAdd.Text = "Add";
+            this.menuItemAdd.Click += new System.EventHandler(this.menuItemAdd_Click);
+            // 
+            // menuItemRemove
+            // 
+            this.menuItemRemove.Index = 1;
+            this.menuItemRemove.Text = "Remove";
+            // 
+            // mainMenu1
+            // 
+            this.mainMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemFile,
             this.menuItemMarkers,
             this.menuItemAnalysis});
-			// 
-			// 'File' button, top left corner
-			// 
-			this.menuItemFile.Index = 0;
-			this.menuItemFile.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            // 
+            // menuItemFile
+            // 
+            this.menuItemFile.Index = 0;
+            this.menuItemFile.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemOpen,
             this.menuItemSave,
             this.menuItemInfo,
@@ -1208,116 +1194,116 @@ namespace ChordQuality
             this.menuItemPrint,
             this.menuItemMidi2Txt,
             this.menuItemExit});
-			this.menuItemFile.Text = "File";
-			// 
-			// Open new file (under file)
-			// 
-			this.menuItemOpen.Index = 0;
-			this.menuItemOpen.Text = "Open...";
-			this.menuItemOpen.Click += new System.EventHandler(this.MenuItemOpenClick);
-			// 
-			// Print Preview option (under file)
-			// 
-			this.menuItemPrintPreview.Enabled = false;
-			this.menuItemPrintPreview.Index = 3;
-			this.menuItemPrintPreview.Text = "Print Preview";
-			this.menuItemPrintPreview.Click += new System.EventHandler(this.MenuItemPrintClick);
-			// 
-			// Print option (under file)
-			// 
-			this.menuItemPrint.Enabled = false;
-			this.menuItemPrint.Index = 4;
-			this.menuItemPrint.Text = "Print...";
-			this.menuItemPrint.Click += new System.EventHandler(this.MenuItemPrintClick);
-			// 
-			// Exit program option (under file)
-			// 
-			this.menuItemExit.Index = 6;
-			this.menuItemExit.Text = "Exit";
-			this.menuItemExit.Click += new System.EventHandler(this.MenuItemExitClick);
-			// 
-			// Top menu - analsis button
-			// 
-			this.menuItemAnalysis.Enabled = false;
-			this.menuItemAnalysis.Index = 2;
-			this.menuItemAnalysis.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemFile.Text = "File";
+            // 
+            // menuItemOpen
+            // 
+            this.menuItemOpen.Index = 0;
+            this.menuItemOpen.Text = "Open...";
+            this.menuItemOpen.Click += new System.EventHandler(this.MenuItemOpenClick);
+            // 
+            // menuItemPrintPreview
+            // 
+            this.menuItemPrintPreview.Enabled = false;
+            this.menuItemPrintPreview.Index = 3;
+            this.menuItemPrintPreview.Text = "Print Preview";
+            this.menuItemPrintPreview.Click += new System.EventHandler(this.MenuItemPrintClick);
+            // 
+            // menuItemPrint
+            // 
+            this.menuItemPrint.Enabled = false;
+            this.menuItemPrint.Index = 4;
+            this.menuItemPrint.Text = "Print...";
+            this.menuItemPrint.Click += new System.EventHandler(this.MenuItemPrintClick);
+            // 
+            // menuItemExit
+            // 
+            this.menuItemExit.Index = 6;
+            this.menuItemExit.Text = "Exit";
+            this.menuItemExit.Click += new System.EventHandler(this.MenuItemExitClick);
+            // 
+            // menuItemAnalysis
+            // 
+            this.menuItemAnalysis.Enabled = false;
+            this.menuItemAnalysis.Index = 2;
+            this.menuItemAnalysis.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItemBest,
             this.menuItemExport});
-			this.menuItemAnalysis.Text = "Analysis";
-			// 
-			// Best tuning option
-			// 
-			this.menuItemBest.Index = 0;
-			this.menuItemBest.Text = "Find Best Tuning";
-			this.menuItemBest.Click += new System.EventHandler(this.MenuItemBestClick);
-			// 
-			// timer1
-			// 
-			this.timer1.Interval = 10;
-			this.timer1.Tick += new System.EventHandler(this.Timer1Tick);
-			// 
-			// printDialog1
-			// 
-			this.printDialog1.AllowSomePages = true;
-			// 
-			// printPreviewDialog1
-			// 
-			this.printPreviewDialog1.Location = new System.Drawing.Point(0, 0);
-			this.printPreviewDialog1.Name = "printPreviewDialog1";
-			this.printPreviewDialog1.Size = new System.Drawing.Size(100, 100);
-			this.printPreviewDialog1.TabIndex = 0;
-			// 
-			// contextMenu1
-			// 
-			this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
+            this.menuItemAnalysis.Text = "Analysis";
+            // 
+            // menuItemBest
+            // 
+            this.menuItemBest.Index = 0;
+            this.menuItemBest.Text = "Find Best Tuning";
+            this.menuItemBest.Click += new System.EventHandler(this.MenuItemBestClick);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 10;
+            this.timer1.Tick += new System.EventHandler(this.Timer1Tick);
+            // 
+            // printDialog1
+            // 
+            this.printDialog1.AllowSomePages = true;
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.Location = new System.Drawing.Point(0, 0);
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Size = new System.Drawing.Size(100, 100);
+            this.printPreviewDialog1.TabIndex = 0;
+            // 
+            // contextMenu1
+            // 
+            this.contextMenu1.MenuItems.AddRange(new System.Windows.Forms.MenuItem[] {
             this.menuItem1});
-			// 
-			// cutRowCursor
-			// 
-			this.cutRowCursor.BackColor = System.Drawing.Color.Red;
-			this.cutRowCursor.Location = new System.Drawing.Point(8, 6);
-			this.cutRowCursor.Name = "cutRowCursor";
-			this.cutRowCursor.Size = new System.Drawing.Size(1, 47);
-			this.cutRowCursor.Visible = false;
-			// 
-			// MainForm
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.ClientSize = new System.Drawing.Size(1049, 613);
-			this.Controls.Add(this.panel2);
-			this.Controls.Add(this.panel1);
-			this.Menu = this.mainMenu1;
-			this.Name = "MainForm";
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-			this.Text = "ChordQuality";
-			this.Closed += new System.EventHandler(this.MainFormClosed);
-			this.Load += new System.EventHandler(this.MainFormLoad);
-			((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).EndInit();
-			this.intervalBox.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).EndInit();
-			this.transposeBox.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.transposeFileUpDown)).EndInit();
-			this.playbackBox.ResumeLayout(false);
-			this.playbackBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.tempoBar)).EndInit();
-			this.panel1.ResumeLayout(false);
-			this.groupBox1.ResumeLayout(false);
-			this.layoutBox.ResumeLayout(false);
-			this.layoutBox.PerformLayout();
-			this.penaltyBox.ResumeLayout(false);
-			this.tuningBox.ResumeLayout(false);
-			this.qualityBox.ResumeLayout(false);
-			this.chordBox.ResumeLayout(false);
-			this.panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).EndInit();
-			this.cursor.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).EndInit();
-			this.ResumeLayout(false);
+            // 
+            // cutRowCursor
+            // 
+            this.cutRowCursor.BackColor = System.Drawing.Color.Red;
+            this.cutRowCursor.Location = new System.Drawing.Point(8, 6);
+            this.cutRowCursor.Name = "cutRowCursor";
+            this.cutRowCursor.Size = new System.Drawing.Size(1, 47);
+            this.cutRowCursor.TabIndex = 0;
+            this.cutRowCursor.Visible = false;
+            // 
+            // MainForm
+            // 
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.ClientSize = new System.Drawing.Size(1049, 613);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
+            this.Menu = this.mainMenu1;
+            this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "ChordQuality";
+            this.Closed += new System.EventHandler(this.MainFormClosed);
+            this.Load += new System.EventHandler(this.MainFormLoad);
+            ((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).EndInit();
+            this.intervalBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).EndInit();
+            this.transposeBox.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.transposeFileUpDown)).EndInit();
+            this.playbackBox.ResumeLayout(false);
+            this.playbackBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.volumeBar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tempoBar)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.layoutBox.ResumeLayout(false);
+            this.layoutBox.PerformLayout();
+            this.penaltyBox.ResumeLayout(false);
+            this.tuningBox.ResumeLayout(false);
+            this.qualityBox.ResumeLayout(false);
+            this.chordBox.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).EndInit();
+            this.ResumeLayout(false);
 
 		}
-		private System.Windows.Forms.TextBox factor;
-		private System.Windows.Forms.Label label10;
+		private TextBox factor;
+		private Label label10;
 		#endregion
 
 		MidiFile f = null;
@@ -2452,8 +2438,8 @@ namespace ChordQuality
 		}
 	}
 
-	class TransparentPanel : System.Windows.Forms.Panel
-	{
+	class TransparentPanel : Panel
+    {
 		//from http://stackoverflow.com/questions/547172/pass-through-mouse-events-to-parent-control
 		protected override void WndProc(ref Message m)
 		{

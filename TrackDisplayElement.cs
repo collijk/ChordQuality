@@ -7,16 +7,15 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-using System;
 using System.Collections;
 using System.Drawing;
 
 namespace ChordQuality
 {
-	/// <summary>
-	/// Description of TrackDisplayElement.
-	/// </summary>
-	public class TrackDisplayElement
+    /// <summary>
+    /// Description of TrackDisplayElement.
+    /// </summary>
+    public class TrackDisplayElement
 	{
 		public TrackDisplayElement(int time1, int time2, int y,
 		                            System.Drawing.Color color, float width)
