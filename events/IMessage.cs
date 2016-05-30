@@ -1,6 +1,8 @@
 ﻿namespace ChordQuality.events
 {
-    //Empty interface for type correctness in message handling
+    /// <summary>
+    /// Empty message interface for type correctness in message handling.
+    /// </summary>
     public interface IMessage
     {
     }

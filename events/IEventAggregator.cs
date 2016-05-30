@@ -2,6 +2,9 @@
 
 namespace ChordQuality.events
 {   
+    /// <summary>
+    /// Interface for Event Aggregator classes.
+    /// </summary>
     public interface IEventAggregator
     {
         void Publish<TMessage>(TMessage message) where TMessage : IMessage;
