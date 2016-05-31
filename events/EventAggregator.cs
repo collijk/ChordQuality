@@ -11,6 +11,29 @@ namespace ChordQuality.events
     /// </summary>
     public class EventAggregator : IEventAggregator
     {
+        // Thread safe singleton pattern for EventAggregator construction.
+        private static EventAggregator instance = null;
+        private static readonly object padlock = new object();
+
+        EventAggregator()
+        {
+        }
+
+        public static EventAggregator Instance
+        {
+            get
+            {
+                lock(padlock)
+                {
+                    if(instance == null)
+                    {
+                        instance = new EventAggregator();
+                    }
+                    return instance;
+                }
+            }
+        }
+
         /// <summary>
         /// A dictionary maintaining the message types as a set of keys
         /// and a list of subscriptions to each message type as the associated values.

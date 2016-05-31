@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace ChordQuality.events.messages
 {
-    class PlaybackMessage
+    public abstract class PlaybackMessage : IMessage
+    {
+    }
+
+    public class PlayMessage : PlaybackMessage
+    {
+    }
+
+    public class PauseMessage : PlaybackMessage
+    {
+    }
+
+    public class StopMessage : PlaybackMessage
     {
     }
 }

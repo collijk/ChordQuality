@@ -127,8 +127,9 @@
     </Compile>
     <Compile Include="events\EventAggregator.cs" />
     <Compile Include="events\IEventAggregator.cs" />
-    <Compile Include="events\IMessage.cs" />
+    <Compile Include="events\messages\IMessage.cs" />
     <Compile Include="events\ISubscription.cs" />
+    <Compile Include="events\messages\PlaybackMessage.cs" />
     <Compile Include="events\Subscription.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
