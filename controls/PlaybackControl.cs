@@ -7,7 +7,8 @@ namespace ChordQuality
 {
     public partial class PlaybackControl : UserControl
     {
-        private EventAggregator eventAggregator;
+        private IEventAggregator eventAggregator;
+        private ISubscription<FileOpenedMessage> fileOpenedSubscription;
 
         public PlaybackControl()
         {
@@ -18,6 +19,17 @@ namespace ChordQuality
         private void InitializeSubscriptions()
         {
             this.eventAggregator = EventAggregator.Instance;
+            this.fileOpenedSubscription = eventAggregator.Subscribe<FileOpenedMessage>(Message =>
+            {
+                onFileOpened();
+            });
+        }
+
+        private void onFileOpened()
+        {
+            this.playButton.Enabled = true;
+            this.pauseButton.Enabled = false;
+            this.stopButton.Enabled = false;
         }
 
         private void playButton_Click(object sender, System.EventArgs e)
@@ -49,6 +61,8 @@ namespace ChordQuality
         {
             return this.stopButton.Enabled;
         }
+
+
     }
 
 

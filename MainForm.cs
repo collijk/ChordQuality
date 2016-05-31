@@ -115,11 +115,12 @@ namespace ChordQuality
 		private Button cutClrBtn;
 		private Panel cutRowCursor;
 		private float rf;
-        private EventAggregator eventAggregator;
+        private IEventAggregator eventAggregator;
         private ISubscription<PlayMessage> playSubscription;
         private ISubscription<PauseMessage> pauseSubscription;
-        private PlaybackControl playbackControl;
         private ISubscription<StopMessage> stopSubscription;
+        private PlaybackControl playbackControl;
+        
 
 
         public MainForm()
@@ -1282,18 +1283,15 @@ namespace ChordQuality
         private void InitializeSubscriptions()
         {
             this.eventAggregator = EventAggregator.Instance;
-            this.playSubscription = eventAggregator.Subscribe<PlayMessage>
-                (Message =>
+            this.playSubscription = eventAggregator.Subscribe<PlayMessage>(Message =>
                 {
                     Play();
                 });
-            this.pauseSubscription = eventAggregator.Subscribe<PauseMessage>
-                (Message =>
+            this.pauseSubscription = eventAggregator.Subscribe<PauseMessage>(Message =>
                 {
                     Pause();
                 });
-            this.stopSubscription = eventAggregator.Subscribe<StopMessage>
-                (Message =>
+            this.stopSubscription = eventAggregator.Subscribe<StopMessage>(Message =>
                 {
                     Stop();
                 });
@@ -1521,7 +1519,9 @@ namespace ChordQuality
 
 			//place cut panel below
 			cutPanel.Top = offsetScroll.Bottom + 5;
-			//redraw();
+            //redraw();
+
+            eventAggregator.Publish(new FileOpenedMessage());
 		}
 
 		void Timer1Tick(object sender, EventArgs e)

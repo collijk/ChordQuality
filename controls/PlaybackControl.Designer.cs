@@ -155,6 +155,7 @@
             // 
             // stopButton
             // 
+            this.stopButton.Enabled = false;
             this.stopButton.Location = new System.Drawing.Point(165, 19);
             this.stopButton.Name = "stopButton";
             this.stopButton.Size = new System.Drawing.Size(75, 23);
@@ -165,6 +166,7 @@
             // 
             // pauseButton
             // 
+            this.pauseButton.Enabled = false;
             this.pauseButton.Location = new System.Drawing.Point(84, 19);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(75, 23);
@@ -175,6 +177,7 @@
             // 
             // playButton
             // 
+            this.playButton.Enabled = false;
             this.playButton.Location = new System.Drawing.Point(3, 19);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(75, 23);
