@@ -130,6 +130,7 @@
     <Compile Include="events\messages\FileIOMessage.cs" />
     <Compile Include="events\messages\IMessage.cs" />
     <Compile Include="events\ISubscription.cs" />
+    <Compile Include="events\messages\MidiInfoMessage.cs" />
     <Compile Include="events\messages\PlaybackMessage.cs" />
     <Compile Include="events\Subscription.cs" />
     <Compile Include="MainForm.cs">

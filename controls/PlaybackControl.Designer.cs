@@ -96,6 +96,7 @@
             this.tempoTrackBar.TabIndex = 57;
             this.tempoTrackBar.TickFrequency = 10;
             this.tempoTrackBar.Value = 120;
+            this.tempoTrackBar.Scroll += new System.EventHandler(this.tempoTrackBar_Scroll);
             // 
             // instrumentComboBox
             // 
@@ -104,6 +105,7 @@
             this.instrumentComboBox.Name = "instrumentComboBox";
             this.instrumentComboBox.Size = new System.Drawing.Size(231, 21);
             this.instrumentComboBox.TabIndex = 60;
+            this.instrumentComboBox.SelectedIndexChanged += new System.EventHandler(this.instrumentComboBox_SelectedIndexChanged);
             // 
             // midiOutComboBox
             // 
@@ -152,6 +154,7 @@
             this.volumeTrackBar.TickFrequency = 20;
             this.volumeTrackBar.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.volumeTrackBar.Value = 100;
+            this.volumeTrackBar.Scroll += new System.EventHandler(this.volumeTrackBar_Scroll);
             // 
             // stopButton
             // 
