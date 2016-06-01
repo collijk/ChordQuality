@@ -110,10 +110,7 @@ namespace ChordQuality
         private ISubscription<PlayMessage> playSubscription;
         private ISubscription<PauseMessage> pauseSubscription;
         private ISubscription<StopMessage> stopSubscription;
-        // Consider injecting midiplayer into playback control to remove these.
-        private ISubscription<InstrumentChangedMessage> instrumentSubscription;
-        private ISubscription<TempoChangedMessage> tempoSubscription;
-        private ISubscription<VolumeChangedMessage> volumeSubscription;
+        private ISubscription<MidiPlayerUpdatedMessage> midiPlayerSubscription;        
         private PlaybackControl playbackControl;
         
 
@@ -1167,33 +1164,27 @@ namespace ChordQuality
         {
             this.eventAggregator = EventAggregator.Instance;
             this.playSubscription = eventAggregator.Subscribe<PlayMessage>(Message =>
-                {
-                    Play();
-                });
+            {
+                Play(Message.deviceIndex);
+            });
             this.pauseSubscription = eventAggregator.Subscribe<PauseMessage>(Message =>
-                {
-                    Pause();
-                });
+            {
+                Pause();
+            });
             this.stopSubscription = eventAggregator.Subscribe<StopMessage>(Message =>
-                {
-                    Stop();
-                });
-            this.instrumentSubscription = eventAggregator.Subscribe<InstrumentChangedMessage>(Message =>
-                {
-                    updateInstrument(Message.instrument);
-                });
-            this.tempoSubscription = eventAggregator.Subscribe<TempoChangedMessage>(Message =>
-                {
-                    updateTempo(Message.tempo);
-                });
-            this.volumeSubscription = eventAggregator.Subscribe<VolumeChangedMessage>(Message =>
-                {
-                    updateVolume(Message.volume);
-                });
-
+            {
+                Stop();
+            });
+            this.midiPlayerSubscription = eventAggregator.Subscribe<MidiPlayerUpdatedMessage>(Message =>
+            {
+                updatePlayer(Message.player);
+            });
         }
 
-       
+        private void updatePlayer(MidiFilePlayer player)
+        {
+            pl = player;
+        }
 
         MidiFile f = null;
 		Color[] colors = new Color[19] {
@@ -1240,9 +1231,8 @@ namespace ChordQuality
 		{
 			// misc init.'s
 			orientpen.DashStyle = DashStyle.Dot;
-			// detect output ports
-			MidiOutDevs mout = new MidiOutDevs();
-            this.playbackControl.initializeMidiOutBox(mout);			
+			
+			
 			// load tunings from textfiles
 			DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory);
 			FileInfo[] fi = di.GetFiles("*.tng");
@@ -1288,8 +1278,15 @@ namespace ChordQuality
 
 		void OpenFileDialog1FileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-            if(this.playbackControl.isStopEnabled()) Stop();
-			menuItemSave.Enabled = true;
+            // read midi file
+            MidiFileReader fr = new MidiFileReader();
+            f = fr.Read(openMidFileDialog.FileName);
+            
+            FileOpenedMessage message = new FileOpenedMessage();
+            message.file = f;            
+            eventAggregator.Publish(message);
+
+            menuItemSave.Enabled = true;
 			menuItemPrint.Enabled = true;
 			menuItemMidi2Txt.Enabled = true;
 			menuItemMarkers.Enabled = true;
@@ -1298,18 +1295,12 @@ namespace ChordQuality
 			menuItemPrintPreview.Enabled = true;
 			play_start = -1;
 			play_stop = -1;
-			// read midi file
-			MidiFileReader fr = new MidiFileReader();
-			f = fr.Read(openMidFileDialog.FileName);
+			
 
 			// load the track display into memory
 			trackDisplay = new TrackDisplay(f.tracks, trackColors);
 
-			// init file player
-			pl = new MidiFilePlayer(f);
-            pl.Volume = this.playbackControl.getVolume();
-			pl.Tempo = f.tempo;
-			if (f.instrument >= 0) pl.Instrument = f.instrument;
+			
 			for (int i = 0; i < tuningRadios.Length; i++)
 			{
 				if (tuningRadios[i].Checked)
@@ -1319,9 +1310,7 @@ namespace ChordQuality
 			}
 
 			// show file information
-			Text = "ChordQuality   ---   " + f.name;
-            this.playbackControl.setTempo(f.tempo);
-            this.playbackControl.setInstrument(f.instrument);			
+			Text = "ChordQuality   ---   " + f.name;			
 			transposeFileUpDown.Maximum = 127 - f.max_note;
 			transposeFileUpDown.Minimum = 0 - f.min_note;
 
@@ -1397,7 +1386,7 @@ namespace ChordQuality
 			cutPanel.Top = offsetScroll.Bottom + 5;
             //redraw();
 
-            eventAggregator.Publish(new FileOpenedMessage());
+            
 		}
 
 		void Timer1Tick(object sender, EventArgs e)
@@ -1449,17 +1438,14 @@ namespace ChordQuality
 
 		void MainFormClosed(object sender, EventArgs e)
 		{
-			if (this.playbackControl.isStopEnabled())
+			if (pl != null)
 			{
 				Stop();
 			}
 		}
 
 
-        private void updateInstrument(int instrument)
-        {
-            if(pl != null)pl.Instrument = instrument;
-        }
+        
 
         void PrintPage(object sender, PrintPageEventArgs ev)
 		{
@@ -1502,10 +1488,7 @@ namespace ChordQuality
 			}
 		}
 
-        private void updateTempo(int tempo)
-        {
-            if(pl != null)pl.Tempo = tempo;
-        }
+        
 
 
 		void SaveFileDialog1FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1817,19 +1800,17 @@ namespace ChordQuality
 			saveTxtFileDialog.ShowDialog();
 		}
 
-		/***** Playback Event Handlers Begin *****/
-		void Play()
-		{
-            int selectedIndex = this.playbackControl.getMidiOutIndex();
-
+        /***** Playback Event Handlers Begin *****/
+        void Play(int outputDevice)
+        {
             if(play_start == play_stop)
             {
-                pl.Play(selectedIndex);
+                pl.Play(outputDevice);
             } else
             {
                 double selectionStart = Math.Min(play_start, play_stop);
                 double selectionStop = Math.Max(play_start, play_stop);
-                pl.Play(selectedIndex, selectionStart, selectionStop);
+                pl.Play(outputDevice, selectionStart, selectionStop);
             }                
 			timer1.Enabled = true;
 		}
@@ -1853,15 +1834,8 @@ namespace ChordQuality
 			pl.Pause();
 			timer1.Enabled = false;
 		}
-
-        private void updateVolume(int volume)
-        {
-            if(pl != null) pl.Volume = volume;
-        }
-        private void VolumeBarScroll(object sender, EventArgs e)
-		{
-			
-		}
+        
+        
 
 		/***** Tracks Event Handlers Begin *****/
 		void TrackCheckedChanged(object sender, EventArgs e)

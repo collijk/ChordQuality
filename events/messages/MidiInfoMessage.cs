@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Janus.ManagedMIDI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,27 +11,12 @@ namespace ChordQuality.events.messages
     {
     }
 
-    public class InstrumentChangedMessage : MidiInfoMessage
+    public class MidiPlayerUpdatedMessage : MidiInfoMessage
     {
-        public int instrument
+        public MidiFilePlayer player
         {
             get; set;
         }
     }
-
-    public class TempoChangedMessage : MidiInfoMessage
-    {
-        public int tempo
-        {
-            get; set;
-        }
-    }
-
-    public class VolumeChangedMessage : MidiInfoMessage
-    {
-        public int volume
-        {
-            get; set;
-        }
-    }
+   
 }

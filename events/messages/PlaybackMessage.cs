@@ -12,6 +12,10 @@ namespace ChordQuality.events.messages
 
     public class PlayMessage : PlaybackMessage
     {
+        public int deviceIndex
+        {
+            get; set;
+        }
     }
 
     public class PauseMessage : PlaybackMessage

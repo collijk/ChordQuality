@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Janus.ManagedMIDI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,14 @@ namespace ChordQuality.events.messages
 
     public class FileOpenedMessage : FileIOMessage
     {
+        public MidiFile file
+        {
+            get; set;
+        }
+
+        public MidiFilePlayer player
+        {
+            get; set;
+        }
     }
 }

@@ -11,12 +11,16 @@ namespace ChordQuality
     {
         private IEventAggregator eventAggregator;
         private ISubscription<FileOpenedMessage> fileOpenedSubscription;
+        private MidiOutDevs devices;
+        private MidiFile file;
+        private MidiFilePlayer player;
 
         public PlaybackControl()
         {
             InitializeComponent();
             initializeSubscriptions();
-            initializeInstruments();
+            initializeDevices();
+            initializeInstruments();            
         }
 
         private void initializeSubscriptions()
@@ -24,25 +28,77 @@ namespace ChordQuality
             eventAggregator = EventAggregator.Instance;
             fileOpenedSubscription = eventAggregator.Subscribe<FileOpenedMessage>(Message =>
             {
-                onFileOpened();
+                onFileOpened(Message.file);
             });
         }
 
-        private void onFileOpened()
+        private void initializeDevices()
         {
+            devices = new MidiOutDevs();
+            for(int i = 0; i < devices.NumDevs; i++)
+            {
+                midiOutComboBox.Items.Add(devices.Label(i));
+            }
+            midiOutComboBox.SelectedIndex = 0;
+        }
+
+        private void initializeInstruments()
+        {
+            if(File.Exists("MIDI_PatchMap.txt"))
+            {
+                StreamReader sr = new StreamReader("MIDI_PatchMap.txt");
+                for(int i = 0; i < 128; i++)
+                    instrumentComboBox.Items.Add(sr.ReadLine());
+                sr.Close();
+            } else
+            {
+                for(int i = 1; i < 129; i++)
+                    instrumentComboBox.Items.Add(i.ToString().PadLeft(3, '0'));
+            }
+            instrumentComboBox.SelectedIndex = 0;
+        }
+             
+
+        private void onFileOpened(MidiFile file)
+        {
+            player = new MidiFilePlayer(file);
+
+            if(file.tempo >= tempoTrackBar.Minimum &&
+                file.tempo <= tempoTrackBar.Maximum)
+            {
+                player.Tempo = file.tempo;
+                tempoTrackBar.Value = (int) file.tempo;
+            }            
+            if(file.instrument >= 0)
+            {
+                player.Instrument = file.instrument;
+                instrumentComboBox.SelectedIndex = file.instrument;
+            }
+            if(stopButton.Enabled)
+            {
+                eventAggregator.Publish(new StopMessage());
+            }
+
             playButton.Enabled = true;
             pauseButton.Enabled = false;
             stopButton.Enabled = false;
             midiOutComboBox.Enabled = true;
+
+            MidiPlayerUpdatedMessage message = new MidiPlayerUpdatedMessage();
+            message.player = player;
+            eventAggregator.Publish(message);
         }
 
+        #region Local Event Handlers
         private void playButton_Click(object sender, System.EventArgs e)
         {
             playButton.Enabled = false;
             pauseButton.Enabled = true;
             stopButton.Enabled = true;
             midiOutComboBox.Enabled = false;
-            eventAggregator.Publish(new PlayMessage());
+            PlayMessage message = new PlayMessage();
+            message.deviceIndex = this.midiOutComboBox.SelectedIndex;
+            eventAggregator.Publish(message);
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
@@ -63,90 +119,24 @@ namespace ChordQuality
             eventAggregator.Publish(new StopMessage());
         }
 
-        // Currently a hacky fix for testing
-        internal bool isStopEnabled()
-        {
-            return this.stopButton.Enabled;
-        }
-
-        // Currently a hacky fix for testing
-        internal int getMidiOutIndex()
-        {
-            return this.midiOutComboBox.SelectedIndex;
-        }
-
-        // Currently a hacky fix for testing
-        internal double getVolume()
-        {
-            return ((double) this.volumeTrackBar.Value)/this.volumeTrackBar.Maximum;
-        }
-
-        // TODO: Fix this with dependency injection, probably.
-        internal void initializeMidiOutBox(MidiOutDevs mout)
-        {
-            for(int i = 0; i < mout.NumDevs; i++)
-                this.midiOutComboBox.Items.Add(mout.Label(i));
-            this.midiOutComboBox.SelectedIndex = 0;
-        }
-
-        internal void initializeInstruments()
-        {
-            if(File.Exists("MIDI_PatchMap.txt"))
-            {
-                StreamReader sr = new StreamReader("MIDI_PatchMap.txt");
-                for(int i = 0; i < 128; i++)
-                    this.instrumentComboBox.Items.Add(sr.ReadLine());
-                sr.Close();
-            } else
-            {
-                for(int i = 1; i < 129; i++)
-                    this.instrumentComboBox.Items.Add(i.ToString().PadLeft(3, '0'));
-            }
-            this.instrumentComboBox.SelectedIndex = 0;
-        }
-
-        internal void setInstrument(int instrument)
-        {
-            if(instrument >= 0)
-            {
-                this.instrumentComboBox.SelectedIndex = instrument;
-            }            
-        }
-
         private void instrumentComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            InstrumentChangedMessage message = new InstrumentChangedMessage();
-            message.instrument = instrumentComboBox.SelectedIndex;
-            eventAggregator.Publish(message);
+            if(player != null)
+            {
+                player.Instrument = instrumentComboBox.SelectedIndex;
+            }            
         }
 
         private void tempoTrackBar_Scroll(object sender, EventArgs e)
         {
-            TempoChangedMessage message = new TempoChangedMessage();
-            message.tempo = tempoTrackBar.Value;
-            eventAggregator.Publish(message);
-            this.bpmLabel.Text = tempoTrackBar.Value.ToString() + " bpm";
-        }
-
-        internal void setTempo(double tempo)
-        {
-            if(tempo >= this.tempoTrackBar.Minimum && 
-                tempo <= this.tempoTrackBar.Maximum)
-            {
-                this.tempoTrackBar.Value = (int) tempo;
-            }
+            player.Tempo = tempoTrackBar.Value;
+            bpmLabel.Text = tempoTrackBar.Value.ToString() + " bpm";
         }
 
         private void volumeTrackBar_Scroll(object sender, EventArgs e)
         {
-            VolumeChangedMessage message = new VolumeChangedMessage();
-            message.volume = volumeTrackBar.Value;
-            eventAggregator.Publish(message);
+            player.Volume = volumeTrackBar.Value;
         }
-
-        
+        #endregion
     }
-
-
-
 }
