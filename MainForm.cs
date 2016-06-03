@@ -916,7 +916,7 @@ namespace ChordQuality
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 211);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1220, 108);
+            this.panel2.Size = new System.Drawing.Size(1220, 87);
             this.panel2.TabIndex = 46;
             this.panel2.Resize += new System.EventHandler(this.Panel2Resize);
             // 
@@ -1126,7 +1126,7 @@ namespace ChordQuality
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(1220, 319);
+            this.ClientSize = new System.Drawing.Size(1220, 298);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Menu = this.mainMenu1;
@@ -1440,7 +1440,9 @@ namespace ChordQuality
 		{
 			if (pl != null)
 			{
-				Stop();
+                System.Diagnostics.Debug.Write(pl.ToString());
+                Stop();
+                
 			}
 		}
 

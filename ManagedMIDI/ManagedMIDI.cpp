@@ -2173,7 +2173,10 @@ namespace Janus
 			}
 			void Stop()
 			{
-				stream->Stop();
+				if (stream != nullptr)
+				{
+					stream->Stop();
+				}				
 			}
 			
 			property double Position // position of the playback cursor in the file (in bars)

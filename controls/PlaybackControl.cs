@@ -11,8 +11,7 @@ namespace ChordQuality
     {
         private IEventAggregator eventAggregator;
         private ISubscription<FileOpenedMessage> fileOpenedSubscription;
-        private MidiOutDevs devices;
-        private MidiFile file;
+        private MidiOutDevs devices;        
         private MidiFilePlayer player;
 
         public PlaybackControl()
@@ -68,6 +67,7 @@ namespace ChordQuality
             {
                 player.Tempo = file.tempo;
                 tempoTrackBar.Value = (int) file.tempo;
+                bpmLabel.Text = tempoTrackBar.Value.ToString() + " bpm";
             }            
             if(file.instrument >= 0)
             {
