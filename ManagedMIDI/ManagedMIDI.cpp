@@ -1289,6 +1289,7 @@ namespace Janus
 			int bars;
 			double tempo;
 			int instrument;
+			int transpose;
 			Byte max_note,min_note;
 			MetaMsg ^key_sig,^time_sig;
 			MidiFile()
@@ -1446,7 +1447,7 @@ namespace Janus
 				RemoveMarkers(tr,t_start,t_stop);
 			}
 		private:
-			int transpose;
+			
 			// merge all tracks into "allevents"
 			// (no meta msgs & instrument  changes)
 			// used for playback and chord finding

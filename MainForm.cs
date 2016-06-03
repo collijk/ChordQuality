@@ -18,7 +18,6 @@ namespace ChordQuality
     {
 		private System.ComponentModel.IContainer components;
 		private MenuItem menuItemOpen;
-		private NumericUpDown transposeFileUpDown;
 		private GroupBox layoutBox;
 		private GroupBox chordBox;
 		private ContextMenu contextMenu1;
@@ -73,8 +72,6 @@ namespace ChordQuality
 		private SaveFileDialog saveMidFileDialog;
 		private Panel panel2;
 		private Panel panel1;
-		private Label offsetLabel;
-		private GroupBox transposeBox;
 		private MenuItem menuItemSave;
 		private NumericUpDown transposeTuningUpDown;
 		private VScrollBar weightScroll3min;
@@ -110,7 +107,9 @@ namespace ChordQuality
         private ISubscription<PlayMessage> playSubscription;
         private ISubscription<PauseMessage> pauseSubscription;
         private ISubscription<StopMessage> stopSubscription;
-        private ISubscription<MidiPlayerUpdatedMessage> midiPlayerSubscription;        
+        private ISubscription<MidiPlayerUpdatedMessage> midiPlayerSubscription;
+        private ISubscription<FileTransposedMessage> fileTransposeSubscription;
+        private controls.FileTransposeControl fileTransposeControl1;
         private PlaybackControl playbackControl;
         
 
@@ -165,9 +164,6 @@ namespace ChordQuality
             this.menuItem1 = new System.Windows.Forms.MenuItem();
             this.transposeTuningUpDown = new System.Windows.Forms.NumericUpDown();
             this.menuItemSave = new System.Windows.Forms.MenuItem();
-            this.transposeBox = new System.Windows.Forms.GroupBox();
-            this.transposeFileUpDown = new System.Windows.Forms.NumericUpDown();
-            this.offsetLabel = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cutClrBtn = new System.Windows.Forms.Button();
@@ -226,12 +222,11 @@ namespace ChordQuality
             this.cutBarSecond = new ChordQuality.TransparentPanel();
             this.cutBarFirst = new ChordQuality.TransparentPanel();
             this.hoverBar = new ChordQuality.TransparentPanel();
+            this.fileTransposeControl1 = new ChordQuality.controls.FileTransposeControl();
             this.playbackControl = new ChordQuality.PlaybackControl();
             ((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).BeginInit();
             this.intervalBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).BeginInit();
-            this.transposeBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.transposeFileUpDown)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.layoutBox.SuspendLayout();
@@ -536,56 +531,17 @@ namespace ChordQuality
             this.menuItemSave.Text = "Save...";
             this.menuItemSave.Click += new System.EventHandler(this.MenuItemSaveClick);
             // 
-            // transposeBox
-            // 
-            this.transposeBox.Controls.Add(this.transposeFileUpDown);
-            this.transposeBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.transposeBox.Location = new System.Drawing.Point(309, 12);
-            this.transposeBox.Name = "transposeBox";
-            this.transposeBox.Size = new System.Drawing.Size(88, 44);
-            this.transposeBox.TabIndex = 52;
-            this.transposeBox.TabStop = false;
-            this.transposeBox.Text = "Transpose File";
-            // 
-            // transposeFileUpDown
-            // 
-            this.transposeFileUpDown.Location = new System.Drawing.Point(16, 15);
-            this.transposeFileUpDown.Maximum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-            this.transposeFileUpDown.Minimum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            -2147483648});
-            this.transposeFileUpDown.Name = "transposeFileUpDown";
-            this.transposeFileUpDown.Size = new System.Drawing.Size(56, 20);
-            this.transposeFileUpDown.TabIndex = 0;
-            this.transposeFileUpDown.ValueChanged += new System.EventHandler(this.TransposeFileUpDownValueChanged);
-            // 
-            // offsetLabel
-            // 
-            this.offsetLabel.Location = new System.Drawing.Point(322, 61);
-            this.offsetLabel.Name = "offsetLabel";
-            this.offsetLabel.Size = new System.Drawing.Size(88, 12);
-            this.offsetLabel.TabIndex = 43;
-            this.offsetLabel.Text = "offset: 0 bars";
-            this.offsetLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel1.Controls.Add(this.fileTransposeControl1);
             this.panel1.Controls.Add(this.playbackControl);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.layoutBox);
             this.panel1.Controls.Add(this.penaltyBox);
-            this.panel1.Controls.Add(this.offsetLabel);
-            this.panel1.Controls.Add(this.transposeBox);
             this.panel1.Controls.Add(this.tuningBox);
             this.panel1.Controls.Add(this.qualityBox);
             this.panel1.Controls.Add(this.label20);
@@ -593,7 +549,7 @@ namespace ChordQuality
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1220, 211);
+            this.panel1.Size = new System.Drawing.Size(1220, 287);
             this.panel1.TabIndex = 45;
             // 
             // groupBox1
@@ -902,6 +858,8 @@ namespace ChordQuality
             // 
             // panel2
             // 
+            this.panel2.AutoSize = true;
+            this.panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel2.BackColor = System.Drawing.SystemColors.ControlLight;
             this.panel2.Controls.Add(this.cutPanel);
             this.panel2.Controls.Add(this.cutBarSecond);
@@ -914,15 +872,16 @@ namespace ChordQuality
             this.panel2.Controls.Add(this.hoverBar);
             this.panel2.Controls.Add(this.noteDisplay);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 211);
+            this.panel2.Location = new System.Drawing.Point(0, 287);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1220, 87);
+            this.panel2.Size = new System.Drawing.Size(1220, 140);
             this.panel2.TabIndex = 46;
             this.panel2.Resize += new System.EventHandler(this.Panel2Resize);
             // 
             // cutPanel
             // 
-            this.cutPanel.Location = new System.Drawing.Point(8, 196);
+            this.cutPanel.AutoScroll = true;
+            this.cutPanel.Location = new System.Drawing.Point(8, 140);
             this.cutPanel.Name = "cutPanel";
             this.cutPanel.Size = new System.Drawing.Size(976, 235);
             this.cutPanel.TabIndex = 47;
@@ -1114,6 +1073,15 @@ namespace ChordQuality
             this.hoverBar.TabIndex = 31;
             this.hoverBar.Visible = false;
             // 
+            // fileTransposeControl1
+            // 
+            this.fileTransposeControl1.AutoSize = true;
+            this.fileTransposeControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.fileTransposeControl1.Location = new System.Drawing.Point(0, 211);
+            this.fileTransposeControl1.Name = "fileTransposeControl1";
+            this.fileTransposeControl1.Size = new System.Drawing.Size(161, 73);
+            this.fileTransposeControl1.TabIndex = 1;
+            // 
             // playbackControl
             // 
             this.playbackControl.AutoSize = true;
@@ -1126,20 +1094,18 @@ namespace ChordQuality
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-            this.ClientSize = new System.Drawing.Size(1220, 298);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(1220, 427);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Menu = this.mainMenu1;
             this.Name = "MainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ChordQuality";
             this.Closed += new System.EventHandler(this.MainFormClosed);
             this.Load += new System.EventHandler(this.MainFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).EndInit();
             this.intervalBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).EndInit();
-            this.transposeBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.transposeFileUpDown)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -1178,6 +1144,12 @@ namespace ChordQuality
             this.midiPlayerSubscription = eventAggregator.Subscribe<MidiPlayerUpdatedMessage>(Message =>
             {
                 updatePlayer(Message.player);
+            });
+            this.fileTransposeSubscription = eventAggregator.Subscribe<FileTransposedMessage>(Message =>
+            {
+                chords = Message.chords;
+                update_tuning_avg();
+                redraw();
             });
         }
 
@@ -1271,8 +1243,7 @@ namespace ChordQuality
 			chordDisplay.Top = noteDisplay.Bottom + 1;
 			chordDisplay.Height = (int)(2 * maxq);
 			chordNameDisplay.Top = chordDisplay.Bottom + 1;
-			offsetScroll.Top = chordNameDisplay.Bottom;
-			offsetLabel.Top = offsetScroll.Bottom + 8;
+			offsetScroll.Top = chordNameDisplay.Bottom;			
 			zoomScroll.Height = noteDisplay.Height + chordDisplay.Height + chordNameDisplay.Height + 2;
 		}
 
@@ -1310,9 +1281,7 @@ namespace ChordQuality
 			}
 
 			// show file information
-			Text = "ChordQuality   ---   " + f.name;			
-			transposeFileUpDown.Maximum = 127 - f.max_note;
-			transposeFileUpDown.Minimum = 0 - f.min_note;
+			Text = "ChordQuality   ---   " + f.name;						
 
 			// adjust noteDisplay size
 			noteDisplay.Height = (f.max_note - f.min_note) * 2 + 1;
@@ -1421,7 +1390,9 @@ namespace ChordQuality
 
 		void OffsetScrollValueChanged(object sender, EventArgs e)
 		{
-			offsetLabel.Text = "offset: " + offsetScroll.Value.ToString() + " bars";
+            BarOffsetChangedMessage message = new BarOffsetChangedMessage();
+            message.offsetValue = offsetScroll.Value.ToString();
+            eventAggregator.Publish(message);
 			redraw();
 		}
 
@@ -1536,7 +1507,7 @@ namespace ChordQuality
 				offsetScroll.Top = chordDisplay.Bottom;
 			else
 				offsetScroll.Top = noteDisplay.Bottom;
-			offsetLabel.Top = offsetScroll.Bottom + 8;
+			
 			if (f != null) redraw();
 		}
 
@@ -1601,7 +1572,7 @@ namespace ChordQuality
 		void SaveTxtFileDialogFileOk(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			AnalysisFileWriter w = new AnalysisFileWriter(saveTxtFileDialog.FileName);
-			w.WriteTracks(f, (int)transposeFileUpDown.Value);
+			w.WriteTracks(f);
 			w.WriteTunings(tunings);
 			w.WriteTuningTranspose((int)transposeTuningUpDown.Value);
 			w.WriteWeights(qualityWeights, thresholdUpDown);
@@ -1622,19 +1593,7 @@ namespace ChordQuality
 			qualityWeights.Ch3 = (20 - weightScrollCh3.Value) / 10.0;
 			update_tuning_avg();
 			if (f != null) redraw_chords();
-		}
-
-		void TransposeFileUpDownValueChanged(object sender, EventArgs e)
-		{
-			if (f != null)
-			{
-				f.Transpose((int)transposeFileUpDown.Value);
-				chords = f.FindChords();
-				update_tuning_avg();
-				redraw();
-			}
-
-		}
+		}		
 
 		void PenaltyScrollAddValueChanged(object sender, EventArgs e)
 		{

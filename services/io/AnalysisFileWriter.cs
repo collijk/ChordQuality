@@ -12,13 +12,13 @@ namespace ChordQuality.Services
         {
             sw = File.CreateText(filename);
         }
-        public void WriteTracks(MidiFile f, int t)
+        public void WriteTracks(MidiFile f)
         {
             sw.WriteLine("<<< SOURCE FILE >>>");
             sw.WriteLine(f.name);
             sw.WriteLine();
             sw.WriteLine("<<< TRANSPOSE >>>");
-            sw.WriteLine(t);
+            sw.WriteLine(f.transpose);
             sw.WriteLine();
             sw.WriteLine("<<< TRACKS >>>");
             for(int i = 0; i < f.tracks.Length; i++)

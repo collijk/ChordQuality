@@ -1,5 +1,6 @@
 ﻿using Janus.ManagedMIDI;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,14 @@ namespace ChordQuality.events.messages
     public class MidiPlayerUpdatedMessage : MidiInfoMessage
     {
         public MidiFilePlayer player
+        {
+            get; set;
+        }
+    }
+
+    public class FileTransposedMessage : MidiInfoMessage
+    {
+        public ArrayList chords
         {
             get; set;
         }

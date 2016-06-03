@@ -29,18 +29,17 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.offsetLabel = new System.Windows.Forms.Label();
             this.fileTransposeUpDown = new System.Windows.Forms.NumericUpDown();
             this.fileTransposeLabel = new System.Windows.Forms.Label();
+            this.offsetValueLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileTransposeUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.numericUpDown1);
+            this.groupBox1.Controls.Add(this.offsetValueLabel);
             this.groupBox1.Controls.Add(this.offsetLabel);
             this.groupBox1.Controls.Add(this.fileTransposeUpDown);
             this.groupBox1.Controls.Add(this.fileTransposeLabel);
@@ -50,13 +49,6 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "File Transposition";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(83, 44);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(61, 20);
-            this.numericUpDown1.TabIndex = 3;
             // 
             // offsetLabel
             // 
@@ -83,6 +75,7 @@
             this.fileTransposeUpDown.Name = "fileTransposeUpDown";
             this.fileTransposeUpDown.Size = new System.Drawing.Size(60, 20);
             this.fileTransposeUpDown.TabIndex = 1;
+            this.fileTransposeUpDown.ValueChanged += new System.EventHandler(this.fileTransposeUpDown_ValueChanged);
             // 
             // fileTransposeLabel
             // 
@@ -92,6 +85,15 @@
             this.fileTransposeLabel.Size = new System.Drawing.Size(60, 13);
             this.fileTransposeLabel.TabIndex = 0;
             this.fileTransposeLabel.Text = "Transpose:";
+            // 
+            // offsetValueLabel
+            // 
+            this.offsetValueLabel.AutoSize = true;
+            this.offsetValueLabel.Location = new System.Drawing.Point(90, 46);
+            this.offsetValueLabel.Name = "offsetValueLabel";
+            this.offsetValueLabel.Size = new System.Drawing.Size(37, 13);
+            this.offsetValueLabel.TabIndex = 3;
+            this.offsetValueLabel.Text = "0 Bars";
             // 
             // FileTransposeControl
             // 
@@ -104,7 +106,6 @@
             this.Size = new System.Drawing.Size(161, 73);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fileTransposeUpDown)).EndInit();
             this.ResumeLayout(false);
 
@@ -115,7 +116,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label fileTransposeLabel;
         private System.Windows.Forms.NumericUpDown fileTransposeUpDown;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label offsetLabel;
+        private System.Windows.Forms.Label offsetValueLabel;
     }
 }

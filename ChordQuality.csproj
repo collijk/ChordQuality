@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="events\EventAggregator.cs" />
     <Compile Include="events\IEventAggregator.cs" />
+    <Compile Include="events\messages\DisplayChangeMessage.cs" />
     <Compile Include="events\messages\FileIOMessage.cs" />
     <Compile Include="events\messages\IMessage.cs" />
     <Compile Include="events\ISubscription.cs" />
@@ -199,7 +200,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="services\AnalysisFileWriter.cs" />
+    <Compile Include="services\io\AnalysisFileWriter.cs" />
     <Compile Include="TrackDisplayElement.cs" />
     <Compile Include="TrackDisplay.cs" />
   </ItemGroup>
