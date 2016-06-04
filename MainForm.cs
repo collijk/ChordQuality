@@ -110,6 +110,7 @@ namespace ChordQuality
         private ISubscription<MidiPlayerUpdatedMessage> midiPlayerSubscription;
         private ISubscription<FileTransposedMessage> fileTransposeSubscription;
         private controls.FileTransposeControl fileTransposeControl1;
+        private PageSetupDialog pageSetupDialog1;
         private PlaybackControl playbackControl;
         
 
@@ -224,6 +225,7 @@ namespace ChordQuality
             this.hoverBar = new ChordQuality.TransparentPanel();
             this.fileTransposeControl1 = new ChordQuality.controls.FileTransposeControl();
             this.playbackControl = new ChordQuality.PlaybackControl();
+            this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             ((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).BeginInit();
             this.intervalBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.transposeTuningUpDown)).BeginInit();
@@ -874,7 +876,7 @@ namespace ChordQuality
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 287);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1220, 140);
+            this.panel2.Size = new System.Drawing.Size(1220, 119);
             this.panel2.TabIndex = 46;
             this.panel2.Resize += new System.EventHandler(this.Panel2Resize);
             // 
@@ -1095,7 +1097,7 @@ namespace ChordQuality
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1220, 427);
+            this.ClientSize = new System.Drawing.Size(1220, 406);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Menu = this.mainMenu1;

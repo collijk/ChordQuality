@@ -15,7 +15,7 @@ namespace ChordQuality.events
         private static EventAggregator instance = null;
         private static readonly object padlock = new object();
 
-        EventAggregator()
+        private EventAggregator()
         {
         }
 

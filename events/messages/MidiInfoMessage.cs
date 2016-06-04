@@ -27,5 +27,18 @@ namespace ChordQuality.events.messages
             get; set;
         }
     }
+
+    public class PlaySelectionChangedMessage : MidiInfoMessage
+    {
+        public double playStart
+        {
+            get; set;
+        }
+
+        public double playStop
+        {
+            get; set;
+        }
+    }
    
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ChordQuality.events.messages
 {
@@ -17,4 +18,21 @@ namespace ChordQuality.events.messages
             get; set;
         }
     }
+
+    public class ZoomScrollChangedMessage : DisplayChangeMessage
+    {
+        public int zoomValue
+        {
+            get; set;
+        }
+    }
+
+    public class TrackDisplayChangedMessage : DisplayChangeMessage
+    {
+        public TrackDisplay trackDisplay
+        {
+            get; set;
+        }
+    }
+      
 }

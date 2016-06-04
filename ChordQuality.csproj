@@ -95,6 +95,12 @@
     <Compile Include="controls\CutControl.Designer.cs">
       <DependentUpon>CutControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="controls\MainMenuControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\MainMenuControl.Designer.cs">
+      <DependentUpon>MainMenuControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="controls\PenaltiesControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -149,6 +155,9 @@
     </Compile>
     <EmbeddedResource Include="controls\ControlPanel.resx">
       <DependentUpon>ControlPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\MainMenuControl.resx">
+      <DependentUpon>MainMenuControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="controls\PenaltiesControl.resx">
       <DependentUpon>PenaltiesControl.cs</DependentUpon>
