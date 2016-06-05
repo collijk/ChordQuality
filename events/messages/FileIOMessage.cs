@@ -16,11 +16,16 @@ namespace ChordQuality.events.messages
         public MidiFile file
         {
             get; set;
-        }
+        }        
+    }
 
-        public MidiFilePlayer player
+    public class FileUpdatedMessage : FileIOMessage
+    {
+        public MidiFile file
         {
             get; set;
         }
     }
+
+    
 }

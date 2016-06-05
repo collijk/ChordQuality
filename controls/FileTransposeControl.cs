@@ -10,7 +10,7 @@ namespace ChordQuality.controls
     {
 
         private IEventAggregator eventAggregator;
-        private ISubscription<FileOpenedMessage> fileOpenedSubscription;
+        private ISubscription<FileUpdatedMessage> fileOpenedSubscription;
         private ISubscription<BarOffsetChangedMessage> barOffsetSubscription;
         private MidiFile file;
 
@@ -23,9 +23,9 @@ namespace ChordQuality.controls
         private void initializeSubscriptions()
         {
             eventAggregator = EventAggregator.Instance;
-            fileOpenedSubscription = eventAggregator.Subscribe<FileOpenedMessage>(Message =>
+            fileOpenedSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
             {
-                onFileOpened(Message.file);
+                onFileUpdated(Message.file);
             });
             barOffsetSubscription = eventAggregator.Subscribe<BarOffsetChangedMessage>(Message =>
             {
@@ -33,7 +33,7 @@ namespace ChordQuality.controls
             });
         }
 
-        private void onFileOpened(MidiFile file)
+        private void onFileUpdated(MidiFile file)
         {
             this.file = file;
             fileTransposeUpDown.Maximum = 127 - file.max_note;

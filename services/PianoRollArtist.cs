@@ -31,7 +31,7 @@ namespace ChordQuality.services
         SolidBrush drawBrush = new SolidBrush(Color.Black);
         Font drawFont = new Font("Courier New", 10);
         Pen orientpen = new Pen(Color.LightGray, 1);
-        private int zoomScrollValue = 0;
+        private int zoomScrollValue = 15;
         private float relThickness = 0.5f;
         private double playStart = -1;
         private double playStop = -1;
@@ -45,7 +45,7 @@ namespace ChordQuality.services
 
         private IEventAggregator eventAggregator;
         private ISubscription<ZoomScrollChangedMessage> zoomScrollSubscription;
-        private ISubscription<FileOpenedMessage> fileSubscription;
+        private ISubscription<FileUpdatedMessage> fileSubscription;
         private ISubscription<TrackDisplayChangedMessage> trackDisplaySubscription;
         private ISubscription<RelThicknessChangedMessage> relThicknessSubscription;
         private ISubscription<PlaySelectionChangedMessage> playSelectionSubscription;
@@ -68,7 +68,7 @@ namespace ChordQuality.services
             {
                 zoomScrollValue = Message.zoomValue;
             });
-            fileSubscription = eventAggregator.Subscribe<FileOpenedMessage>(Message =>
+            fileSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
             {
                 currentFile = Message.file;
             });

@@ -1,17 +1,107 @@
-﻿using Janus.ManagedMIDI;
+﻿using ChordQuality.events;
+using ChordQuality.events.messages;
+using Janus.ManagedMIDI;
 using System;
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
+using System.ComponentModel;
+using Janus.Misc;
 
 namespace ChordQuality.Services
 {
     public class AnalysisFileWriter
     {
-        public AnalysisFileWriter(string filename)
+        private IEventAggregator eventAggregator;
+        private SaveFileDialog saveAnalysisDialog;
+        private ISubscription<FileUpdatedMessage> midiFileSubscription;
+        private ISubscription<TuningsUpdatedMessage> tuningsSubscription;
+        private ISubscription<TuningsTransposedMessage> tuningsTransposedSubscription;
+        private ISubscription<QualityWeightsUpdatedMessage> qualityWeightsSubscription;
+        private ISubscription<PenaltiesChangedMessage> penaltiesSubscription;
+        private MidiFile currentFile;
+        private TuningScheme[] tunings;
+        private int tuningTransposeValue = 0;
+        private QualityWeights qualityWeights;
+        private String penaltiesValue = "1";
+
+        // Thread safe singleton pattern for MidiToTextWriter construction.
+        private static AnalysisFileWriter instance = null;
+        private static readonly object padlock = new object();
+
+        public static AnalysisFileWriter Instance
         {
-            sw = File.CreateText(filename);
+            get
+            {
+                lock(padlock)
+                {
+                    if(instance == null)
+                    {
+                        instance = new AnalysisFileWriter();
+                    }
+                    return instance;
+                }
+            }
         }
+
+        
+        private AnalysisFileWriter()
+        {
+            initializeSubscriptions();
+            initializeDialog();
+        }
+
+        private void initializeDialog()
+        {
+            saveAnalysisDialog = new SaveFileDialog();
+            saveAnalysisDialog.DefaultExt = "txt";
+            saveAnalysisDialog.Filter = "TXT-Files|*.txt";
+            saveAnalysisDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialogFileOk);
+        }
+
+        private void SaveFileDialogFileOk(object sender, CancelEventArgs e)
+        {
+            WriteTracks(currentFile);
+            WriteTunings(tunings);
+            WriteTuningTranspose(tuningTransposeValue);
+            WriteWeights(qualityWeights, penaltiesValue);
+            WriteChords(currentFile.FindChords(), currentFile, tunings, qualityWeights);
+            Close();
+            Shell.Execute(saveAnalysisDialog.FileName);
+        }
+
+        private void initializeSubscriptions()
+        {
+            eventAggregator = EventAggregator.Instance;
+            midiFileSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
+            {
+                currentFile = Message.file;
+            });
+            tuningsSubscription = eventAggregator.Subscribe<TuningsUpdatedMessage>(Message =>
+            {
+                tunings = Message.tunings;
+            });
+            tuningsTransposedSubscription = eventAggregator.Subscribe<TuningsTransposedMessage>(Message =>
+            {
+                tuningTransposeValue = Message.transposeValue;
+            });
+            qualityWeightsSubscription = eventAggregator.Subscribe<QualityWeightsUpdatedMessage>(Message =>
+            {
+                qualityWeights = Message.qualityWeights;
+            });
+            penaltiesSubscription = eventAggregator.Subscribe<PenaltiesChangedMessage>(Message =>
+            {
+                penaltiesValue = Message.penalties;
+            });
+        }
+
+        public void writeAnalysis()
+        {
+            saveAnalysisDialog.FileName = Path.ChangeExtension(currentFile.name, null);
+            saveAnalysisDialog.FileName += "_analysis.txt";
+            saveAnalysisDialog.ShowDialog();
+        }
+
         public void WriteTracks(MidiFile f)
         {
             sw.WriteLine("<<< SOURCE FILE >>>");
@@ -48,7 +138,7 @@ namespace ChordQuality.Services
             sw.WriteLine(t);
             sw.WriteLine();
         }
-        public void WriteWeights(QualityWeights w, DomainUpDown tud)
+        public void WriteWeights(QualityWeights w, String penalties)
         {
             sw.WriteLine("<<< QUALITY WEIGHTS >>>");
             sw.WriteLine("INTERVALS:");
@@ -65,7 +155,7 @@ namespace ChordQuality.Services
             sw.WriteLine("<<< PENALTIES >>>");
             sw.WriteLine("Additional Notes:\t" + w.Add);
             sw.WriteLine("Short Notes:\t" + w.Short);
-            sw.WriteLine("Threshold for Short Notes:\t" + tud.Text);
+            sw.WriteLine("Threshold for Short Notes:\t" + penalties);
             sw.WriteLine();
         }
         public void WriteChords(ArrayList chords, MidiFile f, TuningScheme[] t, QualityWeights w)

@@ -12,7 +12,7 @@ namespace ChordQuality.services.io
         private PrintDialog printDialog;
         private PrintDocumentProvider printDocProvider;
 
-        // Thread safe singleton pattern for EventAggregator construction.
+        // Thread safe singleton pattern for PrintDocumentPrinter construction.
         private static PrintDocumentPrinter instance = null;
         private static readonly object padlock = new object();
 

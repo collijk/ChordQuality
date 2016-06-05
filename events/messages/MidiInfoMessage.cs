@@ -40,5 +40,44 @@ namespace ChordQuality.events.messages
             get; set;
         }
     }
-   
+
+    public class MarkersChangedMessage : MidiInfoMessage
+    {
+    }
+
+    public class FindBestTuningsMessage : MidiInfoMessage
+    {
+    }
+
+    public class TuningsUpdatedMessage : MidiInfoMessage
+    {
+        public TuningScheme[] tunings
+        {
+            get; set;
+        }
+    }
+
+    public class TuningsTransposedMessage : MidiInfoMessage
+    {
+        public int transposeValue
+        {
+            get; set;
+        }
+    }
+
+    public class QualityWeightsUpdatedMessage : MidiInfoMessage
+    {
+        public QualityWeights qualityWeights
+        {
+            get; set;
+        }
+    }
+
+    public class PenaltiesChangedMessage : MidiInfoMessage
+    {
+        public String penalties
+        {
+            get; set;
+        }
+    }
 }

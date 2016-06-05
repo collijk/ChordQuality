@@ -10,7 +10,7 @@ namespace ChordQuality
     public partial class PlaybackControl : UserControl
     {
         private IEventAggregator eventAggregator;
-        private ISubscription<FileOpenedMessage> fileOpenedSubscription;
+        private ISubscription<FileUpdatedMessage> fileOpenedSubscription;
         private MidiOutDevs devices;        
         private MidiFilePlayer player;
 
@@ -25,9 +25,9 @@ namespace ChordQuality
         private void initializeSubscriptions()
         {
             eventAggregator = EventAggregator.Instance;
-            fileOpenedSubscription = eventAggregator.Subscribe<FileOpenedMessage>(Message =>
+            fileOpenedSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
             {
-                onFileOpened(Message.file);
+                onFileUpdated(Message.file);
             });
         }
 
@@ -58,7 +58,7 @@ namespace ChordQuality
         }
              
 
-        private void onFileOpened(MidiFile file)
+        private void onFileUpdated(MidiFile file)
         {
             player = new MidiFilePlayer(file);
 

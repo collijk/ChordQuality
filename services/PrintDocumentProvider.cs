@@ -14,7 +14,7 @@ namespace ChordQuality.services
     class PrintDocumentProvider
     {
         private IEventAggregator eventAggregator;
-        private ISubscription<FileOpenedMessage> midiFileSubscription;
+        private ISubscription<FileUpdatedMessage> midiFileSubscription;
         private ISubscription<ZoomScrollChangedMessage> zoomValueSubscription;
         private ISubscription<RowsPerPageChangedMessage> rowsPerPageSubscription;
         private MidiFile currentFile;
@@ -64,7 +64,7 @@ namespace ChordQuality.services
         private void initializeSubscriptions()
         {
             eventAggregator = EventAggregator.Instance;
-            midiFileSubscription = eventAggregator.Subscribe<FileOpenedMessage>(Message =>
+            midiFileSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
             {
                 currentFile = Message.file;
             });

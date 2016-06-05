@@ -12,7 +12,7 @@ namespace ChordQuality.services
     class FileInfoProvider
     {
         private IEventAggregator eventAggregator;
-        private ISubscription<FileOpenedMessage> midiFileSubscription;
+        private ISubscription<FileUpdatedMessage> midiFileSubscription;
         private MidiFile currentFile;
 
         // Thread safe singleton pattern for EventAggregator construction.
@@ -42,7 +42,7 @@ namespace ChordQuality.services
         private void initializeSubscriptions()
         {
             eventAggregator = EventAggregator.Instance;
-            midiFileSubscription = eventAggregator.Subscribe<FileOpenedMessage>(Message =>
+            midiFileSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
             {
                 currentFile = Message.file;
             });

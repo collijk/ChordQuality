@@ -69,6 +69,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2|x86'">
+    <OutputPath>bin\x86\Debug2\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug2|x64'">
+    <OutputPath>bin\x64\Debug2\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -133,12 +139,14 @@
     </Compile>
     <Compile Include="events\EventAggregator.cs" />
     <Compile Include="events\IEventAggregator.cs" />
+    <Compile Include="events\messages\ApplicationMessage.cs" />
     <Compile Include="events\messages\DisplayChangeMessage.cs" />
     <Compile Include="events\messages\FileIOMessage.cs" />
     <Compile Include="events\messages\IMessage.cs" />
     <Compile Include="events\ISubscription.cs" />
     <Compile Include="events\messages\MidiInfoMessage.cs" />
     <Compile Include="events\messages\PlaybackMessage.cs" />
+    <Compile Include="events\messages\PrintSettingsMesage.cs" />
     <Compile Include="events\Subscription.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -209,7 +217,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="services\FileInfoProvider.cs" />
     <Compile Include="services\io\AnalysisFileWriter.cs" />
+    <Compile Include="services\io\MidiFileOpener.cs" />
+    <Compile Include="services\io\MidiFileSaver.cs" />
+    <Compile Include="services\io\MidiToTextWriter.cs" />
+    <Compile Include="services\io\PrintDocumentPrinter.cs" />
+    <Compile Include="services\PianoRollArtist.cs" />
+    <Compile Include="services\PrintDocumentProvider.cs" />
+    <Compile Include="services\PrintPreviewProvider.cs" />
     <Compile Include="TrackDisplayElement.cs" />
     <Compile Include="TrackDisplay.cs" />
   </ItemGroup>
