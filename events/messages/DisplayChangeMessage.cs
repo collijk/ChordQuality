@@ -34,5 +34,9 @@ namespace ChordQuality.events.messages
             get; set;
         }
     }
+
+    public class TrackColorChangedMessage : DisplayChangeMessage
+    {
+    }
       
 }

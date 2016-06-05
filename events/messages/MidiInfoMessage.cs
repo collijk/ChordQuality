@@ -80,4 +80,8 @@ namespace ChordQuality.events.messages
             get; set;
         }
     }
+
+    public class TracksChangedMessage : MidiInfoMessage
+    {
+    }
 }

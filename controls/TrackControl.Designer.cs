@@ -28,9 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.trackBox = new System.Windows.Forms.GroupBox();
             this.trackPanel = new System.Windows.Forms.Panel();
+            this.colorContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.colorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trackBox.SuspendLayout();
+            this.colorContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // trackBox
@@ -49,10 +53,25 @@
             // 
             this.trackPanel.AutoScroll = true;
             this.trackPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.trackPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.trackPanel.Location = new System.Drawing.Point(3, 16);
             this.trackPanel.Name = "trackPanel";
             this.trackPanel.Size = new System.Drawing.Size(219, 141);
             this.trackPanel.TabIndex = 0;
+            // 
+            // colorContextMenu
+            // 
+            this.colorContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colorMenuItem});
+            this.colorContextMenu.Name = "colorContextMenu";
+            this.colorContextMenu.Size = new System.Drawing.Size(104, 26);
+            // 
+            // colorMenuItem
+            // 
+            this.colorMenuItem.Name = "colorMenuItem";
+            this.colorMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.colorMenuItem.Text = "Color";
+            this.colorMenuItem.Click += new System.EventHandler(this.colorMenuItem_Click);
             // 
             // TrackControl
             // 
@@ -64,6 +83,7 @@
             this.Name = "TrackControl";
             this.Size = new System.Drawing.Size(231, 179);
             this.trackBox.ResumeLayout(false);
+            this.colorContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -73,5 +93,7 @@
 
         private System.Windows.Forms.GroupBox trackBox;
         private System.Windows.Forms.Panel trackPanel;
+        private System.Windows.Forms.ContextMenuStrip colorContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem colorMenuItem;
     }
 }

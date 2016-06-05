@@ -4,6 +4,7 @@ using Janus.ManagedMIDI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +32,7 @@ namespace ChordQuality.services
         SolidBrush drawBrush = new SolidBrush(Color.Black);
         Font drawFont = new Font("Courier New", 10);
         Pen orientpen = new Pen(Color.LightGray, 1);
+        
         private int zoomScrollValue = 15;
         private float relThickness = 0.5f;
         private double playStart = -1;
@@ -59,6 +61,7 @@ namespace ChordQuality.services
             this.tunings = tunings;
             this.qualityWeights = qualityWeights;
             this.chordNameDisplay = chordNameDisplay;
+            this.orientpen.DashStyle = DashStyle.Dot;
         }
 
         private void initializeSubscriptions()
