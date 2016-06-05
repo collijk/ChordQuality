@@ -38,5 +38,21 @@ namespace ChordQuality.events.messages
     public class TrackColorChangedMessage : DisplayChangeMessage
     {
     }
+
+    public class QualityCheckChangedMessage : DisplayChangeMessage
+    {
+        public bool checkStatus
+        {
+            get; set;
+        }
+    }
+
+    public class LabelCheckChangedMessage : DisplayChangeMessage
+    {
+        public bool checkStatus
+        {
+            get; set;
+        }
+    }
       
 }

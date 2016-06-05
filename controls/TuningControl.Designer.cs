@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.tuningBox = new System.Windows.Forms.GroupBox();
-            this.penaltiesControl = new ChordQuality.controls.PenaltiesControl();
-            this.qualityWeightsControl = new ChordQuality.controls.QualityWeightsControl();
             this.labelCheckBox = new System.Windows.Forms.CheckBox();
             this.qualityCheckBox = new System.Windows.Forms.CheckBox();
             this.tuningTransposeLabel = new System.Windows.Forms.Label();
             this.tuningTransposeUpDown = new System.Windows.Forms.NumericUpDown();
             this.tuningsPanel = new System.Windows.Forms.Panel();
+            this.penaltiesControl = new ChordQuality.controls.PenaltiesControl();
+            this.qualityWeightsControl = new ChordQuality.controls.QualityWeightsControl();
             this.tuningBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tuningTransposeUpDown)).BeginInit();
             this.SuspendLayout();
@@ -59,24 +59,6 @@
             this.tuningBox.TabStop = false;
             this.tuningBox.Text = "Tuning Scheme";
             // 
-            // penaltiesControl
-            // 
-            this.penaltiesControl.AutoSize = true;
-            this.penaltiesControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.penaltiesControl.Location = new System.Drawing.Point(476, 21);
-            this.penaltiesControl.Name = "penaltiesControl";
-            this.penaltiesControl.Size = new System.Drawing.Size(79, 193);
-            this.penaltiesControl.TabIndex = 6;
-            // 
-            // qualityWeightsControl
-            // 
-            this.qualityWeightsControl.AutoSize = true;
-            this.qualityWeightsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.qualityWeightsControl.Location = new System.Drawing.Point(214, 21);
-            this.qualityWeightsControl.Name = "qualityWeightsControl";
-            this.qualityWeightsControl.Size = new System.Drawing.Size(256, 189);
-            this.qualityWeightsControl.TabIndex = 5;
-            // 
             // labelCheckBox
             // 
             this.labelCheckBox.AutoSize = true;
@@ -89,6 +71,7 @@
             this.labelCheckBox.TabStop = false;
             this.labelCheckBox.Text = "Show Labels";
             this.labelCheckBox.UseVisualStyleBackColor = false;
+            this.labelCheckBox.CheckedChanged += new System.EventHandler(this.labelCheckBox_CheckedChanged);
             // 
             // qualityCheckBox
             // 
@@ -101,6 +84,7 @@
             this.qualityCheckBox.TabIndex = 3;
             this.qualityCheckBox.Text = "Show Quality";
             this.qualityCheckBox.UseVisualStyleBackColor = true;
+            this.qualityCheckBox.CheckedChanged += new System.EventHandler(this.qualityCheckBox_CheckedChanged);
             // 
             // tuningTransposeLabel
             // 
@@ -137,6 +121,24 @@
             this.tuningsPanel.Name = "tuningsPanel";
             this.tuningsPanel.Size = new System.Drawing.Size(200, 131);
             this.tuningsPanel.TabIndex = 0;
+            // 
+            // penaltiesControl
+            // 
+            this.penaltiesControl.AutoSize = true;
+            this.penaltiesControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.penaltiesControl.Location = new System.Drawing.Point(476, 21);
+            this.penaltiesControl.Name = "penaltiesControl";
+            this.penaltiesControl.Size = new System.Drawing.Size(79, 193);
+            this.penaltiesControl.TabIndex = 6;
+            // 
+            // qualityWeightsControl
+            // 
+            this.qualityWeightsControl.AutoSize = true;
+            this.qualityWeightsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.qualityWeightsControl.Location = new System.Drawing.Point(214, 21);
+            this.qualityWeightsControl.Name = "qualityWeightsControl";
+            this.qualityWeightsControl.Size = new System.Drawing.Size(256, 189);
+            this.qualityWeightsControl.TabIndex = 5;
             // 
             // TuningControl
             // 

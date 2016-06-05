@@ -100,6 +100,7 @@
             // 
             // thirdMajorChordVScroll
             // 
+            this.thirdMajorChordVScroll.Enabled = false;
             this.thirdMajorChordVScroll.LargeChange = 1;
             this.thirdMajorChordVScroll.Location = new System.Drawing.Point(35, 24);
             this.thirdMajorChordVScroll.Margin = new System.Windows.Forms.Padding(5);
@@ -112,6 +113,7 @@
             // 
             // fifthChordVScroll
             // 
+            this.fifthChordVScroll.Enabled = false;
             this.fifthChordVScroll.LargeChange = 1;
             this.fifthChordVScroll.Location = new System.Drawing.Point(8, 24);
             this.fifthChordVScroll.Margin = new System.Windows.Forms.Padding(5);
@@ -148,6 +150,7 @@
             // 
             // thirdMajorIntervalVScroll
             // 
+            this.thirdMajorIntervalVScroll.Enabled = false;
             this.thirdMajorIntervalVScroll.LargeChange = 1;
             this.thirdMajorIntervalVScroll.Location = new System.Drawing.Point(121, 24);
             this.thirdMajorIntervalVScroll.Margin = new System.Windows.Forms.Padding(5);
@@ -169,6 +172,7 @@
             // 
             // fourthIntervalVScroll
             // 
+            this.fourthIntervalVScroll.Enabled = false;
             this.fourthIntervalVScroll.LargeChange = 1;
             this.fourthIntervalVScroll.Location = new System.Drawing.Point(94, 24);
             this.fourthIntervalVScroll.Margin = new System.Windows.Forms.Padding(5);
@@ -208,6 +212,7 @@
             // 
             // fifthIntervalVScroll
             // 
+            this.fifthIntervalVScroll.Enabled = false;
             this.fifthIntervalVScroll.LargeChange = 1;
             this.fifthIntervalVScroll.Location = new System.Drawing.Point(67, 24);
             this.fifthIntervalVScroll.Margin = new System.Windows.Forms.Padding(5);
@@ -220,6 +225,7 @@
             // 
             // thirdMinorIntervalVScroll
             // 
+            this.thirdMinorIntervalVScroll.Enabled = false;
             this.thirdMinorIntervalVScroll.LargeChange = 1;
             this.thirdMinorIntervalVScroll.Location = new System.Drawing.Point(148, 24);
             this.thirdMinorIntervalVScroll.Margin = new System.Windows.Forms.Padding(5);
@@ -250,6 +256,7 @@
             // 
             // sixthMinorIntervalVScroll
             // 
+            this.sixthMinorIntervalVScroll.Enabled = false;
             this.sixthMinorIntervalVScroll.LargeChange = 1;
             this.sixthMinorIntervalVScroll.Location = new System.Drawing.Point(40, 24);
             this.sixthMinorIntervalVScroll.Margin = new System.Windows.Forms.Padding(5);
@@ -262,6 +269,7 @@
             // 
             // sixthMajorIntervalVScroll
             // 
+            this.sixthMajorIntervalVScroll.Enabled = false;
             this.sixthMajorIntervalVScroll.LargeChange = 1;
             this.sixthMajorIntervalVScroll.Location = new System.Drawing.Point(13, 24);
             this.sixthMajorIntervalVScroll.Margin = new System.Windows.Forms.Padding(5);

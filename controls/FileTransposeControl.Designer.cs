@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.offsetValueLabel = new System.Windows.Forms.Label();
             this.offsetLabel = new System.Windows.Forms.Label();
             this.fileTransposeUpDown = new System.Windows.Forms.NumericUpDown();
             this.fileTransposeLabel = new System.Windows.Forms.Label();
-            this.offsetValueLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fileTransposeUpDown)).BeginInit();
             this.SuspendLayout();
@@ -50,6 +50,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "File Transposition";
             // 
+            // offsetValueLabel
+            // 
+            this.offsetValueLabel.AutoSize = true;
+            this.offsetValueLabel.Location = new System.Drawing.Point(90, 46);
+            this.offsetValueLabel.Name = "offsetValueLabel";
+            this.offsetValueLabel.Size = new System.Drawing.Size(37, 13);
+            this.offsetValueLabel.TabIndex = 3;
+            this.offsetValueLabel.Text = "0 Bars";
+            // 
             // offsetLabel
             // 
             this.offsetLabel.AutoSize = true;
@@ -61,6 +70,7 @@
             // 
             // fileTransposeUpDown
             // 
+            this.fileTransposeUpDown.Enabled = false;
             this.fileTransposeUpDown.Location = new System.Drawing.Point(6, 44);
             this.fileTransposeUpDown.Maximum = new decimal(new int[] {
             24,
@@ -85,15 +95,6 @@
             this.fileTransposeLabel.Size = new System.Drawing.Size(60, 13);
             this.fileTransposeLabel.TabIndex = 0;
             this.fileTransposeLabel.Text = "Transpose:";
-            // 
-            // offsetValueLabel
-            // 
-            this.offsetValueLabel.AutoSize = true;
-            this.offsetValueLabel.Location = new System.Drawing.Point(90, 46);
-            this.offsetValueLabel.Name = "offsetValueLabel";
-            this.offsetValueLabel.Size = new System.Drawing.Size(37, 13);
-            this.offsetValueLabel.TabIndex = 3;
-            this.offsetValueLabel.Text = "0 Bars";
             // 
             // FileTransposeControl
             // 

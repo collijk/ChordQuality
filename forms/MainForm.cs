@@ -17,28 +17,19 @@ namespace ChordQuality
 {
     public class MainForm : Form
     {
-        [STAThread]
-        public static void Main(string[] args)
-        {
-            MainForm view = new MainForm();
-            Application.Run(view);
-
-        }
+        
 
         private System.ComponentModel.IContainer components;
         private GroupBox layoutBox;
         private Button applyButton;
-        private GroupBox tuningBox;
         private TextBox barsPerPageBox;
         private PrintPreviewControl printPreviewDialog1;
         private Timer timer1;
-        private Panel tuningPanel;
         private Label label7;
         private Label label6;
         private Label label5;
         private Label label9;
         private ToolTip toolTip1;
-        private CheckBox labelCheck;
         private PictureBox chordNameDisplay;
         private Panel cursor;
         private TextBox barsEdit;
@@ -47,7 +38,6 @@ namespace ChordQuality
         private Panel panel1;
         private TextBox rowsEdit;
         private HScrollBar offsetScroll;
-        private CheckBox qualityCheck;
         private TextBox pagesBox;
         private PictureBox chordDisplay;
         private VScrollBar zoomScroll;
@@ -77,6 +67,9 @@ namespace ChordQuality
         private ISubscription<PenaltyScrollChangedMessage> penaltyScrollSubscription;
         private ISubscription<QualityWeightScrollChangedMessage> qualityWeightScrollSubscription;
         private ISubscription<TuningsTransposedMessage> tuningTransposeSubscription;
+        private ISubscription<TuningEnabledMessage> tuningEnabledSubscription;
+        private ISubscription<QualityCheckChangedMessage> qualityCheckSubscription;
+        private ISubscription<LabelCheckChangedMessage> labelCheckSubscription;
         private controls.FileTransposeControl fileTransposeControl1;
         private PlaybackControl playbackControl;
         private PianoRollArtist artist;
@@ -109,10 +102,10 @@ namespace ChordQuality
             this.zoomScroll = new System.Windows.Forms.VScrollBar();
             this.chordDisplay = new System.Windows.Forms.PictureBox();
             this.pagesBox = new System.Windows.Forms.TextBox();
-            this.qualityCheck = new System.Windows.Forms.CheckBox();
             this.offsetScroll = new System.Windows.Forms.HScrollBar();
             this.rowsEdit = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tuningControl1 = new ChordQuality.controls.TuningControl();
             this.trackControl1 = new ChordQuality.controls.TrackControl();
             this.fileTransposeControl1 = new ChordQuality.controls.FileTransposeControl();
             this.playbackControl = new ChordQuality.PlaybackControl();
@@ -130,9 +123,6 @@ namespace ChordQuality
             this.barsEdit = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.tuningBox = new System.Windows.Forms.GroupBox();
-            this.labelCheck = new System.Windows.Forms.CheckBox();
-            this.tuningPanel = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cutPanel = new System.Windows.Forms.Panel();
             this.cutBarSecond = new ChordQuality.TransparentPanel();
@@ -146,12 +136,10 @@ namespace ChordQuality
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewControl();
             this.cutRowCursor = new System.Windows.Forms.Panel();
             this.mainMenuControl1 = new ChordQuality.controls.MainMenuControl();
-            this.tuningControl1 = new ChordQuality.controls.TuningControl();
             ((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.layoutBox.SuspendLayout();
-            this.tuningBox.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).BeginInit();
@@ -188,17 +176,6 @@ namespace ChordQuality
             this.pagesBox.TabIndex = 7;
             this.pagesBox.Text = "0";
             // 
-            // qualityCheck
-            // 
-            this.qualityCheck.Checked = true;
-            this.qualityCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.qualityCheck.Location = new System.Drawing.Point(104, 130);
-            this.qualityCheck.Name = "qualityCheck";
-            this.qualityCheck.Size = new System.Drawing.Size(90, 21);
-            this.qualityCheck.TabIndex = 50;
-            this.qualityCheck.Text = "Show Quality";
-            this.qualityCheck.CheckedChanged += new System.EventHandler(this.QualityCheckCheckedChanged);
-            // 
             // offsetScroll
             // 
             this.offsetScroll.LargeChange = 1;
@@ -228,12 +205,20 @@ namespace ChordQuality
             this.panel1.Controls.Add(this.playbackControl);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.layoutBox);
-            this.panel1.Controls.Add(this.tuningBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1228, 457);
             this.panel1.TabIndex = 45;
+            // 
+            // tuningControl1
+            // 
+            this.tuningControl1.AutoSize = true;
+            this.tuningControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tuningControl1.Location = new System.Drawing.Point(546, 6);
+            this.tuningControl1.Name = "tuningControl1";
+            this.tuningControl1.Size = new System.Drawing.Size(566, 238);
+            this.tuningControl1.TabIndex = 51;
             // 
             // trackControl1
             // 
@@ -405,40 +390,6 @@ namespace ChordQuality
             this.label5.Text = "Bars/Row:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tuningBox
-            // 
-            this.tuningBox.Controls.Add(this.qualityCheck);
-            this.tuningBox.Controls.Add(this.labelCheck);
-            this.tuningBox.Controls.Add(this.tuningPanel);
-            this.tuningBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.tuningBox.Location = new System.Drawing.Point(434, 250);
-            this.tuningBox.Name = "tuningBox";
-            this.tuningBox.Size = new System.Drawing.Size(208, 176);
-            this.tuningBox.TabIndex = 50;
-            this.tuningBox.TabStop = false;
-            this.tuningBox.Text = "Tuning";
-            // 
-            // labelCheck
-            // 
-            this.labelCheck.Checked = true;
-            this.labelCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.labelCheck.Location = new System.Drawing.Point(104, 151);
-            this.labelCheck.Name = "labelCheck";
-            this.labelCheck.Size = new System.Drawing.Size(88, 22);
-            this.labelCheck.TabIndex = 49;
-            this.labelCheck.Text = "Show Labels";
-            this.labelCheck.CheckedChanged += new System.EventHandler(this.QualityCheckCheckedChanged);
-            // 
-            // tuningPanel
-            // 
-            this.tuningPanel.AutoScroll = true;
-            this.tuningPanel.BackColor = System.Drawing.Color.White;
-            this.tuningPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tuningPanel.Location = new System.Drawing.Point(8, 12);
-            this.tuningPanel.Name = "tuningPanel";
-            this.tuningPanel.Size = new System.Drawing.Size(192, 113);
-            this.tuningPanel.TabIndex = 46;
-            // 
             // panel2
             // 
             this.panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -556,15 +507,6 @@ namespace ChordQuality
             this.mainMenuControl1.Size = new System.Drawing.Size(1228, 24);
             this.mainMenuControl1.TabIndex = 60;
             // 
-            // tuningControl1
-            // 
-            this.tuningControl1.AutoSize = true;
-            this.tuningControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tuningControl1.Location = new System.Drawing.Point(546, 6);
-            this.tuningControl1.Name = "tuningControl1";
-            this.tuningControl1.Size = new System.Drawing.Size(566, 238);
-            this.tuningControl1.TabIndex = 51;
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -584,7 +526,6 @@ namespace ChordQuality
             this.groupBox1.ResumeLayout(false);
             this.layoutBox.ResumeLayout(false);
             this.layoutBox.PerformLayout();
-            this.tuningBox.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).EndInit();
@@ -654,19 +595,43 @@ namespace ChordQuality
             });
             penaltiesChangedSubscription = eventAggregator.Subscribe<PenaltiesChangedMessage>(Message =>
             {
-                onPenaltiesChanged(Message.penaltiesIndex);
+                update_tuning_avg();
+                redraw_chords();
             });
             penaltyScrollSubscription = eventAggregator.Subscribe<PenaltyScrollChangedMessage>(Message =>
             {
-                onPenaltyScrollChanged(Message.source, Message.scrollValue);
+                update_tuning_avg();
+                if(f != null)
+                    redraw_chords();
             });
             qualityWeightScrollSubscription = eventAggregator.Subscribe<QualityWeightScrollChangedMessage>(Message =>
             {
-                onQualityWeightScrollChanged(Message.source, Message.scrollValue);
+                update_tuning_avg();
+
+                if(f != null)
+                    redraw_chords();
             });
             tuningTransposeSubscription = eventAggregator.Subscribe<TuningsTransposedMessage>(Message =>
             {
-                onTuningTransposed(Message.transposeValue);
+                if(f != null)
+                {
+                    update_tuning_avg();
+                    redraw_chords();
+                }
+            });
+            tuningEnabledSubscription = eventAggregator.Subscribe<TuningEnabledMessage>(Message =>
+            {
+                redraw_chords();
+            });
+            qualityCheckSubscription = eventAggregator.Subscribe<QualityCheckChangedMessage>(Message =>
+            {
+                chordDisplay.Visible = Message.checkStatus;
+                updateDisplay();
+            });
+            labelCheckSubscription = eventAggregator.Subscribe<LabelCheckChangedMessage>(Message =>
+            {
+                chordNameDisplay.Visible = Message.checkStatus;
+                updateDisplay();
             });
         }
 
@@ -703,8 +668,7 @@ namespace ChordQuality
         ArrayList chords;
         TuningScheme[] tunings;
         double play_start = -1, play_stop = -1;
-        RadioButton[] tuningRadios;
-        CheckBox[] tuningChecks;
+        
         QualityWeights qualityWeights;
 
         int RowsPerPage = 5, Pages = 0;
@@ -733,26 +697,7 @@ namespace ChordQuality
             TuningsUpdatedMessage tMessage = new TuningsUpdatedMessage();
             tMessage.tunings = tunings;
             eventAggregator.Publish(tMessage);
-            tuningChecks = new CheckBox[tunings.Length];
-            tuningRadios = new RadioButton[tunings.Length];
-            for(int n = 0; n < tunings.Length; n++)
-            {
-                tuningChecks[n] = new CheckBox();
-                tuningChecks[n].Location = new Point(4, 4 + n * 16);
-                tuningChecks[n].Size = new Size(152, 16);
-                tuningChecks[n].ForeColor = colors[n];
-                tuningChecks[n].Text = tunings[n].Name;
-                tuningChecks[n].CheckedChanged += new System.EventHandler(TuningCheckedChanged);
-                tuningPanel.Controls.Add(tuningChecks[n]);
-                tuningRadios[n] = new RadioButton();
-                tuningRadios[n].Location = new Point(156, 4 + n * 16);
-                tuningRadios[n].Size = new Size(16, 16);
-                tuningRadios[n].ForeColor = colors[n];
-                tuningRadios[n].CheckedChanged += new System.EventHandler(TuningRadioCheckedChanged);
-                tuningPanel.Controls.Add(tuningRadios[n]);
-            }
-            tuningChecks[0].Checked = true;
-            tuningRadios[0].Checked = true;
+            
 
             // adjust chordDisplay size
             double q, maxq = 0;
@@ -794,13 +739,7 @@ namespace ChordQuality
             eventAggregator.Publish(tmessage);
 
 
-            for(int i = 0; i < tuningRadios.Length; i++)
-            {
-                if(tuningRadios[i].Checked)
-                {
-                    pl.Tuning = tunings[i];
-                }
-            }
+            
 
             // show file information
             Text = "ChordQuality   ---   " + f.name;
@@ -815,15 +754,9 @@ namespace ChordQuality
             noteDisplay.Image = new Bitmap(noteDisplay.Width, noteDisplay.Height);
             chordDisplay.Image = new Bitmap(chordDisplay.Width, chordDisplay.Height);
             chordNameDisplay.Image = new Bitmap(chordNameDisplay.Width, chordNameDisplay.Height);
-
-
-
-
-
             //
             chords = f.FindChords();
             update_tuning_avg();
-
             //
 
             zoomScroll.Maximum = f.bars;
@@ -838,7 +771,7 @@ namespace ChordQuality
             offsetScroll.Value = 0;
 
             //
-            QualityCheckCheckedChanged(this, new EventArgs());
+            updateDisplay();
             applyButton.PerformClick();
 
             //place cut panel below
@@ -900,36 +833,15 @@ namespace ChordQuality
         void MainFormClosed(object sender, EventArgs e)
         {
             if(pl != null)
-            {
-                System.Diagnostics.Debug.Write(pl.ToString());
+            {                
                 Stop();
-
             }
         }
 
 
-        void onTuningTransposed(int tuningValue)
+       
+        private void updateDisplay()
         {
-            for(int i = 0; i < tunings.Length; i++)
-                tunings[i].Transpose = (int) tuningValue;
-            if(f != null)
-            {
-                update_tuning_avg();
-                redraw_chords();
-            }
-            if(pl != null)
-            {
-                for(int i = 0; i < tuningRadios.Length; i++)
-                    if(tuningRadios[i].Checked)
-                        pl.Tuning = tunings[i];
-            }
-            
-        }
-
-        void QualityCheckCheckedChanged(object sender, EventArgs e)
-        {
-            chordDisplay.Visible = qualityCheck.Checked;
-            chordNameDisplay.Visible = labelCheck.Checked;
             zoomScroll.Height = noteDisplay.Height;
             if(chordDisplay.Visible)
             {
@@ -949,6 +861,7 @@ namespace ChordQuality
             if(f != null)
                 redraw();
         }
+        
 
         void Panel2Resize(object sender, EventArgs e)
         {
@@ -966,91 +879,6 @@ namespace ChordQuality
                     redraw();
             }
         }
-
-        private void onQualityWeightScrollChanged(String source, int scrollValue)
-        {
-            switch(source)
-            {
-                case "6M Interval":
-                    qualityWeights.M6 = (20 - scrollValue) / 10.0;
-                    break;
-                case "6m Interval":
-                    qualityWeights.m6 = (20 - scrollValue) / 10.0;
-                    break;
-                case "5 Interval":
-                    qualityWeights.fifth = (20 - scrollValue) / 10.0;
-                    break;
-                case "4 Interval":
-                    qualityWeights.fourth = (20 - scrollValue) / 10.0;
-                    break;
-                case "3M Interval":
-                    qualityWeights.M3 = (20 - scrollValue) / 10.0;
-                    break;
-                case "3m Interval":
-                    qualityWeights.m3 = (20 - scrollValue) / 10.0;
-                    break;
-                case "5 Chord":
-                    qualityWeights.Ch5 = (20 - scrollValue) / 10.0;
-                    break;
-                case "3M Chord":
-                    qualityWeights.Ch3 = (20 - scrollValue) / 10.0;
-                    break;
-            }
-            update_tuning_avg();
-            if(f != null)
-                redraw_chords();
-
-        }        
-
-        void onPenaltyScrollChanged(String source, int scrollValue)
-        {
-            if(source == "Add")
-            {
-                qualityWeights.Add = (10 - scrollValue) / 10.0;
-            } else //source == "Short"
-            {
-                qualityWeights.Short = (10 - scrollValue) / 10.0;
-            }
-            
-            update_tuning_avg();
-            if(f != null)
-                redraw_chords();
-        }
-        
-
-        void onPenaltiesChanged(int penaltiesIndex)
-        {
-            if(f != null)
-            {
-                switch(penaltiesIndex)
-                {
-                    case 0:
-                        qualityWeights.Threshold = 4 * f.timing;
-                        break;
-                    case 1:
-                        qualityWeights.Threshold = 4 * f.timing / 2.0;
-                        break;
-                    case 2:
-                        qualityWeights.Threshold = 4 * f.timing / 4.0;
-                        break;
-                    case 3:
-                        qualityWeights.Threshold = 4 * f.timing / 8.0;
-                        break;
-                    case 4:
-                        qualityWeights.Threshold = 4 * f.timing / 16.0;
-                        break;
-                    case 5:
-                        qualityWeights.Threshold = 4 * f.timing / 32.0;
-                        break;
-                    case 6:
-                        qualityWeights.Threshold = 4 * f.timing / 64.0;
-                        break;
-                }
-                update_tuning_avg();
-                redraw_chords();                
-            }
-        }
-
         private void findBestTunings()
         {
             int mini = 0, minj = 0;
@@ -1068,8 +896,7 @@ namespace ChordQuality
                     }
                 }
             MessageBox.Show(tunings[mini].Name + " +" + minj + " (" + Math.Round(minq, 5) + ")", "Best Tuning");
-            tuningControl1.setTranspose(minj);
-            onTuningTransposed(minj);
+            tuningControl1.setTranspose(minj);            
         }
 
         /***** Playback Event Handlers Begin *****/
@@ -1177,31 +1004,7 @@ namespace ChordQuality
             cutRows.Clear();
             cutPanel.Controls.Clear();
         }
-
-        /***** Tunning Event Handlers Begin *****/
-        void TuningCheckedChanged(object sender, EventArgs e)
-        {
-            if(f != null)
-            {
-                for(int i = 0; i < tunings.Length; i++)
-                    tunings[i].enabled = tuningChecks[i].Checked;
-                redraw_chords();
-            }
-        }
-
-        void TuningRadioCheckedChanged(object sender, EventArgs e)
-        {
-            if(pl != null)
-            {
-                for(int i = 0; i < tuningRadios.Length; i++)
-                    if(tuningRadios[i].Checked)
-                        pl.Tuning = tunings[i];
-            }
-        }
-
-        /***** Penalties Event Handlers Begin *****/
         
-
         /***** Print Layout Event Handlers Begin *****/
         private void ApplyButtonClick(object sender, EventArgs e)
         {
@@ -1391,14 +1194,9 @@ namespace ChordQuality
         }
 
         void update_tuning_avg()
-        {
-            if(chords == null)
-                return;
-            for(int i = 0; i < tunings.Length; i++)
-            {
-                double q = Math.Round(tunings[i].AvgQuality(chords, qualityWeights), 1);
-                tuningChecks[i].Text = tunings[i].Name + " (" + q.ToString() + ")";
-            }
+        {            
+            if(chords != null)
+                tuningControl1.updateTuningAverage(chords, qualityWeights);            
         }
 
         void redraw()

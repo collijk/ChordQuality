@@ -57,6 +57,7 @@
             // 
             // thresholdUpDown
             // 
+            this.thresholdUpDown.Enabled = false;
             this.thresholdUpDown.Items.Add("1");
             this.thresholdUpDown.Items.Add("1/2");
             this.thresholdUpDown.Items.Add("1/4");
@@ -93,6 +94,7 @@
             // 
             // penaltyShortVScroll
             // 
+            this.penaltyShortVScroll.Enabled = false;
             this.penaltyShortVScroll.Location = new System.Drawing.Point(46, 71);
             this.penaltyShortVScroll.Margin = new System.Windows.Forms.Padding(5);
             this.penaltyShortVScroll.Name = "penaltyShortVScroll";
@@ -102,6 +104,7 @@
             // 
             // penaltyAddVScroll
             // 
+            this.penaltyAddVScroll.Enabled = false;
             this.penaltyAddVScroll.Location = new System.Drawing.Point(9, 71);
             this.penaltyAddVScroll.Margin = new System.Windows.Forms.Padding(5);
             this.penaltyAddVScroll.Name = "penaltyAddVScroll";

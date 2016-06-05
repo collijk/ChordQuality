@@ -37,7 +37,7 @@
     </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>ChordQuality.MainForm</StartupObject>
+    <StartupObject>ChordQuality.ChordQualityApp</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -152,6 +152,8 @@
     <Compile Include="forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="model\IMidiQualityModel.cs" />
+    <Compile Include="model\IMidiTuningModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="forms\FileInfoForm.cs">
       <SubType>Form</SubType>

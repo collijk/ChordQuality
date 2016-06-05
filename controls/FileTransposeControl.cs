@@ -40,6 +40,7 @@ namespace ChordQuality.controls
             fileTransposeUpDown.Minimum = 0 - file.min_note;
             fileTransposeUpDown.Value = 0;
             offsetValueLabel.Text = "0 Bars";
+            fileTransposeUpDown.Enabled = true;
         }
 
         private void fileTransposeUpDown_ValueChanged(object sender, EventArgs e)

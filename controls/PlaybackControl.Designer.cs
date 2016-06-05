@@ -88,6 +88,7 @@
             // tempoTrackBar
             // 
             this.tempoTrackBar.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.tempoTrackBar.Enabled = false;
             this.tempoTrackBar.Location = new System.Drawing.Point(65, 154);
             this.tempoTrackBar.Maximum = 200;
             this.tempoTrackBar.Minimum = 40;
@@ -145,6 +146,7 @@
             // volumeTrackBar
             // 
             this.volumeTrackBar.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.volumeTrackBar.Enabled = false;
             this.volumeTrackBar.Location = new System.Drawing.Point(246, 40);
             this.volumeTrackBar.Maximum = 100;
             this.volumeTrackBar.Name = "volumeTrackBar";
