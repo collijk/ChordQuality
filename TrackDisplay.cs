@@ -107,7 +107,8 @@ namespace ChordQuality
 			  			{
 			  				// This is the piece of the already existing element
 			  				// that does not overlap to the left
-			  				m_displayElementList.Add(new TrackDisplayElement(iter.m_time1, element.m_time1, iter.m_y, new ArrayList(iter.m_colorList), new ArrayList(iter.m_widthList)));
+			  				m_displayElementList.Add(new TrackDisplayElement(iter.m_time1, element.m_time1, 
+                                iter.m_y, new ArrayList(iter.m_colorList), new ArrayList(iter.m_widthList)));
 			  				
 			  				overlapTime1 = element.m_time1;
 			  			}
@@ -115,14 +116,16 @@ namespace ChordQuality
 			  			{
 			  				// call this method recursively for the nonoverlapping part
 			  				// start at index i, since we already checked all the elements before that
-			  				AddElement(new TrackDisplayElement(element.m_time1, iter.m_time1, element.m_y, (Color)element.m_colorList[0], (float)element.m_widthList[0]), false, i+1);
+			  				AddElement(new TrackDisplayElement(element.m_time1, iter.m_time1, element.m_y, 
+                                (Color)element.m_colorList[0], (float)element.m_widthList[0]), false, i+1);
 			  			}
 			  			
 			  			if (iter.m_time2 > element.m_time2)
 			  			{
 			  				// This is the piece of the already existing element
 			  				// that does not overlap to right
-			  				m_displayElementList.Add(new TrackDisplayElement(element.m_time2, iter.m_time2, iter.m_y, new ArrayList(iter.m_colorList), new ArrayList(iter.m_widthList)));
+			  				m_displayElementList.Add(new TrackDisplayElement(element.m_time2, iter.m_time2, iter.m_y, 
+                                new ArrayList(iter.m_colorList), new ArrayList(iter.m_widthList)));
 			  			
 			  				overlapTime2 = element.m_time2;
 			  			}
@@ -130,7 +133,8 @@ namespace ChordQuality
 			  			{
 			  				// call this method recursively for the nonoverlapping part
 			  				// start at index i, since we already checked all the elements before that
-			  				AddElement(new TrackDisplayElement(iter.m_time2, element.m_time2, element.m_y, (Color)element.m_colorList[0], (float)element.m_widthList[0]), false, i+1);
+			  				AddElement(new TrackDisplayElement(iter.m_time2, element.m_time2, element.m_y, 
+                                (Color)element.m_colorList[0], (float)element.m_widthList[0]), false, i+1);
 			  			}
 			  			
 			  			// update iter for the overlapping data

@@ -29,32 +29,49 @@
         private void InitializeComponent()
         {
             this.penaltyBox = new System.Windows.Forms.GroupBox();
+            this.thresholdUpDown = new System.Windows.Forms.DomainUpDown();
             this.penaltyShortLabel = new System.Windows.Forms.Label();
             this.penaltyAddLabel = new System.Windows.Forms.Label();
             this.penaltyShortVScroll = new System.Windows.Forms.VScrollBar();
             this.penaltyAddVScroll = new System.Windows.Forms.VScrollBar();
             this.thresholdLabel = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.penaltyBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // penaltyBox
             // 
             this.penaltyBox.AutoSize = true;
             this.penaltyBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.penaltyBox.Controls.Add(this.thresholdUpDown);
             this.penaltyBox.Controls.Add(this.penaltyShortLabel);
             this.penaltyBox.Controls.Add(this.penaltyAddLabel);
             this.penaltyBox.Controls.Add(this.penaltyShortVScroll);
             this.penaltyBox.Controls.Add(this.penaltyAddVScroll);
             this.penaltyBox.Controls.Add(this.thresholdLabel);
-            this.penaltyBox.Controls.Add(this.numericUpDown1);
             this.penaltyBox.Location = new System.Drawing.Point(0, 0);
             this.penaltyBox.Name = "penaltyBox";
             this.penaltyBox.Size = new System.Drawing.Size(76, 190);
             this.penaltyBox.TabIndex = 0;
             this.penaltyBox.TabStop = false;
             this.penaltyBox.Text = "Penalties";
+            // 
+            // thresholdUpDown
+            // 
+            this.thresholdUpDown.Items.Add("1");
+            this.thresholdUpDown.Items.Add("1/2");
+            this.thresholdUpDown.Items.Add("1/4");
+            this.thresholdUpDown.Items.Add("1/8");
+            this.thresholdUpDown.Items.Add("1/16");
+            this.thresholdUpDown.Items.Add("1/32");
+            this.thresholdUpDown.Items.Add("1/64");
+            this.thresholdUpDown.Location = new System.Drawing.Point(9, 43);
+            this.thresholdUpDown.Name = "thresholdUpDown";
+            this.thresholdUpDown.ReadOnly = true;
+            this.thresholdUpDown.Size = new System.Drawing.Size(54, 20);
+            this.thresholdUpDown.TabIndex = 55;
+            this.thresholdUpDown.Text = "1";
+            this.thresholdUpDown.Wrap = true;
+            this.thresholdUpDown.SelectedItemChanged += new System.EventHandler(this.thresholdUpDown_SelectedItemChanged);
             // 
             // penaltyShortLabel
             // 
@@ -81,6 +98,7 @@
             this.penaltyShortVScroll.Name = "penaltyShortVScroll";
             this.penaltyShortVScroll.Size = new System.Drawing.Size(17, 85);
             this.penaltyShortVScroll.TabIndex = 3;
+            this.penaltyShortVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.penaltyShortVScroll_Scroll);
             // 
             // penaltyAddVScroll
             // 
@@ -89,6 +107,7 @@
             this.penaltyAddVScroll.Name = "penaltyAddVScroll";
             this.penaltyAddVScroll.Size = new System.Drawing.Size(17, 85);
             this.penaltyAddVScroll.TabIndex = 2;
+            this.penaltyAddVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.penaltyAddVScroll_Scroll);
             // 
             // thresholdLabel
             // 
@@ -98,13 +117,6 @@
             this.thresholdLabel.Size = new System.Drawing.Size(57, 13);
             this.thresholdLabel.TabIndex = 1;
             this.thresholdLabel.Text = "Threshold:";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(9, 43);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown1.TabIndex = 0;
             // 
             // PenaltiesControl
             // 
@@ -117,7 +129,6 @@
             this.Size = new System.Drawing.Size(79, 193);
             this.penaltyBox.ResumeLayout(false);
             this.penaltyBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,10 +138,10 @@
 
         private System.Windows.Forms.GroupBox penaltyBox;
         private System.Windows.Forms.Label thresholdLabel;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.VScrollBar penaltyShortVScroll;
         private System.Windows.Forms.VScrollBar penaltyAddVScroll;
         private System.Windows.Forms.Label penaltyShortLabel;
         private System.Windows.Forms.Label penaltyAddLabel;
+        private System.Windows.Forms.DomainUpDown thresholdUpDown;
     }
 }

@@ -30,6 +30,10 @@
         {
             this.qualityWeightsBox = new System.Windows.Forms.GroupBox();
             this.chordBox = new System.Windows.Forms.GroupBox();
+            this.thirdMajorChordLabel = new System.Windows.Forms.Label();
+            this.fifthChordLabel = new System.Windows.Forms.Label();
+            this.thirdMajorChordVScroll = new System.Windows.Forms.VScrollBar();
+            this.fifthChordVScroll = new System.Windows.Forms.VScrollBar();
             this.intervalBox = new System.Windows.Forms.GroupBox();
             this.thirdMajorIntervalVScroll = new System.Windows.Forms.VScrollBar();
             this.fourthIntervalLabel = new System.Windows.Forms.Label();
@@ -43,10 +47,6 @@
             this.sixthMajorIntervalLabel = new System.Windows.Forms.Label();
             this.sixthMinorIntervalVScroll = new System.Windows.Forms.VScrollBar();
             this.sixthMajorIntervalVScroll = new System.Windows.Forms.VScrollBar();
-            this.fifthChordVScroll = new System.Windows.Forms.VScrollBar();
-            this.thirdMajorChordVScroll = new System.Windows.Forms.VScrollBar();
-            this.fifthChordLabel = new System.Windows.Forms.Label();
-            this.thirdMajorChordLabel = new System.Windows.Forms.Label();
             this.qualityWeightsBox.SuspendLayout();
             this.chordBox.SuspendLayout();
             this.intervalBox.SuspendLayout();
@@ -79,6 +79,48 @@
             this.chordBox.TabIndex = 0;
             this.chordBox.TabStop = false;
             this.chordBox.Text = "Chords";
+            // 
+            // thirdMajorChordLabel
+            // 
+            this.thirdMajorChordLabel.AutoSize = true;
+            this.thirdMajorChordLabel.Location = new System.Drawing.Point(32, 117);
+            this.thirdMajorChordLabel.Name = "thirdMajorChordLabel";
+            this.thirdMajorChordLabel.Size = new System.Drawing.Size(22, 13);
+            this.thirdMajorChordLabel.TabIndex = 3;
+            this.thirdMajorChordLabel.Text = "3M";
+            // 
+            // fifthChordLabel
+            // 
+            this.fifthChordLabel.AutoSize = true;
+            this.fifthChordLabel.Location = new System.Drawing.Point(12, 117);
+            this.fifthChordLabel.Name = "fifthChordLabel";
+            this.fifthChordLabel.Size = new System.Drawing.Size(13, 13);
+            this.fifthChordLabel.TabIndex = 2;
+            this.fifthChordLabel.Text = "5";
+            // 
+            // thirdMajorChordVScroll
+            // 
+            this.thirdMajorChordVScroll.LargeChange = 1;
+            this.thirdMajorChordVScroll.Location = new System.Drawing.Point(35, 24);
+            this.thirdMajorChordVScroll.Margin = new System.Windows.Forms.Padding(5);
+            this.thirdMajorChordVScroll.Maximum = 20;
+            this.thirdMajorChordVScroll.Name = "thirdMajorChordVScroll";
+            this.thirdMajorChordVScroll.Size = new System.Drawing.Size(17, 88);
+            this.thirdMajorChordVScroll.TabIndex = 1;
+            this.thirdMajorChordVScroll.Value = 10;
+            this.thirdMajorChordVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.thirdMajorChordVScroll_Scroll);
+            // 
+            // fifthChordVScroll
+            // 
+            this.fifthChordVScroll.LargeChange = 1;
+            this.fifthChordVScroll.Location = new System.Drawing.Point(8, 24);
+            this.fifthChordVScroll.Margin = new System.Windows.Forms.Padding(5);
+            this.fifthChordVScroll.Maximum = 20;
+            this.fifthChordVScroll.Name = "fifthChordVScroll";
+            this.fifthChordVScroll.Size = new System.Drawing.Size(17, 88);
+            this.fifthChordVScroll.TabIndex = 0;
+            this.fifthChordVScroll.Value = 10;
+            this.fifthChordVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.fifthChordVScroll_Scroll);
             // 
             // intervalBox
             // 
@@ -114,6 +156,7 @@
             this.thirdMajorIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.thirdMajorIntervalVScroll.TabIndex = 10;
             this.thirdMajorIntervalVScroll.Value = 10;
+            this.thirdMajorIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.thirdMajorIntervalVScroll_Scroll);
             // 
             // fourthIntervalLabel
             // 
@@ -134,6 +177,7 @@
             this.fourthIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.fourthIntervalVScroll.TabIndex = 9;
             this.fourthIntervalVScroll.Value = 10;
+            this.fourthIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.fourthIntervalVScroll_Scroll);
             // 
             // thirdMinorIntervalLabel
             // 
@@ -172,6 +216,7 @@
             this.fifthIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.fifthIntervalVScroll.TabIndex = 8;
             this.fifthIntervalVScroll.Value = 10;
+            this.fifthIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.fifthIntervalVScroll_Scroll);
             // 
             // thirdMinorIntervalVScroll
             // 
@@ -183,6 +228,7 @@
             this.thirdMinorIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.thirdMinorIntervalVScroll.TabIndex = 11;
             this.thirdMinorIntervalVScroll.Value = 10;
+            this.thirdMinorIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.thirdMinorIntervalVScroll_Scroll);
             // 
             // sixthMinorIntervalLabel
             // 
@@ -212,6 +258,7 @@
             this.sixthMinorIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.sixthMinorIntervalVScroll.TabIndex = 7;
             this.sixthMinorIntervalVScroll.Value = 10;
+            this.sixthMinorIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sixthMinorIntervalVScroll_Scroll);
             // 
             // sixthMajorIntervalVScroll
             // 
@@ -223,46 +270,7 @@
             this.sixthMajorIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.sixthMajorIntervalVScroll.TabIndex = 6;
             this.sixthMajorIntervalVScroll.Value = 10;
-            // 
-            // fifthChordVScroll
-            // 
-            this.fifthChordVScroll.LargeChange = 1;
-            this.fifthChordVScroll.Location = new System.Drawing.Point(8, 24);
-            this.fifthChordVScroll.Margin = new System.Windows.Forms.Padding(5);
-            this.fifthChordVScroll.Maximum = 20;
-            this.fifthChordVScroll.Name = "fifthChordVScroll";
-            this.fifthChordVScroll.Size = new System.Drawing.Size(17, 88);
-            this.fifthChordVScroll.TabIndex = 0;
-            this.fifthChordVScroll.Value = 10;
-            // 
-            // thirdMajorChordVScroll
-            // 
-            this.thirdMajorChordVScroll.LargeChange = 1;
-            this.thirdMajorChordVScroll.Location = new System.Drawing.Point(35, 24);
-            this.thirdMajorChordVScroll.Margin = new System.Windows.Forms.Padding(5);
-            this.thirdMajorChordVScroll.Maximum = 20;
-            this.thirdMajorChordVScroll.Name = "thirdMajorChordVScroll";
-            this.thirdMajorChordVScroll.Size = new System.Drawing.Size(17, 88);
-            this.thirdMajorChordVScroll.TabIndex = 1;
-            this.thirdMajorChordVScroll.Value = 10;
-            // 
-            // fifthChordLabel
-            // 
-            this.fifthChordLabel.AutoSize = true;
-            this.fifthChordLabel.Location = new System.Drawing.Point(12, 117);
-            this.fifthChordLabel.Name = "fifthChordLabel";
-            this.fifthChordLabel.Size = new System.Drawing.Size(13, 13);
-            this.fifthChordLabel.TabIndex = 2;
-            this.fifthChordLabel.Text = "5";
-            // 
-            // thirdMajorChordLabel
-            // 
-            this.thirdMajorChordLabel.AutoSize = true;
-            this.thirdMajorChordLabel.Location = new System.Drawing.Point(32, 117);
-            this.thirdMajorChordLabel.Name = "thirdMajorChordLabel";
-            this.thirdMajorChordLabel.Size = new System.Drawing.Size(22, 13);
-            this.thirdMajorChordLabel.TabIndex = 3;
-            this.thirdMajorChordLabel.Text = "3M";
+            this.sixthMajorIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sixthMajorIntervalVScroll_Scroll);
             // 
             // QualityWeightsControl
             // 

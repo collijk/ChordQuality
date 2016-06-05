@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.tuningBox = new System.Windows.Forms.GroupBox();
-            this.tuningsPanel = new System.Windows.Forms.Panel();
-            this.tuningTransposeUpDown = new System.Windows.Forms.NumericUpDown();
-            this.tuningTransposeLabel = new System.Windows.Forms.Label();
-            this.qualityCheckBox = new System.Windows.Forms.CheckBox();
-            this.labelCheckBox = new System.Windows.Forms.CheckBox();
-            this.qualityWeightsControl = new ChordQuality.controls.QualityWeightsControl();
             this.penaltiesControl = new ChordQuality.controls.PenaltiesControl();
+            this.qualityWeightsControl = new ChordQuality.controls.QualityWeightsControl();
+            this.labelCheckBox = new System.Windows.Forms.CheckBox();
+            this.qualityCheckBox = new System.Windows.Forms.CheckBox();
+            this.tuningTransposeLabel = new System.Windows.Forms.Label();
+            this.tuningTransposeUpDown = new System.Windows.Forms.NumericUpDown();
+            this.tuningsPanel = new System.Windows.Forms.Panel();
             this.tuningBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tuningTransposeUpDown)).BeginInit();
             this.SuspendLayout();
@@ -59,14 +59,57 @@
             this.tuningBox.TabStop = false;
             this.tuningBox.Text = "Tuning Scheme";
             // 
-            // tuningsPanel
+            // penaltiesControl
             // 
-            this.tuningsPanel.AutoScroll = true;
-            this.tuningsPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.tuningsPanel.Location = new System.Drawing.Point(8, 21);
-            this.tuningsPanel.Name = "tuningsPanel";
-            this.tuningsPanel.Size = new System.Drawing.Size(200, 131);
-            this.tuningsPanel.TabIndex = 0;
+            this.penaltiesControl.AutoSize = true;
+            this.penaltiesControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.penaltiesControl.Location = new System.Drawing.Point(476, 21);
+            this.penaltiesControl.Name = "penaltiesControl";
+            this.penaltiesControl.Size = new System.Drawing.Size(79, 193);
+            this.penaltiesControl.TabIndex = 6;
+            // 
+            // qualityWeightsControl
+            // 
+            this.qualityWeightsControl.AutoSize = true;
+            this.qualityWeightsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.qualityWeightsControl.Location = new System.Drawing.Point(214, 21);
+            this.qualityWeightsControl.Name = "qualityWeightsControl";
+            this.qualityWeightsControl.Size = new System.Drawing.Size(256, 189);
+            this.qualityWeightsControl.TabIndex = 5;
+            // 
+            // labelCheckBox
+            // 
+            this.labelCheckBox.AutoSize = true;
+            this.labelCheckBox.Checked = true;
+            this.labelCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.labelCheckBox.Location = new System.Drawing.Point(96, 184);
+            this.labelCheckBox.Name = "labelCheckBox";
+            this.labelCheckBox.Size = new System.Drawing.Size(87, 17);
+            this.labelCheckBox.TabIndex = 4;
+            this.labelCheckBox.TabStop = false;
+            this.labelCheckBox.Text = "Show Labels";
+            this.labelCheckBox.UseVisualStyleBackColor = false;
+            // 
+            // qualityCheckBox
+            // 
+            this.qualityCheckBox.AutoSize = true;
+            this.qualityCheckBox.Checked = true;
+            this.qualityCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.qualityCheckBox.Location = new System.Drawing.Point(96, 161);
+            this.qualityCheckBox.Name = "qualityCheckBox";
+            this.qualityCheckBox.Size = new System.Drawing.Size(88, 17);
+            this.qualityCheckBox.TabIndex = 3;
+            this.qualityCheckBox.Text = "Show Quality";
+            this.qualityCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // tuningTransposeLabel
+            // 
+            this.tuningTransposeLabel.AutoSize = true;
+            this.tuningTransposeLabel.Location = new System.Drawing.Point(8, 165);
+            this.tuningTransposeLabel.Name = "tuningTransposeLabel";
+            this.tuningTransposeLabel.Size = new System.Drawing.Size(60, 13);
+            this.tuningTransposeLabel.TabIndex = 2;
+            this.tuningTransposeLabel.Text = "Transpose:";
             // 
             // tuningTransposeUpDown
             // 
@@ -84,58 +127,16 @@
             this.tuningTransposeUpDown.Name = "tuningTransposeUpDown";
             this.tuningTransposeUpDown.Size = new System.Drawing.Size(60, 20);
             this.tuningTransposeUpDown.TabIndex = 1;
+            this.tuningTransposeUpDown.ValueChanged += new System.EventHandler(this.tuningTransposeUpDown_ValueChanged);
             // 
-            // tuningTransposeLabel
+            // tuningsPanel
             // 
-            this.tuningTransposeLabel.AutoSize = true;
-            this.tuningTransposeLabel.Location = new System.Drawing.Point(8, 165);
-            this.tuningTransposeLabel.Name = "tuningTransposeLabel";
-            this.tuningTransposeLabel.Size = new System.Drawing.Size(60, 13);
-            this.tuningTransposeLabel.TabIndex = 2;
-            this.tuningTransposeLabel.Text = "Transpose:";
-            // 
-            // qualityCheckBox
-            // 
-            this.qualityCheckBox.AutoSize = true;
-            this.qualityCheckBox.Checked = true;
-            this.qualityCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.qualityCheckBox.Location = new System.Drawing.Point(96, 161);
-            this.qualityCheckBox.Name = "qualityCheckBox";
-            this.qualityCheckBox.Size = new System.Drawing.Size(88, 17);
-            this.qualityCheckBox.TabIndex = 3;
-            this.qualityCheckBox.Text = "Show Quality";
-            this.qualityCheckBox.UseVisualStyleBackColor = true;
-            // 
-            // labelCheckBox
-            // 
-            this.labelCheckBox.AutoSize = true;
-            this.labelCheckBox.Checked = true;
-            this.labelCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.labelCheckBox.Location = new System.Drawing.Point(96, 184);
-            this.labelCheckBox.Name = "labelCheckBox";
-            this.labelCheckBox.Size = new System.Drawing.Size(87, 17);
-            this.labelCheckBox.TabIndex = 4;
-            this.labelCheckBox.TabStop = false;
-            this.labelCheckBox.Text = "Show Labels";
-            this.labelCheckBox.UseVisualStyleBackColor = false;
-            // 
-            // qualityWeightsControl
-            // 
-            this.qualityWeightsControl.AutoSize = true;
-            this.qualityWeightsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.qualityWeightsControl.Location = new System.Drawing.Point(214, 21);
-            this.qualityWeightsControl.Name = "qualityWeightsControl";
-            this.qualityWeightsControl.Size = new System.Drawing.Size(256, 189);
-            this.qualityWeightsControl.TabIndex = 5;
-            // 
-            // penaltiesControl
-            // 
-            this.penaltiesControl.AutoSize = true;
-            this.penaltiesControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.penaltiesControl.Location = new System.Drawing.Point(476, 21);
-            this.penaltiesControl.Name = "penaltiesControl";
-            this.penaltiesControl.Size = new System.Drawing.Size(79, 193);
-            this.penaltiesControl.TabIndex = 6;
+            this.tuningsPanel.AutoScroll = true;
+            this.tuningsPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.tuningsPanel.Location = new System.Drawing.Point(8, 21);
+            this.tuningsPanel.Name = "tuningsPanel";
+            this.tuningsPanel.Size = new System.Drawing.Size(200, 131);
+            this.tuningsPanel.TabIndex = 0;
             // 
             // TuningControl
             // 

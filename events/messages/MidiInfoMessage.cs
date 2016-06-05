@@ -73,15 +73,45 @@ namespace ChordQuality.events.messages
         }
     }
 
+    public class QualityWeightScrollChangedMessage : MidiInfoMessage
+    {
+        public String source
+        {
+            get; set;
+        }
+        public int scrollValue
+        {
+            get; set;
+        }
+    }
+
     public class PenaltiesChangedMessage : MidiInfoMessage
     {
         public String penalties
         {
             get; set;
         }
+
+        public int penaltiesIndex
+        {
+            get; set;
+        }
     }
 
+    public class PenaltyScrollChangedMessage : MidiInfoMessage
+    {
+        public String source
+        {
+            get; set;
+        }
+
+        public int scrollValue
+        {
+            get; set;
+        }
+    }
     public class TracksChangedMessage : MidiInfoMessage
     {
     }
+
 }
