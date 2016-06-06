@@ -27,7 +27,6 @@ namespace ChordQuality
         private Panel panel1;
         private HScrollBar offsetScroll;
         private PictureBox chordDisplay;
-        private VScrollBar zoomScroll;
         private TransparentPanel hoverBar;
         private TransparentPanel cutBarFirst;
         private TransparentPanel cutBarSecond;
@@ -36,8 +35,7 @@ namespace ChordQuality
         private Button cutResetBtn;
         private Panel cutPanel;
         private Button cutClrBtn;
-        private Panel cutRowCursor;
-        private float rf;
+        private Panel cutRowCursor;        
         private IEventAggregator eventAggregator;
         private ISubscription<PlayMessage> playSubscription;
         private ISubscription<PauseMessage> pauseSubscription;
@@ -56,8 +54,8 @@ namespace ChordQuality
         private ISubscription<TuningsTransposedMessage> tuningTransposeSubscription;
         private ISubscription<TuningEnabledMessage> tuningEnabledSubscription;
         private ISubscription<QualityCheckChangedMessage> qualityCheckSubscription;
-        private ISubscription<LabelCheckChangedMessage> labelCheckSubscription;
-        private ISubscription<BarsPerRowChangedMessage> barsPerRowSubscription;
+        private ISubscription<LabelCheckChangedMessage> labelCheckSubscription;        
+        private ISubscription<ZoomScrollChangedMessage> zoomUpdatedMessage;
         private controls.FileTransposeControl fileTransposeControl1;
         private PlaybackControl playbackControl;
         private PianoRollArtist artist;
@@ -65,6 +63,7 @@ namespace ChordQuality
         private controls.TrackControl trackControl1;
         private controls.TuningControl tuningControl1;
         private controls.PrintingControl printingControl1;
+        private controls.ZoomControl zoomControl1;
         private PrintDocumentProvider printDocProvider;
 
 
@@ -88,7 +87,6 @@ namespace ChordQuality
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.zoomScroll = new System.Windows.Forms.VScrollBar();
             this.chordDisplay = new System.Windows.Forms.PictureBox();
             this.offsetScroll = new System.Windows.Forms.HScrollBar();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -105,6 +103,7 @@ namespace ChordQuality
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewControl();
             this.cutRowCursor = new System.Windows.Forms.Panel();
+            this.zoomControl1 = new ChordQuality.controls.ZoomControl();
             this.printingControl1 = new ChordQuality.controls.PrintingControl();
             this.tuningControl1 = new ChordQuality.controls.TuningControl();
             this.trackControl1 = new ChordQuality.controls.TrackControl();
@@ -121,18 +120,6 @@ namespace ChordQuality
             ((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).BeginInit();
             this.SuspendLayout();
-            // 
-            // zoomScroll
-            // 
-            this.zoomScroll.LargeChange = 1;
-            this.zoomScroll.Location = new System.Drawing.Point(968, 6);
-            this.zoomScroll.Maximum = 60;
-            this.zoomScroll.Minimum = 1;
-            this.zoomScroll.Name = "zoomScroll";
-            this.zoomScroll.Size = new System.Drawing.Size(16, 114);
-            this.zoomScroll.TabIndex = 44;
-            this.zoomScroll.Value = 15;
-            this.zoomScroll.ValueChanged += new System.EventHandler(this.ZoomScrollValueChanged);
             // 
             // chordDisplay
             // 
@@ -160,6 +147,7 @@ namespace ChordQuality
             this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel1.Controls.Add(this.zoomControl1);
             this.panel1.Controls.Add(this.printingControl1);
             this.panel1.Controls.Add(this.tuningControl1);
             this.panel1.Controls.Add(this.trackControl1);
@@ -169,7 +157,7 @@ namespace ChordQuality
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1280, 293);
+            this.panel1.Size = new System.Drawing.Size(1280, 313);
             this.panel1.TabIndex = 45;
             // 
             // groupBox1
@@ -177,7 +165,7 @@ namespace ChordQuality
             this.groupBox1.Controls.Add(this.cutClrBtn);
             this.groupBox1.Controls.Add(this.cutCutBtn);
             this.groupBox1.Controls.Add(this.cutResetBtn);
-            this.groupBox1.Location = new System.Drawing.Point(175, 217);
+            this.groupBox1.Location = new System.Drawing.Point(554, 250);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 60);
             this.groupBox1.TabIndex = 55;
@@ -222,7 +210,6 @@ namespace ChordQuality
             this.panel2.Controls.Add(this.cutBarSecond);
             this.panel2.Controls.Add(this.cutBarFirst);
             this.panel2.Controls.Add(this.chordNameDisplay);
-            this.panel2.Controls.Add(this.zoomScroll);
             this.panel2.Controls.Add(this.chordDisplay);
             this.panel2.Controls.Add(this.offsetScroll);
             this.panel2.Controls.Add(this.cursor);
@@ -291,6 +278,15 @@ namespace ChordQuality
             this.cutRowCursor.Size = new System.Drawing.Size(1, 47);
             this.cutRowCursor.TabIndex = 0;
             this.cutRowCursor.Visible = false;
+            // 
+            // zoomControl1
+            // 
+            this.zoomControl1.AutoSize = true;
+            this.zoomControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.zoomControl1.Location = new System.Drawing.Point(175, 217);
+            this.zoomControl1.Name = "zoomControl1";
+            this.zoomControl1.Size = new System.Drawing.Size(209, 86);
+            this.zoomControl1.TabIndex = 0;
             // 
             // printingControl1
             // 
@@ -498,13 +494,14 @@ namespace ChordQuality
                 chordNameDisplay.Visible = Message.checkStatus;
                 updateDisplay();
             });
-            barsPerRowSubscription = eventAggregator.Subscribe<BarsPerRowChangedMessage>(Message =>
+            zoomUpdatedMessage = eventAggregator.Subscribe<ZoomScrollChangedMessage>(Message =>
             {
-                if(zoomScroll.Value != Message.BarsPerRow)
+                zoomValue = Message.zoomValue;
+                if(f != null)
                 {
-                    zoomScroll.Value = Message.BarsPerRow;
-                    updateZoom();
-                }                
+                    offsetScroll.Maximum = Math.Max(f.bars - Message.zoomValue, 0);
+                    redraw();
+                }
             });
         }
 
@@ -540,8 +537,8 @@ namespace ChordQuality
         MidiFilePlayer pl = null;
         ArrayList chords;
         TuningScheme[] tunings;
-        double play_start = -1, play_stop = -1;
-        
+        double play_start, play_stop;
+        int zoomValue = 15;
         QualityWeights qualityWeights;
         TrackDisplay trackDisplay = null;
 
@@ -582,8 +579,6 @@ namespace ChordQuality
             chordDisplay.Height = (int) (2 * maxq);
             chordNameDisplay.Top = chordDisplay.Bottom + 1;
             offsetScroll.Top = chordNameDisplay.Bottom;
-            zoomScroll.Height = noteDisplay.Height + chordDisplay.Height + chordNameDisplay.Height + 2;
-
             initializeServices();
         }
 
@@ -628,17 +623,8 @@ namespace ChordQuality
             //
             chords = f.FindChords();
             update_tuning_avg();
-            //
-
-            zoomScroll.Maximum = f.bars;
-            if(f.bars < zoomScroll.Value)
-            {
-                zoomScroll.Value = f.bars;
-                updateZoom();
-            }
-            offsetScroll.Maximum = Math.Max(f.bars - zoomScroll.Value, 0);
+            //            
             offsetScroll.Value = 0;
-
             //
             updateDisplay();
             printingControl1.updatePrintSettings();
@@ -658,16 +644,16 @@ namespace ChordQuality
                 Stop();
             } else
             {
-                if(p >= offsetScroll.Value + zoomScroll.Value)
+                if(p >= offsetScroll.Value + zoomValue)
                 {
-                    offsetScroll.Value = Math.Min(offsetScroll.Value + zoomScroll.Value, offsetScroll.Maximum);
+                    offsetScroll.Value = Math.Min(offsetScroll.Value + zoomValue, offsetScroll.Maximum);
                 } else if(p < offsetScroll.Value)
                 {
                     offsetScroll.Value = (int) p;
                 }
 
-                cursor.Left = noteDisplay.Left + (int) ((p - offsetScroll.Value) * noteDisplay.Width / zoomScroll.Value);
-                if((play_start != play_stop) && (cursor.Left > noteDisplay.Width * (Math.Max(play_start, play_stop) - offsetScroll.Value) / zoomScroll.Value))
+                cursor.Left = noteDisplay.Left + (int) ((p - offsetScroll.Value) * noteDisplay.Width / zoomValue);
+                if((play_start != play_stop) && (cursor.Left > noteDisplay.Width * (Math.Max(play_start, play_stop) - offsetScroll.Value) / zoomValue))
                 {
                     Stop();
                 }
@@ -685,23 +671,7 @@ namespace ChordQuality
             redraw();
         }
 
-        void ZoomScrollValueChanged(object sender, EventArgs e)
-        {
-            updateZoom();
-            
-        }
-
-        private void updateZoom()
-        {
-            ZoomScrollChangedMessage message = new ZoomScrollChangedMessage();
-            message.zoomValue = zoomScroll.Value;
-            eventAggregator.Publish(message);
-            if(f != null)
-            {
-                offsetScroll.Maximum = Math.Max(f.bars - zoomScroll.Value, 0);
-                redraw();
-            }
-        }
+        
 
         void MainFormClosed(object sender, EventArgs e)
         {
@@ -715,17 +685,17 @@ namespace ChordQuality
        
         private void updateDisplay()
         {
-            zoomScroll.Height = noteDisplay.Height;
+            
             if(chordDisplay.Visible)
             {
                 chordNameDisplay.Top = chordDisplay.Bottom + 1;
-                zoomScroll.Height += chordDisplay.Height + 1;
+                
             } else
                 chordNameDisplay.Top = noteDisplay.Bottom + 1;
             if(chordNameDisplay.Visible)
             {
                 offsetScroll.Top = chordNameDisplay.Bottom;
-                zoomScroll.Height += chordNameDisplay.Height + 1;
+                
             } else if(chordDisplay.Visible)
                 offsetScroll.Top = chordDisplay.Bottom;
             else
@@ -743,8 +713,7 @@ namespace ChordQuality
                 noteDisplay.Width = panel2.Width - 32;
                 chordDisplay.Width = noteDisplay.Width;
                 chordNameDisplay.Width = noteDisplay.Width;
-                offsetScroll.Width = noteDisplay.Width;
-                zoomScroll.Left = noteDisplay.Right;
+                offsetScroll.Width = noteDisplay.Width;                
                 noteDisplay.Image = new Bitmap(noteDisplay.Width, noteDisplay.Height);
                 chordDisplay.Image = new Bitmap(chordDisplay.Width, chordDisplay.Height);
                 chordNameDisplay.Image = new Bitmap(chordNameDisplay.Width, chordNameDisplay.Height);
@@ -891,7 +860,7 @@ namespace ChordQuality
         {
             if(e.Button == MouseButtons.Left)
             {
-                play_start = ((double) e.X * zoomScroll.Value) / noteDisplay.Width + offsetScroll.Value;
+                play_start = ((double) e.X * zoomValue) / noteDisplay.Width + offsetScroll.Value;
                 play_stop = play_start;
                 PlaySelectionChangedMessage pMessage = new PlaySelectionChangedMessage();
                 pMessage.playStart = play_start;
@@ -904,12 +873,12 @@ namespace ChordQuality
                 //begin and end because first can come after second
                 if(cutFirst < 0)
                 {
-                    cutFirst = ((double) e.X * zoomScroll.Value) / noteDisplay.Width + offsetScroll.Value;
+                    cutFirst = ((double) e.X * zoomValue) / noteDisplay.Width + offsetScroll.Value;
                     this.cutBarFirst.Visible = true;
                     this.cutBarFirst.Left = this.noteDisplay.Left + e.X;
                 } else if(cutSecond < 0)
                 {
-                    cutSecond = ((double) e.X * zoomScroll.Value) / noteDisplay.Width + offsetScroll.Value;
+                    cutSecond = ((double) e.X * zoomValue) / noteDisplay.Width + offsetScroll.Value;
                     this.cutBarSecond.Visible = true;
                     this.cutBarSecond.Left = this.noteDisplay.Left + e.X;
                 }
@@ -920,7 +889,7 @@ namespace ChordQuality
         {
             if(f == null)
                 return;
-            int b = e.X * zoomScroll.Value / noteDisplay.Width + offsetScroll.Value + 1;
+            int b = e.X * zoomValue / noteDisplay.Width + offsetScroll.Value + 1;
             int n = ClosestNote(e.X, e.Y);
             if(n >= 0)
             {
@@ -931,7 +900,7 @@ namespace ChordQuality
             }
             if((e.Button == MouseButtons.Left) && (play_start >= 0))
             {
-                play_stop = ((double) e.X * zoomScroll.Value) / noteDisplay.Width + offsetScroll.Value;
+                play_stop = ((double) e.X * zoomValue) / noteDisplay.Width + offsetScroll.Value;
                 PlaySelectionChangedMessage pMessage = new PlaySelectionChangedMessage();
                 pMessage.playStart = play_start;
                 pMessage.playStop = play_stop;
@@ -950,7 +919,7 @@ namespace ChordQuality
         {
             if(f == null)
                 return;
-            int b = e.X * zoomScroll.Value / chordDisplay.Width + offsetScroll.Value + 1;
+            int b = e.X * zoomValue / chordDisplay.Width + offsetScroll.Value + 1;
             toolTip1.SetToolTip(chordDisplay, "bar " + b.ToString());
         }
 

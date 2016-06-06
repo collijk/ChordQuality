@@ -138,6 +138,12 @@
     <Compile Include="controls\QualityWeightsControl.Designer.cs">
       <DependentUpon>QualityWeightsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="controls\ZoomControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\ZoomControl.Designer.cs">
+      <DependentUpon>ZoomControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="events\EventAggregator.cs" />
     <Compile Include="events\IEventAggregator.cs" />
     <Compile Include="events\messages\ApplicationMessage.cs" />
@@ -157,6 +163,7 @@
     </Compile>
     <Compile Include="model\IMidiQualityModel.cs" />
     <Compile Include="model\IMidiTuningModel.cs" />
+    <Compile Include="model\IMidiDisplayModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="forms\FileInfoForm.cs">
       <SubType>Form</SubType>
@@ -196,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="controls\TuningControl.resx">
       <DependentUpon>TuningControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\ZoomControl.resx">
+      <DependentUpon>ZoomControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\FileInfoForm.resx">
       <DependentUpon>FileInfoForm.cs</DependentUpon>
