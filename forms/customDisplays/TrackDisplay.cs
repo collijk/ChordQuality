@@ -14,7 +14,7 @@ using System.Drawing;
 
 using Janus.ManagedMIDI;
 
-namespace ChordQuality
+namespace ChordQuality.forms.customDisplays
 {
 	/// <summary>
 	/// Description of TrackDisplay.

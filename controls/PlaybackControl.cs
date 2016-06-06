@@ -85,6 +85,7 @@ namespace ChordQuality
             volumeTrackBar.Enabled = true;
             tempoTrackBar.Enabled = true;
             midiOutComboBox.Enabled = true;
+            instrumentComboBox.Enabled = true;
 
             MidiPlayerUpdatedMessage message = new MidiPlayerUpdatedMessage();
             message.player = player;

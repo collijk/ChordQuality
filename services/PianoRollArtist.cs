@@ -1,13 +1,10 @@
 ﻿using ChordQuality.events;
 using ChordQuality.events.messages;
+using ChordQuality.forms.customDisplays;
 using Janus.ManagedMIDI;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ChordQuality.services

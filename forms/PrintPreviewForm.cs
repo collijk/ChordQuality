@@ -4,6 +4,7 @@ using System.Drawing.Printing;
 using System.Windows.Forms;
 
 using Janus.ManagedMIDI;
+using ChordQuality.forms.customDisplays;
 
 namespace ChordQuality
 {

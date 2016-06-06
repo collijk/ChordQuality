@@ -1,6 +1,5 @@
 ﻿using ChordQuality.events;
 using System.Windows.Forms;
-using System;
 using ChordQuality.events.messages;
 using Janus.ManagedMIDI;
 

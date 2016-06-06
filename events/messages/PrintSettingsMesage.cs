@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ChordQuality.events.messages
+﻿namespace ChordQuality.events.messages
 {
     public class PrintSettingsMesage : IMessage
     {
@@ -22,6 +16,14 @@ namespace ChordQuality.events.messages
     public class RowsPerPageChangedMessage : PrintSettingsMesage
     {
         public int RowsPerPage
+        {
+            get; set;
+        }
+    }
+
+    public class BarsPerRowChangedMessage : PrintSettingsMesage
+    {
+        public int BarsPerRow
         {
             get; set;
         }

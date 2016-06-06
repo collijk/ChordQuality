@@ -2,7 +2,6 @@
 using ChordQuality.events.messages;
 using Janus.ManagedMIDI;
 using System.Windows.Forms;
-using System;
 
 namespace ChordQuality.controls
 {

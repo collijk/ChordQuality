@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.printLayoutBox = new System.Windows.Forms.GroupBox();
+            this.pagesTextBox = new System.Windows.Forms.TextBox();
+            this.barsPerPageTextBox = new System.Windows.Forms.TextBox();
             this.pagesLabel = new System.Windows.Forms.Label();
             this.barsPerPageLabel = new System.Windows.Forms.Label();
             this.applyPrintSettingsButton = new System.Windows.Forms.Button();
@@ -38,8 +40,6 @@
             this.relativeThicknessLabel = new System.Windows.Forms.Label();
             this.rowsPerPageLabel = new System.Windows.Forms.Label();
             this.barsPerRowLabel = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.printLayoutBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,8 +47,8 @@
             // 
             this.printLayoutBox.AutoSize = true;
             this.printLayoutBox.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.printLayoutBox.Controls.Add(this.textBox2);
-            this.printLayoutBox.Controls.Add(this.textBox1);
+            this.printLayoutBox.Controls.Add(this.pagesTextBox);
+            this.printLayoutBox.Controls.Add(this.barsPerPageTextBox);
             this.printLayoutBox.Controls.Add(this.pagesLabel);
             this.printLayoutBox.Controls.Add(this.barsPerPageLabel);
             this.printLayoutBox.Controls.Add(this.applyPrintSettingsButton);
@@ -66,6 +66,26 @@
             this.printLayoutBox.TabIndex = 0;
             this.printLayoutBox.TabStop = false;
             this.printLayoutBox.Text = "Printing Layout";
+            // 
+            // pagesTextBox
+            // 
+            this.pagesTextBox.Location = new System.Drawing.Point(79, 149);
+            this.pagesTextBox.Name = "pagesTextBox";
+            this.pagesTextBox.ReadOnly = true;
+            this.pagesTextBox.Size = new System.Drawing.Size(35, 20);
+            this.pagesTextBox.TabIndex = 10;
+            this.pagesTextBox.Text = "0";
+            this.pagesTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // barsPerPageTextBox
+            // 
+            this.barsPerPageTextBox.Location = new System.Drawing.Point(79, 123);
+            this.barsPerPageTextBox.Name = "barsPerPageTextBox";
+            this.barsPerPageTextBox.ReadOnly = true;
+            this.barsPerPageTextBox.Size = new System.Drawing.Size(35, 20);
+            this.barsPerPageTextBox.TabIndex = 9;
+            this.barsPerPageTextBox.Text = "75";
+            this.barsPerPageTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // pagesLabel
             // 
@@ -95,6 +115,7 @@
             this.applyPrintSettingsButton.TabIndex = 6;
             this.applyPrintSettingsButton.Text = "Apply Settings";
             this.applyPrintSettingsButton.UseVisualStyleBackColor = true;
+            this.applyPrintSettingsButton.Click += new System.EventHandler(this.applyPrintSettingsButton_Click);
             // 
             // relativeThicknessTextBox
             // 
@@ -153,24 +174,6 @@
             this.barsPerRowLabel.TabIndex = 0;
             this.barsPerRowLabel.Text = "Bars/Row:";
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(79, 123);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(35, 20);
-            this.textBox1.TabIndex = 9;
-            this.textBox1.Text = "75";
-            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(79, 149);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(35, 20);
-            this.textBox2.TabIndex = 10;
-            this.textBox2.Text = "0";
-            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // PrintingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -199,7 +202,7 @@
         private System.Windows.Forms.Button applyPrintSettingsButton;
         private System.Windows.Forms.Label pagesLabel;
         private System.Windows.Forms.Label barsPerPageLabel;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox pagesTextBox;
+        private System.Windows.Forms.TextBox barsPerPageTextBox;
     }
 }

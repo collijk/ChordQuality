@@ -149,6 +149,9 @@
     <Compile Include="events\messages\PlaybackMessage.cs" />
     <Compile Include="events\messages\PrintSettingsMesage.cs" />
     <Compile Include="events\Subscription.cs" />
+    <Compile Include="forms\customDisplays\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -229,8 +232,8 @@
     <Compile Include="services\PianoRollArtist.cs" />
     <Compile Include="services\PrintDocumentProvider.cs" />
     <Compile Include="services\PrintPreviewProvider.cs" />
-    <Compile Include="TrackDisplayElement.cs" />
-    <Compile Include="TrackDisplay.cs" />
+    <Compile Include="forms\customDisplays\TrackDisplayElement.cs" />
+    <Compile Include="forms\customDisplays\TrackDisplay.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

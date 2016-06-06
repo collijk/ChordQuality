@@ -1,17 +1,14 @@
 using System;
 using System.Drawing;
-using System.Drawing.Printing;
-using System.Drawing.Drawing2D;
 using System.Collections;
 using System.IO;
 using System.Windows.Forms;
 
 using Janus.ManagedMIDI;
-using Janus.Misc;
-using ChordQuality.Services;
 using ChordQuality.events.messages;
 using ChordQuality.events;
 using ChordQuality.services;
+using ChordQuality.forms.customDisplays;
 
 namespace ChordQuality
 {
@@ -20,25 +17,15 @@ namespace ChordQuality
         
 
         private System.ComponentModel.IContainer components;
-        private GroupBox layoutBox;
-        private Button applyButton;
-        private TextBox barsPerPageBox;
         private PrintPreviewControl printPreviewDialog1;
         private Timer timer1;
-        private Label label7;
-        private Label label6;
-        private Label label5;
-        private Label label9;
         private ToolTip toolTip1;
         private PictureBox chordNameDisplay;
         private Panel cursor;
-        private TextBox barsEdit;
         private PictureBox noteDisplay;
         private Panel panel2;
         private Panel panel1;
-        private TextBox rowsEdit;
         private HScrollBar offsetScroll;
-        private TextBox pagesBox;
         private PictureBox chordDisplay;
         private VScrollBar zoomScroll;
         private TransparentPanel hoverBar;
@@ -70,12 +57,14 @@ namespace ChordQuality
         private ISubscription<TuningEnabledMessage> tuningEnabledSubscription;
         private ISubscription<QualityCheckChangedMessage> qualityCheckSubscription;
         private ISubscription<LabelCheckChangedMessage> labelCheckSubscription;
+        private ISubscription<BarsPerRowChangedMessage> barsPerRowSubscription;
         private controls.FileTransposeControl fileTransposeControl1;
         private PlaybackControl playbackControl;
         private PianoRollArtist artist;
         private controls.MainMenuControl mainMenuControl1;
         private controls.TrackControl trackControl1;
         private controls.TuningControl tuningControl1;
+        private controls.PrintingControl printingControl1;
         private PrintDocumentProvider printDocProvider;
 
 
@@ -101,45 +90,33 @@ namespace ChordQuality
             this.components = new System.ComponentModel.Container();
             this.zoomScroll = new System.Windows.Forms.VScrollBar();
             this.chordDisplay = new System.Windows.Forms.PictureBox();
-            this.pagesBox = new System.Windows.Forms.TextBox();
             this.offsetScroll = new System.Windows.Forms.HScrollBar();
-            this.rowsEdit = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.tuningControl1 = new ChordQuality.controls.TuningControl();
-            this.trackControl1 = new ChordQuality.controls.TrackControl();
-            this.fileTransposeControl1 = new ChordQuality.controls.FileTransposeControl();
-            this.playbackControl = new ChordQuality.PlaybackControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cutClrBtn = new System.Windows.Forms.Button();
             this.cutCutBtn = new System.Windows.Forms.Button();
             this.cutResetBtn = new System.Windows.Forms.Button();
-            this.layoutBox = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.factor = new System.Windows.Forms.TextBox();
-            this.applyButton = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
-            this.barsPerPageBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.barsEdit = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cutPanel = new System.Windows.Forms.Panel();
-            this.cutBarSecond = new ChordQuality.TransparentPanel();
-            this.cutBarFirst = new ChordQuality.TransparentPanel();
             this.chordNameDisplay = new System.Windows.Forms.PictureBox();
             this.cursor = new System.Windows.Forms.Panel();
-            this.hoverBar = new ChordQuality.TransparentPanel();
             this.noteDisplay = new System.Windows.Forms.PictureBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewControl();
             this.cutRowCursor = new System.Windows.Forms.Panel();
+            this.printingControl1 = new ChordQuality.controls.PrintingControl();
+            this.tuningControl1 = new ChordQuality.controls.TuningControl();
+            this.trackControl1 = new ChordQuality.controls.TrackControl();
+            this.fileTransposeControl1 = new ChordQuality.controls.FileTransposeControl();
+            this.playbackControl = new ChordQuality.PlaybackControl();
             this.mainMenuControl1 = new ChordQuality.controls.MainMenuControl();
+            this.cutBarSecond = new ChordQuality.forms.customDisplays.TransparentPanel();
+            this.cutBarFirst = new ChordQuality.forms.customDisplays.TransparentPanel();
+            this.hoverBar = new ChordQuality.forms.customDisplays.TransparentPanel();
             ((System.ComponentModel.ISupportInitialize)(this.chordDisplay)).BeginInit();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.layoutBox.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).BeginInit();
@@ -167,15 +144,6 @@ namespace ChordQuality
             this.chordDisplay.TabStop = false;
             this.chordDisplay.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ChordDisplayMouseMove);
             // 
-            // pagesBox
-            // 
-            this.pagesBox.Location = new System.Drawing.Point(88, 127);
-            this.pagesBox.Name = "pagesBox";
-            this.pagesBox.ReadOnly = true;
-            this.pagesBox.Size = new System.Drawing.Size(32, 20);
-            this.pagesBox.TabIndex = 7;
-            this.pagesBox.Text = "0";
-            // 
             // offsetScroll
             // 
             this.offsetScroll.LargeChange = 1;
@@ -186,73 +154,30 @@ namespace ChordQuality
             this.offsetScroll.TabIndex = 41;
             this.offsetScroll.ValueChanged += new System.EventHandler(this.OffsetScrollValueChanged);
             // 
-            // rowsEdit
-            // 
-            this.rowsEdit.Location = new System.Drawing.Point(88, 30);
-            this.rowsEdit.Name = "rowsEdit";
-            this.rowsEdit.Size = new System.Drawing.Size(32, 20);
-            this.rowsEdit.TabIndex = 3;
-            this.rowsEdit.Text = "3";
-            // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.AutoSize = true;
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.panel1.Controls.Add(this.printingControl1);
             this.panel1.Controls.Add(this.tuningControl1);
             this.panel1.Controls.Add(this.trackControl1);
             this.panel1.Controls.Add(this.fileTransposeControl1);
             this.panel1.Controls.Add(this.playbackControl);
             this.panel1.Controls.Add(this.groupBox1);
-            this.panel1.Controls.Add(this.layoutBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1228, 457);
+            this.panel1.Size = new System.Drawing.Size(1280, 293);
             this.panel1.TabIndex = 45;
-            // 
-            // tuningControl1
-            // 
-            this.tuningControl1.AutoSize = true;
-            this.tuningControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tuningControl1.Location = new System.Drawing.Point(546, 6);
-            this.tuningControl1.Name = "tuningControl1";
-            this.tuningControl1.Size = new System.Drawing.Size(566, 238);
-            this.tuningControl1.TabIndex = 51;
-            // 
-            // trackControl1
-            // 
-            this.trackControl1.AutoSize = true;
-            this.trackControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.trackControl1.Location = new System.Drawing.Point(309, 3);
-            this.trackControl1.Name = "trackControl1";
-            this.trackControl1.Size = new System.Drawing.Size(231, 179);
-            this.trackControl1.TabIndex = 60;
-            // 
-            // fileTransposeControl1
-            // 
-            this.fileTransposeControl1.AutoSize = true;
-            this.fileTransposeControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.fileTransposeControl1.Location = new System.Drawing.Point(3, 211);
-            this.fileTransposeControl1.Name = "fileTransposeControl1";
-            this.fileTransposeControl1.Size = new System.Drawing.Size(161, 73);
-            this.fileTransposeControl1.TabIndex = 1;
-            // 
-            // playbackControl
-            // 
-            this.playbackControl.AutoSize = true;
-            this.playbackControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.playbackControl.Location = new System.Drawing.Point(0, 3);
-            this.playbackControl.Name = "playbackControl";
-            this.playbackControl.Size = new System.Drawing.Size(303, 208);
-            this.playbackControl.TabIndex = 59;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.cutClrBtn);
             this.groupBox1.Controls.Add(this.cutCutBtn);
             this.groupBox1.Controls.Add(this.cutResetBtn);
-            this.groupBox1.Location = new System.Drawing.Point(210, 211);
+            this.groupBox1.Location = new System.Drawing.Point(175, 217);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 60);
             this.groupBox1.TabIndex = 55;
@@ -289,107 +214,6 @@ namespace ChordQuality
             this.cutResetBtn.UseVisualStyleBackColor = true;
             this.cutResetBtn.Click += new System.EventHandler(this.cutResetBtn_Click);
             // 
-            // layoutBox
-            // 
-            this.layoutBox.Controls.Add(this.label10);
-            this.layoutBox.Controls.Add(this.factor);
-            this.layoutBox.Controls.Add(this.applyButton);
-            this.layoutBox.Controls.Add(this.pagesBox);
-            this.layoutBox.Controls.Add(this.label9);
-            this.layoutBox.Controls.Add(this.barsPerPageBox);
-            this.layoutBox.Controls.Add(this.label7);
-            this.layoutBox.Controls.Add(this.rowsEdit);
-            this.layoutBox.Controls.Add(this.barsEdit);
-            this.layoutBox.Controls.Add(this.label6);
-            this.layoutBox.Controls.Add(this.label5);
-            this.layoutBox.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.layoutBox.Location = new System.Drawing.Point(1093, 3);
-            this.layoutBox.Name = "layoutBox";
-            this.layoutBox.Size = new System.Drawing.Size(132, 151);
-            this.layoutBox.TabIndex = 54;
-            this.layoutBox.TabStop = false;
-            this.layoutBox.Text = "Printing Layout";
-            // 
-            // label10
-            // 
-            this.label10.Location = new System.Drawing.Point(6, 47);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(72, 19);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "rel.thick.";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // factor
-            // 
-            this.factor.Location = new System.Drawing.Point(88, 50);
-            this.factor.Name = "factor";
-            this.factor.Size = new System.Drawing.Size(32, 20);
-            this.factor.TabIndex = 9;
-            this.factor.Text = ".5";
-            // 
-            // applyButton
-            // 
-            this.applyButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.applyButton.Location = new System.Drawing.Point(6, 78);
-            this.applyButton.Name = "applyButton";
-            this.applyButton.Size = new System.Drawing.Size(112, 17);
-            this.applyButton.TabIndex = 8;
-            this.applyButton.Text = "apply";
-            this.applyButton.Click += new System.EventHandler(this.ApplyButtonClick);
-            // 
-            // label9
-            // 
-            this.label9.Location = new System.Drawing.Point(8, 125);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(72, 17);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "Pages:";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // barsPerPageBox
-            // 
-            this.barsPerPageBox.Location = new System.Drawing.Point(88, 103);
-            this.barsPerPageBox.Name = "barsPerPageBox";
-            this.barsPerPageBox.ReadOnly = true;
-            this.barsPerPageBox.Size = new System.Drawing.Size(32, 20);
-            this.barsPerPageBox.TabIndex = 5;
-            this.barsPerPageBox.Text = "75";
-            // 
-            // label7
-            // 
-            this.label7.Location = new System.Drawing.Point(6, 101);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(72, 18);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "Bars/Page:";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // barsEdit
-            // 
-            this.barsEdit.Location = new System.Drawing.Point(88, 12);
-            this.barsEdit.Name = "barsEdit";
-            this.barsEdit.Size = new System.Drawing.Size(32, 20);
-            this.barsEdit.TabIndex = 2;
-            this.barsEdit.Text = "13";
-            // 
-            // label6
-            // 
-            this.label6.Location = new System.Drawing.Point(8, 30);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(72, 17);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Rows/Page:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(8, 12);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 18);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Bars/Row:";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // panel2
             // 
             this.panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -404,9 +228,9 @@ namespace ChordQuality
             this.panel2.Controls.Add(this.cursor);
             this.panel2.Controls.Add(this.hoverBar);
             this.panel2.Controls.Add(this.noteDisplay);
-            this.panel2.Location = new System.Drawing.Point(0, 487);
+            this.panel2.Location = new System.Drawing.Point(0, 314);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1228, 396);
+            this.panel2.Size = new System.Drawing.Size(1280, 396);
             this.panel2.TabIndex = 46;
             this.panel2.Resize += new System.EventHandler(this.Panel2Resize);
             // 
@@ -417,24 +241,6 @@ namespace ChordQuality
             this.cutPanel.Name = "cutPanel";
             this.cutPanel.Size = new System.Drawing.Size(976, 235);
             this.cutPanel.TabIndex = 47;
-            // 
-            // cutBarSecond
-            // 
-            this.cutBarSecond.BackColor = System.Drawing.Color.BlueViolet;
-            this.cutBarSecond.Location = new System.Drawing.Point(8, 6);
-            this.cutBarSecond.Name = "cutBarSecond";
-            this.cutBarSecond.Size = new System.Drawing.Size(1, 47);
-            this.cutBarSecond.TabIndex = 31;
-            this.cutBarSecond.Visible = false;
-            // 
-            // cutBarFirst
-            // 
-            this.cutBarFirst.BackColor = System.Drawing.Color.BlueViolet;
-            this.cutBarFirst.Location = new System.Drawing.Point(8, 6);
-            this.cutBarFirst.Name = "cutBarFirst";
-            this.cutBarFirst.Size = new System.Drawing.Size(1, 47);
-            this.cutBarFirst.TabIndex = 31;
-            this.cutBarFirst.Visible = false;
             // 
             // chordNameDisplay
             // 
@@ -452,15 +258,6 @@ namespace ChordQuality
             this.cursor.Name = "cursor";
             this.cursor.Size = new System.Drawing.Size(1, 47);
             this.cursor.TabIndex = 30;
-            // 
-            // hoverBar
-            // 
-            this.hoverBar.BackColor = System.Drawing.Color.DarkGray;
-            this.hoverBar.Location = new System.Drawing.Point(8, 6);
-            this.hoverBar.Name = "hoverBar";
-            this.hoverBar.Size = new System.Drawing.Size(1, 47);
-            this.hoverBar.TabIndex = 31;
-            this.hoverBar.Visible = false;
             // 
             // noteDisplay
             // 
@@ -495,6 +292,51 @@ namespace ChordQuality
             this.cutRowCursor.TabIndex = 0;
             this.cutRowCursor.Visible = false;
             // 
+            // printingControl1
+            // 
+            this.printingControl1.AutoSize = true;
+            this.printingControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.printingControl1.Location = new System.Drawing.Point(1126, 6);
+            this.printingControl1.Name = "printingControl1";
+            this.printingControl1.Size = new System.Drawing.Size(127, 195);
+            this.printingControl1.TabIndex = 61;
+            // 
+            // tuningControl1
+            // 
+            this.tuningControl1.AutoSize = true;
+            this.tuningControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tuningControl1.Location = new System.Drawing.Point(554, 6);
+            this.tuningControl1.Name = "tuningControl1";
+            this.tuningControl1.Size = new System.Drawing.Size(566, 238);
+            this.tuningControl1.TabIndex = 51;
+            // 
+            // trackControl1
+            // 
+            this.trackControl1.AutoSize = true;
+            this.trackControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.trackControl1.Location = new System.Drawing.Point(317, 3);
+            this.trackControl1.Name = "trackControl1";
+            this.trackControl1.Size = new System.Drawing.Size(231, 179);
+            this.trackControl1.TabIndex = 60;
+            // 
+            // fileTransposeControl1
+            // 
+            this.fileTransposeControl1.AutoSize = true;
+            this.fileTransposeControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.fileTransposeControl1.Location = new System.Drawing.Point(8, 217);
+            this.fileTransposeControl1.Name = "fileTransposeControl1";
+            this.fileTransposeControl1.Size = new System.Drawing.Size(161, 73);
+            this.fileTransposeControl1.TabIndex = 1;
+            // 
+            // playbackControl
+            // 
+            this.playbackControl.AutoSize = true;
+            this.playbackControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.playbackControl.Location = new System.Drawing.Point(8, 3);
+            this.playbackControl.Name = "playbackControl";
+            this.playbackControl.Size = new System.Drawing.Size(303, 208);
+            this.playbackControl.TabIndex = 59;
+            // 
             // mainMenuControl1
             // 
             this.mainMenuControl1.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuBar;
@@ -504,15 +346,42 @@ namespace ChordQuality
             this.mainMenuControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.mainMenuControl1.Location = new System.Drawing.Point(0, 0);
             this.mainMenuControl1.Name = "mainMenuControl1";
-            this.mainMenuControl1.Size = new System.Drawing.Size(1228, 24);
+            this.mainMenuControl1.Size = new System.Drawing.Size(1280, 24);
             this.mainMenuControl1.TabIndex = 60;
+            // 
+            // cutBarSecond
+            // 
+            this.cutBarSecond.BackColor = System.Drawing.Color.BlueViolet;
+            this.cutBarSecond.Location = new System.Drawing.Point(8, 6);
+            this.cutBarSecond.Name = "cutBarSecond";
+            this.cutBarSecond.Size = new System.Drawing.Size(1, 47);
+            this.cutBarSecond.TabIndex = 31;
+            this.cutBarSecond.Visible = false;
+            // 
+            // cutBarFirst
+            // 
+            this.cutBarFirst.BackColor = System.Drawing.Color.BlueViolet;
+            this.cutBarFirst.Location = new System.Drawing.Point(8, 6);
+            this.cutBarFirst.Name = "cutBarFirst";
+            this.cutBarFirst.Size = new System.Drawing.Size(1, 47);
+            this.cutBarFirst.TabIndex = 31;
+            this.cutBarFirst.Visible = false;
+            // 
+            // hoverBar
+            // 
+            this.hoverBar.BackColor = System.Drawing.Color.DarkGray;
+            this.hoverBar.Location = new System.Drawing.Point(8, 6);
+            this.hoverBar.Name = "hoverBar";
+            this.hoverBar.Size = new System.Drawing.Size(1, 47);
+            this.hoverBar.TabIndex = 31;
+            this.hoverBar.Visible = false;
             // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1228, 701);
+            this.ClientSize = new System.Drawing.Size(1280, 701);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.mainMenuControl1);
             this.Controls.Add(this.panel2);
@@ -524,8 +393,6 @@ namespace ChordQuality
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.layoutBox.ResumeLayout(false);
-            this.layoutBox.PerformLayout();
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chordNameDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.noteDisplay)).EndInit();
@@ -533,8 +400,6 @@ namespace ChordQuality
             this.PerformLayout();
 
         }
-        private TextBox factor;
-        private Label label10;
         #endregion
 
         private void initializeServices()
@@ -633,6 +498,14 @@ namespace ChordQuality
                 chordNameDisplay.Visible = Message.checkStatus;
                 updateDisplay();
             });
+            barsPerRowSubscription = eventAggregator.Subscribe<BarsPerRowChangedMessage>(Message =>
+            {
+                if(zoomScroll.Value != Message.BarsPerRow)
+                {
+                    zoomScroll.Value = Message.BarsPerRow;
+                    updateZoom();
+                }                
+            });
         }
 
         private void onMarkersChanged()
@@ -670,8 +543,6 @@ namespace ChordQuality
         double play_start = -1, play_stop = -1;
         
         QualityWeights qualityWeights;
-
-        int RowsPerPage = 5, Pages = 0;
         TrackDisplay trackDisplay = null;
 
         //the starting and ending bar for each cut row
@@ -763,16 +634,14 @@ namespace ChordQuality
             if(f.bars < zoomScroll.Value)
             {
                 zoomScroll.Value = f.bars;
-                ZoomScrollChangedMessage message = new ZoomScrollChangedMessage();
-                message.zoomValue = zoomScroll.Value;
-                eventAggregator.Publish(message);
+                updateZoom();
             }
             offsetScroll.Maximum = Math.Max(f.bars - zoomScroll.Value, 0);
             offsetScroll.Value = 0;
 
             //
             updateDisplay();
-            applyButton.PerformClick();
+            printingControl1.updatePrintSettings();
 
             //place cut panel below
             cutPanel.Top = offsetScroll.Bottom + 5;
@@ -818,11 +687,15 @@ namespace ChordQuality
 
         void ZoomScrollValueChanged(object sender, EventArgs e)
         {
+            updateZoom();
+            
+        }
+
+        private void updateZoom()
+        {
             ZoomScrollChangedMessage message = new ZoomScrollChangedMessage();
             message.zoomValue = zoomScroll.Value;
             eventAggregator.Publish(message);
-            barsEdit.Text = zoomScroll.Value.ToString();
-            applyButton.PerformClick();
             if(f != null)
             {
                 offsetScroll.Maximum = Math.Max(f.bars - zoomScroll.Value, 0);
@@ -1005,31 +878,7 @@ namespace ChordQuality
             cutPanel.Controls.Clear();
         }
         
-        /***** Print Layout Event Handlers Begin *****/
-        private void ApplyButtonClick(object sender, EventArgs e)
-        {
-            int bars = Int32.Parse(barsEdit.Text);
-            RowsPerPage = Int32.Parse(rowsEdit.Text);
-            RowsPerPageChangedMessage rppMessage = new RowsPerPageChangedMessage();
-            rppMessage.RowsPerPage = RowsPerPage;
-            eventAggregator.Publish(rppMessage);
-            int barspp = bars * RowsPerPage;
-            barsPerPageBox.Text = barspp.ToString();
-            rf = (float) Double.Parse(factor.Text);
-            RelThicknessChangedMessage rMessage = new RelThicknessChangedMessage();
-            rMessage.relThickness = rf;
-            eventAggregator.Publish(rMessage);
-            redraw();
-            if(f != null)
-            {
-                Pages = (int) Math.Ceiling((double) f.bars / barspp);
-                pagesBox.Text = Pages.ToString();
-            }
-            zoomScroll.Value = bars;
-            ZoomScrollChangedMessage message = new ZoomScrollChangedMessage();
-            message.zoomValue = zoomScroll.Value;
-            eventAggregator.Publish(message);
-        }
+        
 
         /***** Note Display Event Handlers Begin *****/
         private void NoteDisplayOnMouseLeave(object sender, EventArgs e)
@@ -1220,21 +1069,5 @@ namespace ChordQuality
         }
     }
 
-    class TransparentPanel : Panel
-    {
-        //from http://stackoverflow.com/questions/547172/pass-through-mouse-events-to-parent-control
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_NCHITTEST = 0x0084;
-            const int HTTRANSPARENT = (-1);
-
-            if(m.Msg == WM_NCHITTEST)
-            {
-                m.Result = (IntPtr) HTTRANSPARENT;
-            } else
-            {
-                base.WndProc(ref m);
-            }
-        }
-    }
+    
 }

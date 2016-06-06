@@ -10,7 +10,7 @@
 using System.Collections;
 using System.Drawing;
 
-namespace ChordQuality
+namespace ChordQuality.forms.customDisplays
 {
     /// <summary>
     /// Description of TrackDisplayElement.

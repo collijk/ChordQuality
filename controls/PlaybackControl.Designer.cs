@@ -72,9 +72,9 @@
             this.bpmLabel.AutoSize = true;
             this.bpmLabel.Location = new System.Drawing.Point(16, 176);
             this.bpmLabel.Name = "bpmLabel";
-            this.bpmLabel.Size = new System.Drawing.Size(48, 13);
+            this.bpmLabel.Size = new System.Drawing.Size(36, 13);
             this.bpmLabel.TabIndex = 62;
-            this.bpmLabel.Text = "120 bpm";
+            this.bpmLabel.Text = "-- bpm";
             // 
             // tempoLabel
             // 
@@ -96,11 +96,12 @@
             this.tempoTrackBar.Size = new System.Drawing.Size(226, 45);
             this.tempoTrackBar.TabIndex = 57;
             this.tempoTrackBar.TickFrequency = 10;
-            this.tempoTrackBar.Value = 120;
+            this.tempoTrackBar.Value = 40;
             this.tempoTrackBar.Scroll += new System.EventHandler(this.tempoTrackBar_Scroll);
             // 
             // instrumentComboBox
             // 
+            this.instrumentComboBox.Enabled = false;
             this.instrumentComboBox.FormattingEnabled = true;
             this.instrumentComboBox.Location = new System.Drawing.Point(9, 127);
             this.instrumentComboBox.Name = "instrumentComboBox";

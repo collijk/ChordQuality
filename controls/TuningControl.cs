@@ -42,7 +42,7 @@ namespace ChordQuality.controls
             });
             fileUpdatedSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
             {
-                currentFile = Message.file;
+                currentFile = Message.file;                
             });
             midiPlayerSubscription = eventAggregator.Subscribe<MidiPlayerUpdatedMessage>(Message =>
             {
