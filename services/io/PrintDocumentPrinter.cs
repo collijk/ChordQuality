@@ -2,52 +2,50 @@
 
 namespace ChordQuality.services.io
 {
-    class PrintDocumentPrinter
+    internal class PrintDocumentPrinter
     {
-        private PrintDialog printDialog;
-        private PrintDocumentProvider printDocProvider;
-
         // Thread safe singleton pattern for PrintDocumentPrinter construction.
-        private static PrintDocumentPrinter instance = null;
-        private static readonly object padlock = new object();
+        private static PrintDocumentPrinter _instance;
+        private static readonly object Padlock = new object();
+        private PrintDialog _printDialog;
+        private PrintDocumentProvider _printDocProvider;
+
+        private PrintDocumentPrinter()
+        {
+            InitializeServices();
+            InitializeDialog();
+        }
 
         public static PrintDocumentPrinter Instance
         {
             get
             {
-                lock(padlock)
+                lock (Padlock)
                 {
-                    if(instance == null)
+                    if (_instance == null)
                     {
-                        instance = new PrintDocumentPrinter();
+                        _instance = new PrintDocumentPrinter();
                     }
-                    return instance;
+                    return _instance;
                 }
             }
         }
 
-        private PrintDocumentPrinter()
+        private void InitializeDialog()
         {
-            initializeServices();
-            initializeDialog();
+            _printDialog = new PrintDialog {AllowSomePages = true};
         }
 
-        private void initializeDialog()
+        private void InitializeServices()
         {
-            printDialog = new PrintDialog();
-            printDialog.AllowSomePages = true;
+            _printDocProvider = PrintDocumentProvider.Instance;
         }
 
-        private void initializeServices()
+        public void Print()
         {
-            printDocProvider = PrintDocumentProvider.Instance;
-        }
-
-        public void print()
-        {
-            printDialog.Document = printDocProvider.getPrintDoc();
-            if(printDialog.ShowDialog() == DialogResult.OK)
-                printDialog.Document.Print();
+            _printDialog.Document = _printDocProvider.GetPrintDoc();
+            if (_printDialog.ShowDialog() == DialogResult.OK)
+                _printDialog.Document.Print();
         }
     }
 }

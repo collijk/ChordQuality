@@ -1,41 +1,37 @@
-﻿using ChordQuality.events;
+﻿using System;
+using System.Windows.Forms;
+using ChordQuality.events;
 using ChordQuality.events.messages;
 using Janus.ManagedMIDI;
-using System.Windows.Forms;
-using System;
 
 namespace ChordQuality.controls
 {
     public partial class FileTransposeControl : UserControl
     {
-
-        private IEventAggregator eventAggregator;
-        private ISubscription<FileUpdatedMessage> fileOpenedSubscription;
-        private ISubscription<BarOffsetChangedMessage> barOffsetSubscription;
-        private MidiFile file;
+        private ISubscription<BarOffsetChangedMessage> _barOffsetSubscription;
+        private IEventAggregator _eventAggregator;
+        private MidiFile _file;
+        private ISubscription<FileUpdatedMessage> _fileOpenedSubscription;
 
         public FileTransposeControl()
         {
             InitializeComponent();
-            initializeSubscriptions();
+            InitializeSubscriptions();
         }
 
-        private void initializeSubscriptions()
+        private void InitializeSubscriptions()
         {
-            eventAggregator = EventAggregator.Instance;
-            fileOpenedSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
-            {
-                onFileUpdated(Message.file);
-            });
-            barOffsetSubscription = eventAggregator.Subscribe<BarOffsetChangedMessage>(Message =>
-            {
-                offsetValueLabel.Text = Message.offsetValue + " Bars";
-            });
+            _eventAggregator = EventAggregator.Instance;
+            _fileOpenedSubscription =
+                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { OnFileUpdated(message.File); });
+            _barOffsetSubscription =
+                _eventAggregator.Subscribe<BarOffsetChangedMessage>(
+                    message => { offsetValueLabel.Text = message.OffsetValue + " Bars"; });
         }
 
-        private void onFileUpdated(MidiFile file)
+        private void OnFileUpdated(MidiFile file)
         {
-            this.file = file;
+            _file = file;
             fileTransposeUpDown.Maximum = 127 - file.max_note;
             fileTransposeUpDown.Minimum = 0 - file.min_note;
             fileTransposeUpDown.Value = 0;
@@ -45,12 +41,11 @@ namespace ChordQuality.controls
 
         private void fileTransposeUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if(file != null)
+            if (_file != null)
             {
-                file.Transpose((int) fileTransposeUpDown.Value);
-                FileTransposedMessage message = new FileTransposedMessage();
-                message.chords = file.FindChords();
-                eventAggregator.Publish(message);                
+                _file.Transpose((int) fileTransposeUpDown.Value);
+                var message = new FileTransposedMessage {Chords = _file.FindChords()};
+                _eventAggregator.Publish(message);
             }
         }
     }

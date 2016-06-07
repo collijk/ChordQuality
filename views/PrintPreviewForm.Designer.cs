@@ -1,4 +1,4 @@
-﻿namespace ChordQuality
+﻿namespace ChordQuality.views
 {
     partial class PrintPreviewForm
     {

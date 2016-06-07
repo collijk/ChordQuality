@@ -1,102 +1,106 @@
-﻿using ChordQuality.events;
-using ChordQuality.events.messages;
-using Janus.ManagedMIDI;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ChordQuality.events;
+using ChordQuality.events.messages;
+using Janus.ManagedMIDI;
 
 namespace ChordQuality.controls
 {
     public partial class TrackControl : UserControl
     {
-        private IEventAggregator eventAggregator;
-        private ISubscription<FileUpdatedMessage> fileUpdatedSubscription;
-
-        private MidiFile currentFile;
-        private CheckBox[] trackChecks;
-        Color[] trackColors = new Color[19] {
+        private readonly Color[] _trackColors = new Color[]
+        {
             Color.Black, Color.Red, Color.Green, Color.Orange,
             Color.Blue, Color.Black, Color.Black, Color.Black,
             Color.Black, Color.Magenta, Color.Cyan, Color.Pink,
             Color.LightBlue, Color.Brown, Color.Gold, Color.Silver,
-            Color.Black, Color.Black, Color.Black };
-        private ColorDialog colorDialog;
-        
+            Color.Black, Color.Black, Color.Black
+        };
+
+        private ColorDialog _colorDialog;
+
+        private MidiFile _currentFile;
+        private IEventAggregator _eventAggregator;
+        private ISubscription<FileUpdatedMessage> _fileUpdatedSubscription;
+        private CheckBox[] _trackChecks;
+
 
         public TrackControl()
         {
             InitializeComponent();
-            initializeSubscriptions();
-            initializeDialog();
+            InitializeSubscriptions();
+            InitializeDialog();
         }
 
-        private void initializeDialog()
+        private void InitializeDialog()
         {
-            this.colorDialog = new ColorDialog();
+            _colorDialog = new ColorDialog();
         }
 
-        private void initializeSubscriptions()
+        private void InitializeSubscriptions()
         {
-            eventAggregator = EventAggregator.Instance;
-            fileUpdatedSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
+            _eventAggregator = EventAggregator.Instance;
+            _fileUpdatedSubscription = _eventAggregator.Subscribe<FileUpdatedMessage>(message =>
             {
-                currentFile = Message.file;
-                onFileUpdated();
+                _currentFile = message.File;
+                OnFileUpdated();
             });
         }
 
-        private void onFileUpdated()
+        private void OnFileUpdated()
         {
             trackPanel.Controls.Clear();
-            trackChecks = new CheckBox[currentFile.tracks.Length];
-            for(int n = 0; n < currentFile.tracks.Length; n++)
+            _trackChecks = new CheckBox[_currentFile.tracks.Length];
+            for (var n = 0; n < _currentFile.tracks.Length; n++)
             {
-                trackChecks[n] = new CheckBox();
-                trackChecks[n].Location = new Point(4, 4 + n * 16);
-                trackChecks[n].Size = new Size(192, 16);
-                trackChecks[n].ForeColor = trackColors[n];
-                trackChecks[n].Text = "#" + (n + 1).ToString() + ": " + currentFile.tracks[n].name;
-                trackChecks[n].Checked = true;
-                trackChecks[n].CheckedChanged += new System.EventHandler(TrackCheckedChanged);
-                trackChecks[n].ContextMenuStrip = colorContextMenu;
-                trackPanel.Controls.Add(trackChecks[n]);
+                _trackChecks[n] = new CheckBox
+                {
+                    Location = new Point(4, 4 + n*16),
+                    Size = new Size(192, 16),
+                    ForeColor = _trackColors[n],
+                    Text = "#" + (n + 1) + ": " + _currentFile.tracks[n].name,
+                    Checked = true
+                };
+                _trackChecks[n].CheckedChanged += TrackCheckedChanged;
+                _trackChecks[n].ContextMenuStrip = colorContextMenu;
+                trackPanel.Controls.Add(_trackChecks[n]);
             }
         }
 
-        void TrackCheckedChanged(object sender, EventArgs e)
+        private void TrackCheckedChanged(object sender, EventArgs e)
         {
-            if(currentFile != null)
+            if (_currentFile != null)
             {
-                for(int i = 0; i < currentFile.tracks.Length; i++)
-                    currentFile.tracks[i].enabled = trackChecks[i].Checked;
+                for (var i = 0; i < _currentFile.tracks.Length; i++)
+                    _currentFile.tracks[i].enabled = _trackChecks[i].Checked;
 
-                eventAggregator.Publish(new TracksChangedMessage());                
+                _eventAggregator.Publish(new TracksChangedMessage());
             }
         }
 
-        
 
         private void colorMenuItem_Click(object sender, EventArgs e)
         {
-            for(int i = 0; i < currentFile.tracks.Length; i++)
+            for (var i = 0; i < _currentFile.tracks.Length; i++)
             {
-                if(colorContextMenu.SourceControl == trackChecks[i])
+                if (colorContextMenu.SourceControl == _trackChecks[i])
                 {
-                    colorDialog.Color = trackColors[i];
-                }
-            }              
-                    
-            colorDialog.ShowDialog();
-
-            for(int i = 0; i < currentFile.tracks.Length; i++)
-            {
-                if(colorContextMenu.SourceControl == trackChecks[i])
-                {
-                    trackColors[i] = colorDialog.Color;
-                    trackChecks[i].ForeColor = colorDialog.Color;
+                    _colorDialog.Color = _trackColors[i];
                 }
             }
-            eventAggregator.Publish(new TrackColorChangedMessage());
+
+            _colorDialog.ShowDialog();
+
+            for (var i = 0; i < _currentFile.tracks.Length; i++)
+            {
+                if (colorContextMenu.SourceControl == _trackChecks[i])
+                {
+                    _trackColors[i] = _colorDialog.Color;
+                    _trackChecks[i].ForeColor = _colorDialog.Color;
+                }
+            }
+            _eventAggregator.Publish(new TrackColorChangedMessage());
         }
     }
 }

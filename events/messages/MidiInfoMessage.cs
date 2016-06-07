@@ -1,6 +1,5 @@
-﻿using Janus.ManagedMIDI;
-using System;
-using System.Collections;
+﻿using System.Collections;
+using Janus.ManagedMIDI;
 
 namespace ChordQuality.events.messages
 {
@@ -10,31 +9,19 @@ namespace ChordQuality.events.messages
 
     public class MidiPlayerUpdatedMessage : MidiInfoMessage
     {
-        public MidiFilePlayer player
-        {
-            get; set;
-        }
+        public MidiFilePlayer Player { get; set; }
     }
 
     public class FileTransposedMessage : MidiInfoMessage
     {
-        public ArrayList chords
-        {
-            get; set;
-        }
+        public ArrayList Chords { get; set; }
     }
 
     public class PlaySelectionChangedMessage : MidiInfoMessage
     {
-        public double playStart
-        {
-            get; set;
-        }
+        public double PlayStart { get; set; }
 
-        public double playStop
-        {
-            get; set;
-        }
+        public double PlayStop { get; set; }
     }
 
     public class MarkersChangedMessage : MidiInfoMessage
@@ -47,10 +34,7 @@ namespace ChordQuality.events.messages
 
     public class TuningsUpdatedMessage : MidiInfoMessage
     {
-        public TuningScheme[] tunings
-        {
-            get; set;
-        }
+        public TuningScheme[] Tunings { get; set; }
     }
 
     public class TuningEnabledMessage : MidiInfoMessage
@@ -59,18 +43,12 @@ namespace ChordQuality.events.messages
 
     public class TuningsTransposedMessage : MidiInfoMessage
     {
-        public int transposeValue
-        {
-            get; set;
-        }
+        public int TransposeValue { get; set; }
     }
 
     public class QualityWeightsUpdatedMessage : MidiInfoMessage
     {
-        public QualityWeights qualityWeights
-        {
-            get; set;
-        }
+        public QualityWeights QualityWeights { get; set; }
     }
 
     public class QualityWeightScrollChangedMessage : MidiInfoMessage
@@ -79,18 +57,14 @@ namespace ChordQuality.events.messages
 
     public class PenaltiesChangedMessage : MidiInfoMessage
     {
-        public String penalties
-        {
-            get; set;
-        }        
+        public string Penalties { get; set; }
     }
 
     public class PenaltyScrollChangedMessage : MidiInfoMessage
-    {        
+    {
     }
 
     public class TracksChangedMessage : MidiInfoMessage
     {
     }
-
 }

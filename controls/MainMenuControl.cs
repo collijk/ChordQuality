@@ -1,64 +1,56 @@
 ﻿using System;
 using System.Windows.Forms;
 using ChordQuality.events;
-using ChordQuality.services.io;
 using ChordQuality.events.messages;
 using ChordQuality.services;
+using ChordQuality.services.io;
 using Janus.ManagedMIDI;
-using ChordQuality.Services;
 
 namespace ChordQuality.controls
 {
     public partial class MainMenuControl : UserControl
     {
-        private IEventAggregator eventAggregator;
-        private ISubscription<FileUpdatedMessage> midiFileSubscription;
-        private ISubscription<PlaySelectionChangedMessage> playSelectionSubscription;
-        private MidiFileOpener fileOpener;
-        private MidiFileSaver fileSaver;
-        private FileInfoProvider infoProvider;
-        private PrintPreviewProvider previewProvider;
-        private PrintDocumentPrinter docPrinter;
-        private MidiToTextWriter midiTextWriter;
-        private AnalysisFileWriter analysisWriter;
-        private ToolStripMenuItem[] markersMenuAddMenuItems;
-        private ToolStripMenuItem[] markersMenuRemoveMenuItems;
-        private MidiFile currentFile;
-        private double playStart = -1;
-        private double playStop = -1;
+        private AnalysisFileWriter _analysisWriter;
+        private MidiFile _currentFile;
+        private PrintDocumentPrinter _docPrinter;
+        private IEventAggregator _eventAggregator;
+        private MidiFileOpener _fileOpener;
+        private MidiFileSaver _fileSaver;
+        private FileInfoProvider _infoProvider;
+        private ToolStripMenuItem[] _markersMenuAddMenuItems;
+        private ToolStripMenuItem[] _markersMenuRemoveMenuItems;
+        private ISubscription<FileUpdatedMessage> _midiFileSubscription;
+        private MidiToTextWriter _midiTextWriter;
+        private ISubscription<PlaySelectionChangedMessage> _playSelectionSubscription;
+        private double _playStart = -1;
+        private double _playStop = -1;
+        private PrintPreviewProvider _previewProvider;
 
         public MainMenuControl()
         {
             InitializeComponent();
-            initializeSubscriptions();
-            initializeServices();
+            InitializeSubscriptions();
+            InitializeServices();
         }
 
-        private void initializeSubscriptions()
+        private void InitializeSubscriptions()
         {
-            eventAggregator = EventAggregator.Instance;
-            midiFileSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
+            _eventAggregator = EventAggregator.Instance;
+            _midiFileSubscription = _eventAggregator.Subscribe<FileUpdatedMessage>(message =>
             {
-                currentFile = Message.file;
-                onFileUpdated();
+                _currentFile = message.File;
+                OnFileUpdated();
             });
-            playSelectionSubscription = eventAggregator.Subscribe<PlaySelectionChangedMessage>(Message =>
+            _playSelectionSubscription = _eventAggregator.Subscribe<PlaySelectionChangedMessage>(message =>
             {
-                playStart = Message.playStart;
-                playStop = Message.playStop;
-                if(playStop != playStart)
-                {
-                    markersMenuAddMenu.Enabled = true;
-                } else
-                {
-                    markersMenuAddMenu.Enabled = false;
-                }
+                _playStart = message.PlayStart;
+                _playStop = message.PlayStop;
+                markersMenuAddMenu.Enabled = _playStop != _playStart;
             });
         }
 
-        private void onFileUpdated()
+        private void OnFileUpdated()
         {
-
             fileMenuSaveItem.Enabled = true;
             fileMenuPrintItem.Enabled = true;
             fileMenuMidiToTextItem.Enabled = true;
@@ -67,115 +59,119 @@ namespace ChordQuality.controls
             markersMenu.Enabled = true;
             analysisMenu.Enabled = true;
 
-            markersMenuAddMenuItems = new ToolStripMenuItem[currentFile.tracks.Length];
-            for(int i = 0; i < currentFile.tracks.Length; i++)
+            _markersMenuAddMenuItems = new ToolStripMenuItem[_currentFile.tracks.Length];
+            for (var i = 0; i < _currentFile.tracks.Length; i++)
             {
-                markersMenuAddMenuItems[i] = new ToolStripMenuItem();
-                markersMenuAddMenuItems[i].Text = "#" + (i + 1).ToString() + ": " + currentFile.tracks[i].name;
-                markersMenuAddMenuItems[i].Click += new System.EventHandler(AddMenuItemClicked);
+                _markersMenuAddMenuItems[i] = new ToolStripMenuItem
+                {
+                    Text = "#" + (i + 1) + ": " + _currentFile.tracks[i].name
+                };
+                _markersMenuAddMenuItems[i].Click += AddMenuItemClicked;
             }
             markersMenuAddMenu.DropDownItems.Clear();
-            markersMenuAddMenu.DropDownItems.AddRange(markersMenuAddMenuItems);                
+            markersMenuAddMenu.DropDownItems.AddRange(_markersMenuAddMenuItems);
 
             // create "markers -> remove" menu
-            markersMenuRemoveMenuItems = new ToolStripMenuItem[currentFile.tracks.Length];
-            for(int i = 0; i < currentFile.tracks.Length; i++)
+            _markersMenuRemoveMenuItems = new ToolStripMenuItem[_currentFile.tracks.Length];
+            for (var i = 0; i < _currentFile.tracks.Length; i++)
             {
-                markersMenuRemoveMenuItems[i] = new ToolStripMenuItem();
-                markersMenuRemoveMenuItems[i].Text = "#" + (i + 1).ToString() + ": " + currentFile.tracks[i].name;
-                markersMenuRemoveMenuItems[i].Click += new System.EventHandler(RemoveMenuItemClicked);
+                _markersMenuRemoveMenuItems[i] = new ToolStripMenuItem
+                {
+                    Text = "#" + (i + 1) + ": " + _currentFile.tracks[i].name
+                };
+                _markersMenuRemoveMenuItems[i].Click += RemoveMenuItemClicked;
             }
             markersMenuRemoveMenu.DropDownItems.Clear();
-            markersMenuRemoveMenu.DropDownItems.AddRange(markersMenuRemoveMenuItems);
+            markersMenuRemoveMenu.DropDownItems.AddRange(_markersMenuRemoveMenuItems);
         }
 
         private void RemoveMenuItemClicked(object sender, EventArgs e)
         {
-            for(int i = 0; i < currentFile.tracks.Length; i++)
+            for (var i = 0; i < _currentFile.tracks.Length; i++)
             {
-                if(sender == markersMenuRemoveMenuItems[i])
+                if (sender == _markersMenuRemoveMenuItems[i])
                 {
-                    if(playStart != playStop)
+                    if (_playStart != _playStop)
                     {
-                        currentFile.RemoveMarkers(
-                            i, (int) (playStart * 4 * currentFile.timing), (int) (playStop * 4 * currentFile.timing));
-                    } else
+                        _currentFile.RemoveMarkers(
+                            i, (int) (_playStart*4*_currentFile.timing), (int) (_playStop*4*_currentFile.timing));
+                    }
+                    else
                     {
-                        currentFile.RemoveAllMarkers(i);
-                    }                  
+                        _currentFile.RemoveAllMarkers(i);
+                    }
                 }
             }
-            eventAggregator.Publish(new MarkersChangedMessage());
+            _eventAggregator.Publish(new MarkersChangedMessage());
         }
 
         private void AddMenuItemClicked(object sender, EventArgs e)
         {
-            for(int i = 0; i < currentFile.tracks.Length; i++)
+            for (var i = 0; i < _currentFile.tracks.Length; i++)
             {
-                if(sender == markersMenuAddMenuItems[i])
+                if (sender == _markersMenuAddMenuItems[i])
                 {
-                    currentFile.InsertMarker(i,
-                        (int) (playStart * 4 * currentFile.timing), (int) (playStop * 4 * currentFile.timing));
-                    
+                    _currentFile.InsertMarker(i,
+                        (int) (_playStart*4*_currentFile.timing), (int) (_playStop*4*_currentFile.timing));
                 }
             }
-            eventAggregator.Publish(new MarkersChangedMessage());
+            _eventAggregator.Publish(new MarkersChangedMessage());
         }
 
-        private void initializeServices()
+        private void InitializeServices()
         {
-            fileOpener = MidiFileOpener.Instance;
-            fileSaver = MidiFileSaver.Instance;
-            infoProvider = FileInfoProvider.Instance;
-            previewProvider = PrintPreviewProvider.Instance;
-            docPrinter = PrintDocumentPrinter.Instance;
-            midiTextWriter = MidiToTextWriter.Instance;
-            analysisWriter = AnalysisFileWriter.Instance;
+            _fileOpener = MidiFileOpener.Instance;
+            _fileSaver = MidiFileSaver.Instance;
+            _infoProvider = FileInfoProvider.Instance;
+            _previewProvider = PrintPreviewProvider.Instance;
+            _docPrinter = PrintDocumentPrinter.Instance;
+            _midiTextWriter = MidiToTextWriter.Instance;
+            _analysisWriter = AnalysisFileWriter.Instance;
         }
 
         private void fileMenuOpenItem_Click(object sender, EventArgs e)
         {
-            fileOpener.openMidiFile();
+            _fileOpener.OpenMidiFile();
         }
 
         private void fileMenuSaveItem_Click(object sender, EventArgs e)
         {
-            fileSaver.saveMidiFile();
+            _fileSaver.SaveMidiFile();
         }
 
         private void fileMenuInfoItem_Click(object sender, EventArgs e)
         {
-            infoProvider.showInfo();
+            _infoProvider.ShowInfo();
         }
 
         private void fileMenuPrintPreviewItem_Click(object sender, EventArgs e)
         {
-            previewProvider.showPreview();
+            _previewProvider.ShowPreview();
         }
 
         private void fileMenuPrintItem_Click(object sender, EventArgs e)
         {
-            docPrinter.print();
+            _docPrinter.Print();
         }
 
         private void fileMenuMidiToTextItem_Click(object sender, EventArgs e)
         {
-            midiTextWriter.writeMidiToText();
+            _midiTextWriter.WriteMidiToText();
         }
 
         private void fileMenuExitItem_Click(object sender, EventArgs e)
         {
-            eventAggregator.Publish(new CloseRequestMessage());
+            _eventAggregator.Publish(new CloseRequestMessage());
         }
 
         private void analysisMenuFindBestTuningItem_Click(object sender, EventArgs e)
         {
-            eventAggregator.Publish(new FindBestTuningsMessage());
+            _eventAggregator.Publish(new FindBestTuningsMessage());
         }
 
         private void analysisMenuExportAnalysisItem_Click(object sender, EventArgs e)
         {
-            analysisWriter.writeAnalysis();
+            _analysisWriter.WriteAnalysis();
         }
     }
 }

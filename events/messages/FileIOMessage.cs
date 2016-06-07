@@ -2,25 +2,17 @@
 
 namespace ChordQuality.events.messages
 {
-    public class FileIOMessage : IMessage
+    public class FileIoMessage : IMessage
     {
     }
 
-    public class FileOpenedMessage : FileIOMessage
+    public class FileOpenedMessage : FileIoMessage
     {
-        public MidiFile file
-        {
-            get; set;
-        }        
+        public MidiFile File { get; set; }
     }
 
-    public class FileUpdatedMessage : FileIOMessage
+    public class FileUpdatedMessage : FileIoMessage
     {
-        public MidiFile file
-        {
-            get; set;
-        }
+        public MidiFile File { get; set; }
     }
-
-    
 }

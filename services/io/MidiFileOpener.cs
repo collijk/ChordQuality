@@ -1,67 +1,64 @@
-﻿using Janus.ManagedMIDI;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
-using System.ComponentModel;
-using ChordQuality.events.messages;
 using ChordQuality.events;
+using ChordQuality.events.messages;
+using Janus.ManagedMIDI;
 
 namespace ChordQuality.services.io
 {
-    class MidiFileOpener
+    internal class MidiFileOpener
     {
-        private IEventAggregator eventAggregator;
-        private OpenFileDialog openMidiFileDialog;
-
         // Thread safe singleton pattern for MidiFileOpener construction.
-        private static MidiFileOpener instance = null;
-        private static readonly object padlock = new object();
-               
+        private static MidiFileOpener _instance;
+        private static readonly object Padlock = new object();
+        private IEventAggregator _eventAggregator;
+        private OpenFileDialog _openMidiFileDialog;
+
+        private MidiFileOpener()
+        {
+            InitializeServices();
+            InitializeDialog();
+        }
+
         public static MidiFileOpener Instance
         {
             get
             {
-                lock(padlock)
+                lock (Padlock)
                 {
-                    if(instance == null)
+                    if (_instance == null)
                     {
-                        instance = new MidiFileOpener();
+                        _instance = new MidiFileOpener();
                     }
-                    return instance;
+                    return _instance;
                 }
             }
         }
 
-        private MidiFileOpener()
+        private void InitializeServices()
         {
-            initializeServices();
-            initializeDialog();            
+            _eventAggregator = EventAggregator.Instance;
         }
 
-        private void initializeServices()
+        private void InitializeDialog()
         {
-            eventAggregator = EventAggregator.Instance;            
-        }
-
-        private void initializeDialog()
-        {
-            openMidiFileDialog = new OpenFileDialog();
-            openMidiFileDialog.Filter = "MIDI-Files|*.mid";
-            openMidiFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.OpenFileDialogFileOk);
+            _openMidiFileDialog = new OpenFileDialog {Filter = "MIDI-Files|*.mid"};
+            _openMidiFileDialog.FileOk += OpenFileDialogFileOk;
         }
 
         private void OpenFileDialogFileOk(object sender, CancelEventArgs e)
         {
             // read midi file
             MidiFileReader fileReader = new MidiFileReader();
-            MidiFile file = fileReader.Read(openMidiFileDialog.FileName);
+            MidiFile file = fileReader.Read(_openMidiFileDialog.FileName);
 
-            FileOpenedMessage message = new FileOpenedMessage();
-            message.file = file;
-            eventAggregator.Publish(message);           
+            var message = new FileOpenedMessage {File = file};
+            _eventAggregator.Publish(message);
         }
 
-        public void openMidiFile()
+        public void OpenMidiFile()
         {
-            openMidiFileDialog.ShowDialog();
+            _openMidiFileDialog.ShowDialog();
         }
     }
 }

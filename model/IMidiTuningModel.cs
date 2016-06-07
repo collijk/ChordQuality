@@ -4,20 +4,10 @@ namespace ChordQuality.model
 {
     public interface IMidiTuningModel
     {
-        TuningScheme[] Tunings
-        {
-            get; 
-        }
+        TuningScheme[] Tunings { get; }
 
-        TuningScheme CurrentTuning
-        {
-            get; set;
-        }
+        TuningScheme CurrentTuning { get; set; }
 
-        int NumberOfAvailableTunings
-        {
-            get; set;
-        }
-        
+        int NumberOfAvailableTunings { get; set; }
     }
 }

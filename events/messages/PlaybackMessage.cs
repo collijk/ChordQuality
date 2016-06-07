@@ -6,10 +6,7 @@
 
     public class PlayMessage : PlaybackMessage
     {
-        public int deviceIndex
-        {
-            get; set;
-        }
+        public int DeviceIndex { get; set; }
     }
 
     public class PauseMessage : PlaybackMessage

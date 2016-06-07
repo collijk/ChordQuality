@@ -1,74 +1,67 @@
-﻿using ChordQuality.events;
+﻿using System;
+using System.Windows.Forms;
+using ChordQuality.events;
 using ChordQuality.events.messages;
 using Janus.ManagedMIDI;
-using System;
-using System.Windows.Forms;
 
 namespace ChordQuality.controls
 {
     public partial class PrintingControl : UserControl
     {
-        private IEventAggregator eventAggregator;
-        private ISubscription<FileUpdatedMessage> fileUpdatedSubscription;
-        private ISubscription<ZoomScrollChangedMessage> zoomScrollSubscription;
-        private MidiFile currentFile;
+        private MidiFile _currentFile;
+        private IEventAggregator _eventAggregator;
+        private ISubscription<FileUpdatedMessage> _fileUpdatedSubscription;
+        private ISubscription<ZoomScrollChangedMessage> _zoomScrollSubscription;
 
         public PrintingControl()
         {
             InitializeComponent();
-            initializeSubscriptions();
+            InitializeSubscriptions();
         }
 
-        private void initializeSubscriptions()
+        private void InitializeSubscriptions()
         {
-            eventAggregator = EventAggregator.Instance;
-            fileUpdatedSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
-            {
-                currentFile = Message.file;
-            });
-            zoomScrollSubscription = eventAggregator.Subscribe<ZoomScrollChangedMessage>(Message =>
-            {
-                onZoomChanged(Message.zoomValue);
-            });
+            _eventAggregator = EventAggregator.Instance;
+            _fileUpdatedSubscription =
+                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { _currentFile = message.File; });
+            _zoomScrollSubscription =
+                _eventAggregator.Subscribe<ZoomScrollChangedMessage>(message => { OnZoomChanged(message.ZoomValue); });
         }
 
-        private void onZoomChanged(int zoomValue)
+        private void OnZoomChanged(int zoomValue)
         {
-            int bars = Int32.Parse(barsPerRowTextBox.Text);
-            if(bars != zoomValue)
+            var bars = int.Parse(barsPerRowTextBox.Text);
+            if (bars != zoomValue)
             {
                 barsPerRowTextBox.Text = zoomValue.ToString();
-                updatePrintSettings();
+                UpdatePrintSettings();
             }
         }
 
-        private void applyPrintSettingsButton_Click(object sender, System.EventArgs e)
+        private void applyPrintSettingsButton_Click(object sender, EventArgs e)
         {
-            updatePrintSettings(); 
+            UpdatePrintSettings();
         }
 
-        public void updatePrintSettings()
+        public void UpdatePrintSettings()
         {
-            int bars = Int32.Parse(barsPerRowTextBox.Text);
-            int RowsPerPage = Int32.Parse(rowsPerPageTextBox.Text);
-            float relThickness = (float) Double.Parse(relativeThicknessTextBox.Text);
-            int barspp = bars * RowsPerPage;
+            var bars = int.Parse(barsPerRowTextBox.Text);
+            var rowsPerPage = int.Parse(rowsPerPageTextBox.Text);
+            var relThickness = (float) double.Parse(relativeThicknessTextBox.Text);
+            var barspp = bars*rowsPerPage;
             barsPerPageTextBox.Text = barspp.ToString();
 
-            if(currentFile != null)
+            if (_currentFile != null)
             {
-                int Pages = (int) Math.Ceiling((double) currentFile.bars / barspp);
-                pagesTextBox.Text = Pages.ToString();
+                var pages = (int) Math.Ceiling((double) _currentFile.bars/barspp);
+                pagesTextBox.Text = pages.ToString();
             }
-            RowsPerPageChangedMessage rppMessage = new RowsPerPageChangedMessage();
-            rppMessage.RowsPerPage = RowsPerPage;
-            eventAggregator.Publish(rppMessage);
-            RelThicknessChangedMessage rMessage = new RelThicknessChangedMessage();
-            rMessage.relThickness = relThickness;
-            eventAggregator.Publish(rMessage);
-            BarsPerRowChangedMessage bprMessage = new BarsPerRowChangedMessage();
-            bprMessage.BarsPerRow = bars;
-            eventAggregator.Publish(bprMessage);
+            var rppMessage = new RowsPerPageChangedMessage {RowsPerPage = rowsPerPage};
+            _eventAggregator.Publish(rppMessage);
+            var rMessage = new RelThicknessChangedMessage {RelThickness = relThickness};
+            _eventAggregator.Publish(rMessage);
+            var bprMessage = new BarsPerRowChangedMessage {BarsPerRow = bars};
+            _eventAggregator.Publish(bprMessage);
         }
     }
 }

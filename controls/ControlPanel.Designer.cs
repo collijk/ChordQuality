@@ -34,7 +34,7 @@
             this.cutControl = new ChordQuality.controls.CutControl();
             this.trackControl = new ChordQuality.controls.TrackControl();
             this.fileTransposeControl = new ChordQuality.controls.FileTransposeControl();
-            this.playbackControl = new ChordQuality.PlaybackControl();
+            this.playbackControl = new PlaybackControl();
             this.controlBox.SuspendLayout();
             this.SuspendLayout();
             // 

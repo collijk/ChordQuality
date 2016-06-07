@@ -1,9 +1,10 @@
 ﻿using System;
+using ChordQuality.events.messages;
 
 namespace ChordQuality.events
-{   
+{
     /// <summary>
-    /// Interface for Event Aggregator classes.
+    ///     Interface for Event Aggregator classes.
     /// </summary>
     public interface IEventAggregator
     {

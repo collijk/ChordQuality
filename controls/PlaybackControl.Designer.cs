@@ -1,4 +1,4 @@
-﻿namespace ChordQuality
+﻿namespace ChordQuality.controls
 {
     partial class PlaybackControl
     {

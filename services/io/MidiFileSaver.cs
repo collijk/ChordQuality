@@ -1,69 +1,68 @@
-﻿using ChordQuality.events;
+﻿using System.ComponentModel;
 using System.Windows.Forms;
-using System.ComponentModel;
+using ChordQuality.events;
 using ChordQuality.events.messages;
 using Janus.ManagedMIDI;
 
 namespace ChordQuality.services.io
 {
-    class MidiFileSaver
+    internal class MidiFileSaver
     {
-        private IEventAggregator eventAggregator;
-        private SaveFileDialog saveMidiFileDialog;
-        private ISubscription<FileUpdatedMessage> midiFileSubscription;
-        private MidiFile currentFile;
-
         // Thread safe singleton pattern for EventAggregator construction.
-        private static MidiFileSaver instance = null;
-        private static readonly object padlock = new object();        
+        private static MidiFileSaver _instance;
+        private static readonly object Padlock = new object();
+        private MidiFile _currentFile;
+        private IEventAggregator _eventAggregator;
+        private ISubscription<FileUpdatedMessage> _midiFileSubscription;
+        private SaveFileDialog _saveMidiFileDialog;
+
+        private MidiFileSaver()
+        {
+            InitializeSubscriptions();
+            InitializeDialog();
+        }
 
         public static MidiFileSaver Instance
         {
             get
             {
-                lock(padlock)
+                lock (Padlock)
                 {
-                    if(instance == null)
+                    if (_instance == null)
                     {
-                        instance = new MidiFileSaver();
+                        _instance = new MidiFileSaver();
                     }
-                    return instance;
+                    return _instance;
                 }
             }
         }
 
-        private MidiFileSaver()
+        public void SaveMidiFile()
         {
-            initializeSubscriptions();
-            initializeDialog();
+            _saveMidiFileDialog.ShowDialog();
         }
 
-        public void saveMidiFile()
+        private void InitializeDialog()
         {
-            saveMidiFileDialog.ShowDialog();
-        }
-
-        private void initializeDialog()
-        {
-            saveMidiFileDialog = new SaveFileDialog();
-            saveMidiFileDialog.DefaultExt = "mid";
-            saveMidiFileDialog.Filter = "MIDI-Files|*.mid";
-            saveMidiFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.SaveFileDialogFileOk);            
-        }
-
-        private void initializeSubscriptions()
-        {
-            eventAggregator = EventAggregator.Instance;
-            midiFileSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
+            _saveMidiFileDialog = new SaveFileDialog
             {
-                currentFile = Message.file;
-            });
+                DefaultExt = "mid",
+                Filter = "MIDI-Files|*.mid"
+            };
+            _saveMidiFileDialog.FileOk += SaveFileDialogFileOk;
+        }
+
+        private void InitializeSubscriptions()
+        {
+            _eventAggregator = EventAggregator.Instance;
+            _midiFileSubscription =
+                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { _currentFile = message.File; });
         }
 
         private void SaveFileDialogFileOk(object sender, CancelEventArgs e)
         {
             MidiFileWriter fileWriter = new MidiFileWriter();
-            fileWriter.Write(currentFile, saveMidiFileDialog.FileName);
+            fileWriter.Write(_currentFile, _saveMidiFileDialog.FileName);
         }
     }
 }

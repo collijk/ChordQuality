@@ -1,51 +1,49 @@
 ﻿using ChordQuality.events;
 using ChordQuality.events.messages;
+using ChordQuality.views;
 using Janus.ManagedMIDI;
 
 namespace ChordQuality.services
 {
-    class FileInfoProvider
+    internal class FileInfoProvider
     {
-        private IEventAggregator eventAggregator;
-        private ISubscription<FileUpdatedMessage> midiFileSubscription;
-        private MidiFile currentFile;
-
         // Thread safe singleton pattern for EventAggregator construction.
-        private static FileInfoProvider instance = null;
-        private static readonly object padlock = new object();        
+        private static FileInfoProvider _instance;
+        private static readonly object Padlock = new object();
+        private MidiFile _currentFile;
+        private IEventAggregator _eventAggregator;
+        private ISubscription<FileUpdatedMessage> _midiFileSubscription;
+
+        private FileInfoProvider()
+        {
+            InitializeSubscriptions();
+        }
 
         public static FileInfoProvider Instance
         {
             get
             {
-                lock(padlock)
+                lock (Padlock)
                 {
-                    if(instance == null)
+                    if (_instance == null)
                     {
-                        instance = new FileInfoProvider();
+                        _instance = new FileInfoProvider();
                     }
-                    return instance;
+                    return _instance;
                 }
             }
         }
 
-        private FileInfoProvider()
+        private void InitializeSubscriptions()
         {
-            initializeSubscriptions();
+            _eventAggregator = EventAggregator.Instance;
+            _midiFileSubscription =
+                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { _currentFile = message.File; });
         }
 
-        private void initializeSubscriptions()
+        internal void ShowInfo()
         {
-            eventAggregator = EventAggregator.Instance;
-            midiFileSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
-            {
-                currentFile = Message.file;
-            });
-        }
-
-        internal void showInfo()
-        {
-            FileInfoForm infoForm = new FileInfoForm(currentFile);
+            var infoForm = new FileInfoForm(_currentFile);
             infoForm.Show();
         }
     }

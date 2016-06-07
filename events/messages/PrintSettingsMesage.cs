@@ -6,26 +6,16 @@
 
     public class RelThicknessChangedMessage : PrintSettingsMesage
     {
-        public float relThickness
-        {
-            get; set;
-        }
-
+        public float RelThickness { get; set; }
     }
 
     public class RowsPerPageChangedMessage : PrintSettingsMesage
     {
-        public int RowsPerPage
-        {
-            get; set;
-        }
+        public int RowsPerPage { get; set; }
     }
 
     public class BarsPerRowChangedMessage : PrintSettingsMesage
     {
-        public int BarsPerRow
-        {
-            get; set;
-        }
+        public int BarsPerRow { get; set; }
     }
 }

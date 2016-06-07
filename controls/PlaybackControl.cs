@@ -1,82 +1,82 @@
-﻿using ChordQuality.events;
-using ChordQuality.events.messages;
-using System;
-using System.Windows.Forms;
-using Janus.ManagedMIDI;
+﻿using System;
 using System.IO;
+using System.Windows.Forms;
+using ChordQuality.events;
+using ChordQuality.events.messages;
+using Janus.ManagedMIDI;
 
-namespace ChordQuality
+namespace ChordQuality.controls
 {
     public partial class PlaybackControl : UserControl
     {
-        private IEventAggregator eventAggregator;
-        private ISubscription<FileUpdatedMessage> fileUpdatedSubscription;
-        private MidiOutDevs devices;        
-        private MidiFilePlayer player;
+        private MidiOutDevs _devices;
+        private IEventAggregator _eventAggregator;
+        private ISubscription<FileUpdatedMessage> _fileUpdatedSubscription;
+        private MidiFilePlayer _player;
 
         public PlaybackControl()
         {
             InitializeComponent();
-            initializeSubscriptions();
-            initializeDevices();
-            initializeInstruments();            
+            InitializeSubscriptions();
+            InitializeDevices();
+            InitializeInstruments();
         }
 
-        private void initializeSubscriptions()
+        private void InitializeSubscriptions()
         {
-            eventAggregator = EventAggregator.Instance;
-            fileUpdatedSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
-            {
-                onFileUpdated(Message.file);
-            });
+            _eventAggregator = EventAggregator.Instance;
+            _fileUpdatedSubscription =
+                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { OnFileUpdated(message.File); });
         }
 
-        private void initializeDevices()
+        private void InitializeDevices()
         {
-            devices = new MidiOutDevs();
-            for(int i = 0; i < devices.NumDevs; i++)
+            _devices = new MidiOutDevs();
+            for (var i = 0; i < _devices.NumDevs; i++)
             {
-                midiOutComboBox.Items.Add(devices.Label(i));
+                midiOutComboBox.Items.Add(_devices.Label(i));
             }
             midiOutComboBox.SelectedIndex = 0;
         }
 
-        private void initializeInstruments()
+        private void InitializeInstruments()
         {
-            if(File.Exists("MIDI_PatchMap.txt"))
+            if (File.Exists("MIDI_PatchMap.txt"))
             {
-                StreamReader sr = new StreamReader("MIDI_PatchMap.txt");
-                for(int i = 0; i < 128; i++)
-                    instrumentComboBox.Items.Add(sr.ReadLine());
+                var sr = new StreamReader("MIDI_PatchMap.txt");
+                // TODO : fix this bit of code to handle input read errors.
+                for (var i = 0; i < 128; i++)
+                    instrumentComboBox.Items.Add(item: sr.ReadLine());
                 sr.Close();
-            } else
+            }
+            else
             {
-                for(int i = 1; i < 129; i++)
+                for (var i = 1; i < 129; i++)
                     instrumentComboBox.Items.Add(i.ToString().PadLeft(3, '0'));
             }
             instrumentComboBox.SelectedIndex = 0;
         }
-             
 
-        private void onFileUpdated(MidiFile file)
+
+        private void OnFileUpdated(MidiFile file)
         {
-            player = new MidiFilePlayer(file);
+            _player = new MidiFilePlayer(file);
 
-            if(file.tempo >= tempoTrackBar.Minimum &&
+            if (file.tempo >= tempoTrackBar.Minimum &&
                 file.tempo <= tempoTrackBar.Maximum)
             {
-                player.Tempo = file.tempo;
+                _player.Tempo = file.tempo;
                 tempoTrackBar.Value = (int) file.tempo;
-                bpmLabel.Text = tempoTrackBar.Value.ToString() + " bpm";
-            }            
-            if(file.instrument >= 0)
+                bpmLabel.Text = tempoTrackBar.Value + " bpm";
+            }
+            if (file.instrument >= 0)
             {
-                player.Instrument = file.instrument;
+                _player.Instrument = file.instrument;
                 instrumentComboBox.SelectedIndex = file.instrument;
             }
-            if(stopButton.Enabled)
+            if (stopButton.Enabled)
             {
-                eventAggregator.Publish(new StopMessage());
+                _eventAggregator.Publish(new StopMessage());
             }
 
             playButton.Enabled = true;
@@ -87,21 +87,20 @@ namespace ChordQuality
             midiOutComboBox.Enabled = true;
             instrumentComboBox.Enabled = true;
 
-            MidiPlayerUpdatedMessage message = new MidiPlayerUpdatedMessage();
-            message.player = player;
-            eventAggregator.Publish(message);
+            var message = new MidiPlayerUpdatedMessage {Player = _player};
+            _eventAggregator.Publish(message);
         }
 
         #region Local Event Handlers
-        private void playButton_Click(object sender, System.EventArgs e)
+
+        private void playButton_Click(object sender, EventArgs e)
         {
             playButton.Enabled = false;
             pauseButton.Enabled = true;
             stopButton.Enabled = true;
             midiOutComboBox.Enabled = false;
-            PlayMessage message = new PlayMessage();
-            message.deviceIndex = this.midiOutComboBox.SelectedIndex;
-            eventAggregator.Publish(message);
+            var message = new PlayMessage {DeviceIndex = midiOutComboBox.SelectedIndex};
+            _eventAggregator.Publish(message);
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
@@ -110,7 +109,7 @@ namespace ChordQuality
             pauseButton.Enabled = false;
             stopButton.Enabled = true;
             midiOutComboBox.Enabled = false;
-            eventAggregator.Publish(new PauseMessage());
+            _eventAggregator.Publish(new PauseMessage());
         }
 
         private void stopButton_Click(object sender, EventArgs e)
@@ -119,27 +118,28 @@ namespace ChordQuality
             pauseButton.Enabled = false;
             stopButton.Enabled = false;
             midiOutComboBox.Enabled = true;
-            eventAggregator.Publish(new StopMessage());
+            _eventAggregator.Publish(new StopMessage());
         }
 
         private void instrumentComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(player != null)
+            if (_player != null)
             {
-                player.Instrument = instrumentComboBox.SelectedIndex;
-            }            
+                _player.Instrument = instrumentComboBox.SelectedIndex;
+            }
         }
 
         private void tempoTrackBar_Scroll(object sender, EventArgs e)
         {
-            player.Tempo = tempoTrackBar.Value;
-            bpmLabel.Text = tempoTrackBar.Value.ToString() + " bpm";
+            _player.Tempo = tempoTrackBar.Value;
+            bpmLabel.Text = tempoTrackBar.Value + " bpm";
         }
 
         private void volumeTrackBar_Scroll(object sender, EventArgs e)
         {
-            player.Volume = volumeTrackBar.Value;
+            _player.Volume = volumeTrackBar.Value;
         }
+
         #endregion
     }
 }

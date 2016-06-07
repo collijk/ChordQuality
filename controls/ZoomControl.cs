@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ChordQuality.events;
 using ChordQuality.events.messages;
@@ -14,55 +7,51 @@ namespace ChordQuality.controls
 {
     public partial class ZoomControl : UserControl
     {
-        private IEventAggregator eventAggregator;
-        private ISubscription<FileUpdatedMessage> fileUpdatedSubscription;
-        private ISubscription<BarsPerRowChangedMessage> barsPerRowSubscription;
+        private ISubscription<BarsPerRowChangedMessage> _barsPerRowSubscription;
+        private IEventAggregator _eventAggregator;
+        private ISubscription<FileUpdatedMessage> _fileUpdatedSubscription;
 
         public ZoomControl()
         {
             InitializeComponent();
-            initializeSubscriptions();
+            InitializeSubscriptions();
         }
 
-        private void initializeSubscriptions()
+        private void InitializeSubscriptions()
         {
-            eventAggregator = EventAggregator.Instance;
-            fileUpdatedSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
+            _eventAggregator = EventAggregator.Instance;
+            _fileUpdatedSubscription =
+                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { InitializeZoomTrackBar(message.File.bars); });
+            _barsPerRowSubscription = _eventAggregator.Subscribe<BarsPerRowChangedMessage>(message =>
             {
-                initializeZoomTrackBar(Message.file.bars);
-                
-            });
-            barsPerRowSubscription = eventAggregator.Subscribe<BarsPerRowChangedMessage>(Message =>
-            {
-                if(zoomTrackBar.Value != Message.BarsPerRow)
+                if (zoomTrackBar.Value != message.BarsPerRow)
                 {
-                    zoomTrackBar.Value = Message.BarsPerRow;
-                    updateZoom();
+                    zoomTrackBar.Value = message.BarsPerRow;
+                    UpdateZoom();
                 }
             });
         }
 
-        private void initializeZoomTrackBar(int bars)
+        private void InitializeZoomTrackBar(int bars)
         {
-            if(bars < zoomTrackBar.Value)
+            if (bars < zoomTrackBar.Value)
             {
                 zoomTrackBar.Value = bars;
-                updateZoom();
+                UpdateZoom();
             }
             zoomTrackBar.Maximum = bars;
             zoomTrackBar.Enabled = true;
         }
 
-        private void updateZoom()
+        private void UpdateZoom()
         {
-            ZoomScrollChangedMessage message = new ZoomScrollChangedMessage();
-            message.zoomValue = zoomTrackBar.Value;
-            eventAggregator.Publish(message);
+            var message = new ZoomScrollChangedMessage {ZoomValue = zoomTrackBar.Value};
+            _eventAggregator.Publish(message);
         }
 
         private void zoomTrackBar_Scroll(object sender, EventArgs e)
         {
-            updateZoom();
+            UpdateZoom();
         }
     }
 }

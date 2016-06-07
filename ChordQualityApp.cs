@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
+using ChordQuality.views;
 
 namespace ChordQuality
 {
-    class ChordQualityApp
+    internal class ChordQualityApp
     {
         [STAThread]
         public static void Main(string[] args)
         {
-            MainForm view = new MainForm();
+            var view = new MainForm();
             Application.Run(view);
         }
     }

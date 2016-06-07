@@ -1,87 +1,77 @@
 ﻿using ChordQuality.events;
 using ChordQuality.events.messages;
-using ChordQuality.forms.customDisplays;
+using ChordQuality.views;
 using Janus.ManagedMIDI;
-using System.Drawing.Printing;
 
 namespace ChordQuality.services
 {
-    class PrintPreviewProvider
+    internal class PrintPreviewProvider
     {
-        private IEventAggregator eventAggregator;
-        private ISubscription<FileUpdatedMessage> midiFileSubscription;
-        private ISubscription<ZoomScrollChangedMessage> zoomValueSubscription;
-        private ISubscription<TrackDisplayChangedMessage> trackDisplaySubscription;
-        private ISubscription<RelThicknessChangedMessage> relThicknessSubscription;
-        private ISubscription<RowsPerPageChangedMessage> rowsPerPageSubscription;
-        private MidiFile currentFile;
-        private PrintDocumentProvider printDocProvider;
-        private int zoomScrollValue = 0;
-        private int RowsPerPage = 5;
-        private float relThickness = 0.5f;
-        private TrackDisplay trackDisplay = null;
-
         // Thread safe singleton pattern for PrintPreviewProvider construction.
-        private static PrintPreviewProvider instance = null;
-        private static readonly object padlock = new object();        
+        private static PrintPreviewProvider _instance;
+        private static readonly object Padlock = new object();
+        private MidiFile _currentFile;
+        private IEventAggregator _eventAggregator;
+        private ISubscription<FileUpdatedMessage> _midiFileSubscription;
+        private PrintDocumentProvider _printDocProvider;
+        private float _relThickness = 0.5f;
+        private ISubscription<RelThicknessChangedMessage> _relThicknessSubscription;
+        private int _rowsPerPage = 5;
+        private ISubscription<RowsPerPageChangedMessage> _rowsPerPageSubscription;
+        private TrackDisplay _trackDisplay;
+        private ISubscription<TrackDisplayChangedMessage> _trackDisplaySubscription;
+        private int _zoomScrollValue;
+        private ISubscription<ZoomScrollChangedMessage> _zoomValueSubscription;
+
+        private PrintPreviewProvider()
+        {
+            InitializeSubscriptions();
+            InitializeServices();
+        }
 
         public static PrintPreviewProvider Instance
         {
             get
             {
-                lock(padlock)
+                lock (Padlock)
                 {
-                    if(instance == null)
+                    if (_instance == null)
                     {
-                        instance = new PrintPreviewProvider();
+                        _instance = new PrintPreviewProvider();
                     }
-                    return instance;
+                    return _instance;
                 }
             }
         }
 
-        private PrintPreviewProvider()
+        private void InitializeServices()
         {
-            initializeSubscriptions();
-            initializeServices();        
+            _printDocProvider = PrintDocumentProvider.Instance;
         }
 
-        private void initializeServices()
+        private void InitializeSubscriptions()
         {
-            printDocProvider = PrintDocumentProvider.Instance;
+            _eventAggregator = EventAggregator.Instance;
+            _midiFileSubscription =
+                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { _currentFile = message.File; });
+            _zoomValueSubscription =
+                _eventAggregator.Subscribe<ZoomScrollChangedMessage>(message => { _zoomScrollValue = message.ZoomValue; });
+            _trackDisplaySubscription =
+                _eventAggregator.Subscribe<TrackDisplayChangedMessage>(
+                    message => { _trackDisplay = message.TrackDisplay; });
+            _relThicknessSubscription =
+                _eventAggregator.Subscribe<RelThicknessChangedMessage>(
+                    message => { _relThickness = message.RelThickness; });
+            _rowsPerPageSubscription =
+                _eventAggregator.Subscribe<RowsPerPageChangedMessage>(message => { _rowsPerPage = message.RowsPerPage; });
         }
 
-        private void initializeSubscriptions()
+        public void ShowPreview()
         {
-            eventAggregator = EventAggregator.Instance;
-            midiFileSubscription = eventAggregator.Subscribe<FileUpdatedMessage>(Message =>
-            {
-                currentFile = Message.file;
-            });
-            zoomValueSubscription = eventAggregator.Subscribe<ZoomScrollChangedMessage>(Message =>
-            {
-                zoomScrollValue = Message.zoomValue;
-            });
-            trackDisplaySubscription = eventAggregator.Subscribe<TrackDisplayChangedMessage>(Message =>
-            {
-                trackDisplay = Message.trackDisplay;
-            });
-            relThicknessSubscription = eventAggregator.Subscribe<RelThicknessChangedMessage>(Message =>
-            {
-                relThickness = Message.relThickness;
-            });
-            rowsPerPageSubscription = eventAggregator.Subscribe<RowsPerPageChangedMessage>(Message =>
-            {
-                RowsPerPage = Message.RowsPerPage;
-            });
-        }
-
-        public void showPreview()
-        {
-            PrintDocument printDoc = printDocProvider.getPrintDoc();
-            PrintPreviewForm ppf = new PrintPreviewForm(RowsPerPage, printDoc.DefaultPageSettings.PrinterSettings.ToPage, 
-                zoomScrollValue, currentFile.name, currentFile, trackDisplay, relThickness, printDoc);
-            ppf.Show();           
+            var printDoc = _printDocProvider.GetPrintDoc();
+            var ppf = new PrintPreviewForm(_rowsPerPage, printDoc.DefaultPageSettings.PrinterSettings.ToPage,
+                _zoomScrollValue, _currentFile.name, _currentFile, _trackDisplay, _relThickness, printDoc);
+            ppf.Show();
         }
     }
 }
