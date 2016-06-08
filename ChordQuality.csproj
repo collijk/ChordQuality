@@ -91,6 +91,12 @@
     <Compile Include="controls\ControlPanel.Designer.cs">
       <DependentUpon>ControlPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="views\pianoRollElements\NoteDisplay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="views\pianoRollElements\NoteDisplay.Designer.cs">
+      <DependentUpon>NoteDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="controls\FileTransposeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -114,6 +120,12 @@
     </Compile>
     <Compile Include="controls\PenaltiesControl.Designer.cs">
       <DependentUpon>PenaltiesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="controls\PianoRollControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="controls\PianoRollControl.Designer.cs">
+      <DependentUpon>PianoRollControl.cs</DependentUpon>
     </Compile>
     <Compile Include="controls\PrintingControl.cs">
       <SubType>UserControl</SubType>
@@ -156,6 +168,13 @@
     <Compile Include="events\messages\PlaybackMessage.cs" />
     <Compile Include="events\messages\PrintSettingsMesage.cs" />
     <Compile Include="events\Subscription.cs" />
+    <Compile Include="model\IMidiDataModel.cs" />
+    <Compile Include="views\pianoRollElements\ChordDisplay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="views\pianoRollElements\ChordNameDisplay.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="views\TransparentPanel.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -183,6 +202,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="controls\PenaltiesControl.resx">
       <DependentUpon>PenaltiesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="controls\PianoRollControl.resx">
+      <DependentUpon>PianoRollControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="controls\PlaybackControl.resx">
       <DependentUpon>PlaybackControl.cs</DependentUpon>
@@ -243,8 +265,8 @@
     <Compile Include="services\PianoRollArtist.cs" />
     <Compile Include="services\PrintDocumentProvider.cs" />
     <Compile Include="services\PrintPreviewProvider.cs" />
-    <Compile Include="views\TrackDisplayElement.cs" />
-    <Compile Include="views\TrackDisplay.cs" />
+    <Compile Include="views\pianoRollElements\TrackDisplayElement.cs" />
+    <Compile Include="views\pianoRollElements\TrackDisplay.cs" />
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>

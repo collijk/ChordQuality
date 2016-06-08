@@ -135,7 +135,7 @@ namespace ChordQuality.controls
             for (var i = 0; i < _tunings.Length; i++)
             {
                 double q = Math.Round(_tunings[i].AvgQuality(chords, qualityWeights), 1);
-                _tuningChecks[i].Text = _tunings[i].Name + " (" + q + ")";
+                _tuningChecks[i].Text = _tunings[i].Name + @" (" + q + @")";
             }
         }
 

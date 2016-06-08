@@ -100,8 +100,7 @@ namespace ChordQuality.views
 
         private void printButton_Click(object sender, EventArgs e)
         {
-            var p = new PrintDialog();
-            p.Document = _printDoc;
+            var p = new PrintDialog {Document = _printDoc};
             if (p.ShowDialog() == DialogResult.OK)
             {
                 _printDoc.Print();
@@ -123,7 +122,7 @@ namespace ChordQuality.views
                 {
                     if (i > 0) g.DrawLine(barpen, i*grw/_zoomValue, y0, i*grw/_zoomValue, y0 + grh);
                     if ((offset + i)%_zoomValue == 0)
-                        g.DrawString((offset + i + 1).ToString(), smallFont, drawBrush, i*grw/_zoomValue, y0);
+                        g.DrawString((offset + i + 1).ToString(), smallFont, drawBrush, i*(float)grw/_zoomValue, y0);
                 }
             // draw horizontal orientation lines at each D,F and A
             for (var a = 0; a < 10; a++)
@@ -151,7 +150,7 @@ namespace ChordQuality.views
             //
             // draw notes
 
-            _trackDisplay.Draw(g, grw, y0, _currentFile.max_note, offset, _currentFile.timing, _zoomValue, vscale, _relThickness);
+            _trackDisplay.Draw(g, _currentFile.max_note, offset, _currentFile.timing, _zoomValue, vscale, _relThickness);
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)

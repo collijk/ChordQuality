@@ -59,7 +59,7 @@ namespace ChordQuality.controls
                     Location = new Point(4, 4 + n*16),
                     Size = new Size(192, 16),
                     ForeColor = _trackColors[n],
-                    Text = "#" + (n + 1) + ": " + _currentFile.tracks[n].name,
+                    Text = @"#" + (n + 1) + @": " + _currentFile.tracks[n].name,
                     Checked = true
                 };
                 _trackChecks[n].CheckedChanged += TrackCheckedChanged;

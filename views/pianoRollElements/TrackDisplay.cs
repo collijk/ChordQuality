@@ -9,6 +9,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using Janus.ManagedMIDI;
@@ -20,9 +21,10 @@ namespace ChordQuality.views
     /// </summary>
     public class TrackDisplay
     {
+
         private readonly ArrayList _mDisplayElementList;
 
-        public TrackDisplay(MidiTrack[] tracks, Color[] trackColors)
+        public TrackDisplay(MidiTrack[] tracks, IReadOnlyList<Color> trackColors)
         {
             _mDisplayElementList = new ArrayList();
 
@@ -30,7 +32,7 @@ namespace ChordQuality.views
             var evts = new ArrayList();
             for (var n = 0; n < tracks.Length; n++) //MidiTrack t in f.tracks)
             {
-                MidiTrack t = tracks[n];
+                var t = tracks[n];
                 if (!t.enabled) continue;
                 evts.Clear();
                 float width = 1;
@@ -39,12 +41,12 @@ namespace ChordQuality.views
                 {
                     if (t.get_e(i).IsMidi)
                     {
-                        TimedMidiMsg m = (TimedMidiMsg) t.get_e(i);
+                        var m = (TimedMidiMsg) t.get_e(i);
                         if (m.m.IsNoteOn) evts.Add(m);
                         else if (m.m.IsNoteOff)
                         {
                             TimedMidiMsg e1 = null;
-                            TimedMidiMsg e2 = m;
+                            var e2 = m;
                             foreach (TimedMidiMsg mm in evts)
                                 if (mm.m.Byte2 == e2.m.Byte2)
                                 {
@@ -64,13 +66,17 @@ namespace ChordQuality.views
                     }
                     else if (t.get_e(i).IsMeta)
                     {
-                        MetaMsg m = (MetaMsg) t.get_e(i);
+                        var m = (MetaMsg) t.get_e(i);
                         if (m.Type == 6) // "Marker"
                         {
                             if (m.Txt.ToLower() == "bold")
+                            {
                                 width = 2;
+                            }
                             else if (m.Txt.ToLower() == "stop")
+                            {
                                 width = 1;
+                            }
                         }
                     }
                 }
@@ -79,11 +85,7 @@ namespace ChordQuality.views
 
         private void AddElement(TrackDisplayElement element, bool isFirstTrack, int startIndex)
         {
-            if (isFirstTrack)
-            {
-                _mDisplayElementList.Add(element);
-            }
-            else
+            if (!isFirstTrack)
             {
                 for (var i = startIndex; i < _mDisplayElementList.Count; ++i)
                 {
@@ -107,8 +109,10 @@ namespace ChordQuality.views
                         {
                             // This is the piece of the already existing element
                             // that does not overlap to the left
-                            _mDisplayElementList.Add(new TrackDisplayElement(iter.MTime1, element.MTime1,
-                                iter.My, new ArrayList(iter.MColorList), new ArrayList(iter.MWidthList)));
+                            _mDisplayElementList.Add(
+                                new TrackDisplayElement(
+                                    iter.MTime1, element.MTime1,
+                                    iter.My, new ArrayList(iter.MColorList), new ArrayList(iter.MWidthList)));
 
                             overlapTime1 = element.MTime1;
                         }
@@ -116,16 +120,20 @@ namespace ChordQuality.views
                         {
                             // call this method recursively for the nonoverlapping part
                             // start at index i, since we already checked all the elements before that
-                            AddElement(new TrackDisplayElement(element.MTime1, iter.MTime1, element.My,
-                                (Color) element.MColorList[0], (float) element.MWidthList[0]), false, i + 1);
+                            AddElement(
+                                new TrackDisplayElement(
+                                    element.MTime1, iter.MTime1, element.My,
+                                    (Color) element.MColorList[0], (float) element.MWidthList[0]), false, i + 1);
                         }
 
                         if (iter.MTime2 > element.MTime2)
                         {
                             // This is the piece of the already existing element
                             // that does not overlap to right
-                            _mDisplayElementList.Add(new TrackDisplayElement(element.MTime2, iter.MTime2, iter.My,
-                                new ArrayList(iter.MColorList), new ArrayList(iter.MWidthList)));
+                            _mDisplayElementList.Add(
+                                new TrackDisplayElement(
+                                    element.MTime2, iter.MTime2, iter.My,
+                                    new ArrayList(iter.MColorList), new ArrayList(iter.MWidthList)));
 
                             overlapTime2 = element.MTime2;
                         }
@@ -133,8 +141,10 @@ namespace ChordQuality.views
                         {
                             // call this method recursively for the nonoverlapping part
                             // start at index i, since we already checked all the elements before that
-                            AddElement(new TrackDisplayElement(iter.MTime2, element.MTime2, element.My,
-                                (Color) element.MColorList[0], (float) element.MWidthList[0]), false, i + 1);
+                            AddElement(
+                                new TrackDisplayElement(
+                                    iter.MTime2, element.MTime2, element.My,
+                                    (Color) element.MColorList[0], (float) element.MWidthList[0]), false, i + 1);
                         }
 
                         // update iter for the overlapping data
@@ -146,11 +156,11 @@ namespace ChordQuality.views
                         return;
                     }
                 }
-
-                // Can only get here if there was no overlap
-                // Add the element as is
-                _mDisplayElementList.Add(element);
             }
+            
+            // Can only get here if there was no overlap
+            // Add the element as is
+            _mDisplayElementList.Add(element);
         }
 
         // This method is useful for debugging
@@ -173,8 +183,8 @@ namespace ChordQuality.views
             ostream.Close();
         }
 
-        public void Draw(Graphics gr, int grw, int y0, byte maxNote, int offset,
-            ushort timing, int zoomScrollValue, int vscale, float rf)
+        public void Draw(Graphics gr, byte maxNote, int offset,
+            ushort timing, int zoomScrollValue, float vscale, float rf)
         {
             var mintime = offset*4*timing;
             var maxtime = (offset + zoomScrollValue + 1)*4*timing;
@@ -183,7 +193,7 @@ namespace ChordQuality.views
             {
                 if (element.MTime2 > mintime && element.MTime1 <= maxtime)
                 {
-                    element.Draw(gr, grw, y0, maxNote, offset,
+                    element.Draw(gr, maxNote, offset,
                         timing, zoomScrollValue, vscale, rf);
                 }
             }

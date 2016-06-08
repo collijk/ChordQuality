@@ -42,11 +42,7 @@ namespace ChordQuality.services.io
             {
                 lock (Padlock)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new AnalysisFileWriter();
-                    }
-                    return _instance;
+                    return _instance ?? (_instance = new AnalysisFileWriter());
                 }
             }
         }
@@ -56,7 +52,7 @@ namespace ChordQuality.services.io
             _saveAnalysisDialog = new SaveFileDialog
             {
                 DefaultExt = "txt",
-                Filter = "TXT-Files|*.txt"
+                Filter = @"TXT-Files|*.txt"
             };
             _saveAnalysisDialog.FileOk += SaveFileDialogFileOk;
         }
@@ -108,10 +104,7 @@ namespace ChordQuality.services.io
             for (var i = 0; i < f.tracks.Length; i++)
             {
                 Sw.Write("[");
-                if (f.tracks[i].enabled)
-                    Sw.Write("X");
-                else
-                    Sw.Write(" ");
+                Sw.Write(f.tracks[i].enabled ? "X" : " ");
                 Sw.WriteLine("] #" + (i + 1) + ": " + f.tracks[i].name);
             }
             Sw.WriteLine();

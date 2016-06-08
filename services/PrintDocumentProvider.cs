@@ -40,18 +40,14 @@ namespace ChordQuality.services
             {
                 lock (Padlock)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new PrintDocumentProvider();
-                    }
-                    return _instance;
+                    return _instance ?? (_instance = new PrintDocumentProvider());
                 }
             }
         }
 
         public void SetArtist(PianoRollArtist artist)
         {
-            this._artist = artist;
+            _artist = artist;
         }
 
 
@@ -68,8 +64,7 @@ namespace ChordQuality.services
 
         public PrintDocument GetPrintDoc()
         {
-            _printDoc = new PrintDocument();
-            _printDoc.DefaultPageSettings.Landscape = true;
+            _printDoc = new PrintDocument {DefaultPageSettings = {Landscape = true}};
             _printDoc.PrintPage += PrintPage;
             _printDoc.PrinterSettings.FromPage = 1;
             _printDoc.PrinterSettings.MaximumPage = _pages;
@@ -112,17 +107,11 @@ namespace ChordQuality.services
             _pagesPrinted++;
             if (_printDoc.PrinterSettings.PrintRange == PrintRange.SomePages)
             {
-                if (_pagesPrinted < _printDoc.PrinterSettings.ToPage)
-                    ev.HasMorePages = true;
-                else
-                    ev.HasMorePages = false;
+                ev.HasMorePages = _pagesPrinted < _printDoc.PrinterSettings.ToPage;
             }
             else
             {
-                if (_pagesPrinted*_rowsPerPage*_zoomScrollValue < _currentFile.bars)
-                    ev.HasMorePages = true;
-                else
-                    ev.HasMorePages = false;
+                ev.HasMorePages = _pagesPrinted*_rowsPerPage*_zoomScrollValue < _currentFile.bars;
             }
         }
     }

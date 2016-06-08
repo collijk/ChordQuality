@@ -24,9 +24,8 @@ namespace ChordQuality.controls
             _eventAggregator = EventAggregator.Instance;
             _fileOpenedSubscription =
                 _eventAggregator.Subscribe<FileUpdatedMessage>(message => { OnFileUpdated(message.File); });
-            _barOffsetSubscription =
-                _eventAggregator.Subscribe<BarOffsetChangedMessage>(
-                    message => { offsetValueLabel.Text = message.OffsetValue + " Bars"; });
+            _barOffsetSubscription =_eventAggregator.Subscribe<BarOffsetChangedMessage>(
+                    message => { offsetValueLabel.Text = message.OffsetValue + @" Bars"; });
         }
 
         private void OnFileUpdated(MidiFile file)
@@ -35,18 +34,16 @@ namespace ChordQuality.controls
             fileTransposeUpDown.Maximum = 127 - file.max_note;
             fileTransposeUpDown.Minimum = 0 - file.min_note;
             fileTransposeUpDown.Value = 0;
-            offsetValueLabel.Text = "0 Bars";
+            offsetValueLabel.Text = @"0 Bars";
             fileTransposeUpDown.Enabled = true;
         }
 
         private void fileTransposeUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if (_file != null)
-            {
-                _file.Transpose((int) fileTransposeUpDown.Value);
-                var message = new FileTransposedMessage {Chords = _file.FindChords()};
-                _eventAggregator.Publish(message);
-            }
+            if (_file == null) return;
+            _file.Transpose((int) fileTransposeUpDown.Value);
+            var message = new FileTransposedMessage {Chords = _file.FindChords()};
+            _eventAggregator.Publish(message);
         }
     }
 }

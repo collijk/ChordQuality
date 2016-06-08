@@ -26,11 +26,7 @@ namespace ChordQuality.services.io
             {
                 lock (Padlock)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new MidiFileOpener();
-                    }
-                    return _instance;
+                    return _instance ?? (_instance = new MidiFileOpener());
                 }
             }
         }
@@ -42,7 +38,7 @@ namespace ChordQuality.services.io
 
         private void InitializeDialog()
         {
-            _openMidiFileDialog = new OpenFileDialog {Filter = "MIDI-Files|*.mid"};
+            _openMidiFileDialog = new OpenFileDialog {Filter = @"MIDI-Files|*.mid"};
             _openMidiFileDialog.FileOk += OpenFileDialogFileOk;
         }
 

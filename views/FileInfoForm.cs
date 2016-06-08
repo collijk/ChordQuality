@@ -82,7 +82,7 @@ namespace ChordQuality.views
             _label21.Name = "_label21";
             _label21.Size = new Size(48, 15);
             _label21.TabIndex = 80;
-            _label21.Text = "octaves:";
+            _label21.Text = @"octaves:";
             _label21.TextAlign = ContentAlignment.MiddleRight;
             // 
             // textBox6
@@ -131,7 +131,7 @@ namespace ChordQuality.views
             _label4.Name = "_label4";
             _label4.Size = new Size(40, 15);
             _label4.TabIndex = 76;
-            _label4.Text = "tracks:";
+            _label4.Text = @"tracks:";
             _label4.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label5
@@ -140,7 +140,7 @@ namespace ChordQuality.views
             _label5.Name = "_label5";
             _label5.Size = new Size(40, 15);
             _label5.TabIndex = 77;
-            _label5.Text = "timing:";
+            _label5.Text = @"timing:";
             _label5.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label6
@@ -149,7 +149,7 @@ namespace ChordQuality.views
             _label6.Name = "_label6";
             _label6.Size = new Size(32, 15);
             _label6.TabIndex = 78;
-            _label6.Text = "bars:";
+            _label6.Text = @"bars:";
             _label6.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label7
@@ -158,7 +158,7 @@ namespace ChordQuality.views
             _label7.Name = "_label7";
             _label7.Size = new Size(40, 15);
             _label7.TabIndex = 79;
-            _label7.Text = "tempo:";
+            _label7.Text = @"tempo:";
             _label7.TextAlign = ContentAlignment.MiddleRight;
             // 
             // label11
@@ -167,7 +167,7 @@ namespace ChordQuality.views
             _label11.Name = "_label11";
             _label11.Size = new Size(80, 15);
             _label11.TabIndex = 85;
-            _label11.Text = "time signature:";
+            _label11.Text = @"time signature:";
             _label11.TextAlign = ContentAlignment.MiddleRight;
             _label11.Click += label11_Click;
             // 
@@ -177,7 +177,7 @@ namespace ChordQuality.views
             _label10.Name = "_label10";
             _label10.Size = new Size(80, 15);
             _label10.TabIndex = 82;
-            _label10.Text = "key signature:";
+            _label10.Text = @"key signature:";
             _label10.TextAlign = ContentAlignment.MiddleRight;
             // 
             // textBox10
@@ -212,7 +212,7 @@ namespace ChordQuality.views
             Name = "FileInfoForm";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "File Info";
+            Text = @"File Info";
             TopMost = true;
             Load += FileInfoFormLoad;
             ResumeLayout(false);
@@ -228,10 +228,8 @@ namespace ChordQuality.views
             _textBox6.Text = ((_file.max_note - _file.min_note)/12).ToString();
             _textBox7.Text = _file.bars.ToString();
             _textBox8.Text = Math.Round(_file.tempo, 2).ToString(CultureInfo.CurrentCulture);
-            if (_file.key_sig != null) _textBox9.Text = _file.key_sig.ValueString();
-            else _textBox9.Text = "";
-            if (_file.time_sig != null) _textBox10.Text = _file.time_sig.ValueString();
-            else _textBox10.Text = "";
+            _textBox9.Text = _file.key_sig == null ? "" : _file.key_sig.ValueString();
+            _textBox10.Text = _file.time_sig != null ? _file.time_sig.ValueString() : "";
         }
 
         private void label11_Click(object sender, EventArgs e)

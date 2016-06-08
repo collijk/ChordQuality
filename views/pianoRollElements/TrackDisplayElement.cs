@@ -55,18 +55,20 @@ namespace ChordQuality.views
             MWidthList.Add(width);
         }
 
-        public void Draw(Graphics gr, int grw, int y0, byte maxNote, int offset,
-            ushort timing, int zoomScrollValue, int vscale, float rf)
+        public void Draw(Graphics gr, byte maxNote, int offset,
+            ushort timing, int zoomScrollValue, float vscale, float rf)
         {
-            var x1 = grw*(MTime1 - 4*offset*timing)/timing/4/zoomScrollValue;
-            var x2 = grw*(MTime2 - 4*offset*timing)/timing/4/zoomScrollValue;
+            var grw = gr.VisibleClipBounds.Width;
+            const int y0 = 0;
+            var x1 = grw*(MTime1 - 4*(offset+1)*timing)/timing/4/zoomScrollValue;
+            var x2 = grw*(MTime2 - 4*(offset+1)*timing)/timing/4/zoomScrollValue;
             var y = vscale*(maxNote - My) + y0;
 
             // All overlapping lines are recorded here
             // however, only the first two will be drawn
             if (MColorList.Count >= 2 && MWidthList.Count >= 2)
             {
-                if ((float) MWidthList[0] == (float) MWidthList[1])
+                if (MWidthList[0] == MWidthList[1])
                 {
                     var pen = new Pen((Color) MColorList[0], (float) MWidthList[0]*vscale*rf/2);
                     gr.DrawLine(pen, x1, y - (float) MWidthList[0]*vscale*rf/4, x2,

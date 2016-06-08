@@ -22,11 +22,7 @@ namespace ChordQuality.services.io
             {
                 lock (Padlock)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new PrintDocumentPrinter();
-                    }
-                    return _instance;
+                    return _instance ?? (_instance = new PrintDocumentPrinter());
                 }
             }
         }

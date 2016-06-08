@@ -35,11 +35,7 @@ namespace ChordQuality.services
             {
                 lock (Padlock)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new PrintPreviewProvider();
-                    }
-                    return _instance;
+                    return _instance ?? (_instance = new PrintPreviewProvider());
                 }
             }
         }

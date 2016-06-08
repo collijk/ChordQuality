@@ -25,11 +25,7 @@ namespace ChordQuality.services
             {
                 lock (Padlock)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new FileInfoProvider();
-                    }
-                    return _instance;
+                    return _instance ?? (_instance = new FileInfoProvider());
                 }
             }
         }

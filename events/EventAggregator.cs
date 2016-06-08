@@ -33,11 +33,7 @@ namespace ChordQuality.events
             {
                 lock (Padlock)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new EventAggregator();
-                    }
-                    return _instance;
+                    return _instance ?? (_instance = new EventAggregator());
                 }
             }
         }

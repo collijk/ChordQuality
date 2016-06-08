@@ -14,8 +14,31 @@ namespace ChordQuality.views
 {
     public class MainForm : Form
     {
+        private IEventAggregator _eventAggregator;
+        private ISubscription<FindBestTuningsMessage> _bestTuningsSubscription;
+        private ISubscription<CloseRequestMessage> _closeRequestSubscription;
+        private ISubscription<FileTransposedMessage> _fileTransposeSubscription;
+        private ISubscription<LabelCheckChangedMessage> _labelCheckSubscription;
+        private ISubscription<MarkersChangedMessage> _markersChangedSubscription;
+        private ISubscription<FileOpenedMessage> _midiFileSubscription;
+        private ISubscription<MidiPlayerUpdatedMessage> _midiPlayerSubscription;
+        private ISubscription<PauseMessage> _pauseSubscription;
+        private ISubscription<PenaltiesChangedMessage> _penaltiesChangedSubscription;
+        private ISubscription<PenaltyScrollChangedMessage> _penaltyScrollSubscription;
+        private ISubscription<PlayMessage> _playSubscription;
+        private ISubscription<QualityCheckChangedMessage> _qualityCheckSubscription;
+        private ISubscription<QualityWeightScrollChangedMessage> _qualityWeightScrollSubscription;
+        private ISubscription<StopMessage> _stopSubscription;
+        private ISubscription<TrackColorChangedMessage> _trackColorChangedSubscription;
+        private ISubscription<TracksChangedMessage> _tracksChangedSubscription;
+        private ISubscription<TuningEnabledMessage> _tuningEnabledSubscription;
+        private ISubscription<TuningsTransposedMessage> _tuningTransposeSubscription;
+        private ISubscription<ZoomScrollChangedMessage> _zoomUpdatedMessage;
+
+
         //the starting and ending bar for each cut row
         private readonly ArrayList _cutRows = new ArrayList();
+
 
         private readonly Color[] _trackColors = new Color[]
         {
@@ -26,12 +49,13 @@ namespace ChordQuality.views
             Color.Black, Color.Black, Color.Black
         };
 
+        
         private PianoRollArtist _artist;
-        private ISubscription<FindBestTuningsMessage> _bestTuningsSubscription;
+        
         private PictureBox _chordDisplay;
         private PictureBox _chordNameDisplay;
         private ArrayList _chords;
-        private ISubscription<CloseRequestMessage> _closeRequestSubscription;
+        
 
         
 
@@ -48,51 +72,46 @@ namespace ChordQuality.views
         private Panel _cutRowCursor;
         private int _cutRowDragX = -1;
         private double _cutSecond = -1;
-        private IEventAggregator _eventAggregator;
+        
 
         private MidiFile _currentFile;
         private FileTransposeControl _fileTransposeControl1;
-        private ISubscription<FileTransposedMessage> _fileTransposeSubscription;
+        
         private GroupBox _groupBox1;
         private TransparentPanel _hoverBar;
-        private ISubscription<LabelCheckChangedMessage> _labelCheckSubscription;
+        
         private MainMenuControl _mainMenuControl1;
-        private ISubscription<MarkersChangedMessage> _markersChangedSubscription;
-        private ISubscription<FileOpenedMessage> _midiFileSubscription;
-        private ISubscription<MidiPlayerUpdatedMessage> _midiPlayerSubscription;
+        
         private PictureBox _noteDisplay;
         private HScrollBar _offsetScroll;
         private Panel _panel1;
         private Panel _panel2;
-        private ISubscription<PauseMessage> _pauseSubscription;
-        private ISubscription<PenaltiesChangedMessage> _penaltiesChangedSubscription;
-        private ISubscription<PenaltyScrollChangedMessage> _penaltyScrollSubscription;
+        
 
         private MidiFilePlayer _pl;
         private double _playStart;
         private double _playStop;
         private PlaybackControl _playbackControl;
-        private ISubscription<PlayMessage> _playSubscription;
+        
         private PrintDocumentProvider _printDocProvider;
         private PrintingControl _printingControl1;
         private PrintPreviewControl _printPreviewDialog1;
-        private ISubscription<QualityCheckChangedMessage> _qualityCheckSubscription;
+        
         private QualityWeights _qualityWeights;
-        private ISubscription<QualityWeightScrollChangedMessage> _qualityWeightScrollSubscription;
-        private ISubscription<StopMessage> _stopSubscription;
+        
         private Timer _timer1;
         private ToolTip _toolTip1;
-        private ISubscription<TrackColorChangedMessage> _trackColorChangedSubscription;
+        
 
         private TrackControl _trackControl1;
         private TrackDisplay _trackDisplay;
-        private ISubscription<TracksChangedMessage> _tracksChangedSubscription;
+        
         private TuningControl _tuningControl1;
-        private ISubscription<TuningEnabledMessage> _tuningEnabledSubscription;
+        
         private TuningScheme[] _tunings;
-        private ISubscription<TuningsTransposedMessage> _tuningTransposeSubscription;
+        
         private ZoomControl _zoomControl1;
-        private ISubscription<ZoomScrollChangedMessage> _zoomUpdatedMessage;
+        
         private int _zoomValue = 15;
 
 
@@ -249,7 +268,7 @@ namespace ChordQuality.views
             _groupBox1.Size = new Size(200, 60);
             _groupBox1.TabIndex = 55;
             _groupBox1.TabStop = false;
-            _groupBox1.Text = "Cut";
+            _groupBox1.Text = @"Cut";
             // 
             // cutClrBtn
             // 
@@ -257,7 +276,8 @@ namespace ChordQuality.views
             _cutClrBtn.Name = "_cutClrBtn";
             _cutClrBtn.Size = new Size(56, 37);
             _cutClrBtn.TabIndex = 2;
-            _cutClrBtn.Text = "Clear\r\nDisplay";
+            _cutClrBtn.Text = @"Clear
+Display";
             _cutClrBtn.UseVisualStyleBackColor = true;
             _cutClrBtn.Click += cutClrBtn_Click;
             // 
@@ -267,7 +287,7 @@ namespace ChordQuality.views
             _cutCutBtn.Name = "_cutCutBtn";
             _cutCutBtn.Size = new Size(56, 37);
             _cutCutBtn.TabIndex = 1;
-            _cutCutBtn.Text = "Cut";
+            _cutCutBtn.Text = @"Cut";
             _cutCutBtn.UseVisualStyleBackColor = true;
             _cutCutBtn.Click += cutCutBtn_Click;
             // 
@@ -277,7 +297,8 @@ namespace ChordQuality.views
             _cutResetBtn.Name = "_cutResetBtn";
             _cutResetBtn.Size = new Size(56, 37);
             _cutResetBtn.TabIndex = 0;
-            _cutResetBtn.Text = "Reset\r\nMarker";
+            _cutResetBtn.Text = @"Reset
+Marker";
             _cutResetBtn.UseVisualStyleBackColor = true;
             _cutResetBtn.Click += cutResetBtn_Click;
             // 
@@ -407,7 +428,7 @@ namespace ChordQuality.views
             Controls.Add(_mainMenuControl1);
             Controls.Add(_panel2);
             Name = "MainForm";
-            Text = "ChordQuality";
+            Text = @"ChordQuality";
             Closed += MainFormClosed;
             Load += MainFormLoad;
             ((ISupportInitialize) _chordDisplay).EndInit();
@@ -505,8 +526,7 @@ namespace ChordQuality.views
         private void OnMarkersChanged()
         {
             _trackDisplay = new TrackDisplay(_currentFile.tracks, _trackColors);
-            var tmessage = new TrackDisplayChangedMessage();
-            tmessage.TrackDisplay = _trackDisplay;
+            var tmessage = new TrackDisplayChangedMessage {TrackDisplay = _trackDisplay};
             _eventAggregator.Publish(tmessage);
 
             Redraw();
@@ -521,8 +541,7 @@ namespace ChordQuality.views
         {
             // misc init.'s            
             _qualityWeights = new QualityWeights();
-            var qMessage = new QualityWeightsUpdatedMessage();
-            qMessage.QualityWeights = _qualityWeights;
+            var qMessage = new QualityWeightsUpdatedMessage {QualityWeights = _qualityWeights};
             _eventAggregator.Publish(qMessage);
 
             // load tunings from textfiles
@@ -532,16 +551,15 @@ namespace ChordQuality.views
             _tunings[0] = new TuningScheme();
             for (var n = 0; n < fi.Length; n++)
                 _tunings[n + 1] = new TuningScheme(fi[n].Name);
-            var tMessage = new TuningsUpdatedMessage();
-            tMessage.Tunings = _tunings;
+            var tMessage = new TuningsUpdatedMessage {Tunings = _tunings};
             _eventAggregator.Publish(tMessage);
 
 
             // adjust chordDisplay size
             double maxq = 0;
-            for (var i = 0; i < _tunings.Length; i++)
+            foreach (TuningScheme t in _tunings)
             {
-                var q = _tunings[i].MaxQuality();
+                var q = t.MaxQuality();
                 if (q > maxq)
                     maxq = q;
             }
@@ -557,26 +575,26 @@ namespace ChordQuality.views
             _currentFile = file;
 
             // Synchronize the file among all services.
-            var fMessage = new FileUpdatedMessage();
-            fMessage.File = file;
+            var fMessage = new FileUpdatedMessage {File = file};
             _eventAggregator.Publish(fMessage);
 
             _playStart = -1;
             _playStop = -1;
-            var pMessage = new PlaySelectionChangedMessage();
-            pMessage.PlayStart = _playStart;
-            pMessage.PlayStop = _playStop;
+            var pMessage = new PlaySelectionChangedMessage
+            {
+                PlayStart = _playStart,
+                PlayStop = _playStop
+            };
             _eventAggregator.Publish(pMessage);
 
             // load the track display into memory
             _trackDisplay = new TrackDisplay(_currentFile.tracks, _trackColors);
-            var tmessage = new TrackDisplayChangedMessage();
-            tmessage.TrackDisplay = _trackDisplay;
+            var tmessage = new TrackDisplayChangedMessage {TrackDisplay = _trackDisplay};
             _eventAggregator.Publish(tmessage);
 
 
             // show file information
-            Text = "ChordQuality   ---   " + _currentFile.name;
+            Text = @"ChordQuality   ---   " + _currentFile.name;
 
             // adjust noteDisplay size
             _noteDisplay.Height = (_currentFile.max_note - _currentFile.min_note)*2 + 1;
@@ -623,7 +641,7 @@ namespace ChordQuality.views
                 }
 
                 _cursor.Left = _noteDisplay.Left + (int) ((p - _offsetScroll.Value)*_noteDisplay.Width/_zoomValue);
-                if ((_playStart != _playStop) &&
+                if ((Math.Abs(_playStart - _playStop) > 0.001) &&
                     (_cursor.Left > _noteDisplay.Width*(Math.Max(_playStart, _playStop) - _offsetScroll.Value)/_zoomValue))
                 {
                     Stop();
@@ -636,8 +654,7 @@ namespace ChordQuality.views
 
         private void OffsetScrollValueChanged(object sender, EventArgs e)
         {
-            var message = new BarOffsetChangedMessage();
-            message.OffsetValue = _offsetScroll.Value.ToString();
+            var message = new BarOffsetChangedMessage {OffsetValue = _offsetScroll.Value.ToString()};
             _eventAggregator.Publish(message);
             Redraw();
         }
@@ -676,18 +693,16 @@ namespace ChordQuality.views
 
         private void Panel2Resize(object sender, EventArgs e)
         {
-            if (_panel2.Width > 0)
-            {
-                _noteDisplay.Width = _panel2.Width - 32;
-                _chordDisplay.Width = _noteDisplay.Width;
-                _chordNameDisplay.Width = _noteDisplay.Width;
-                _offsetScroll.Width = _noteDisplay.Width;
-                _noteDisplay.Image = new Bitmap(_noteDisplay.Width, _noteDisplay.Height);
-                _chordDisplay.Image = new Bitmap(_chordDisplay.Width, _chordDisplay.Height);
-                _chordNameDisplay.Image = new Bitmap(_chordNameDisplay.Width, _chordNameDisplay.Height);
-                if (_currentFile != null)
-                    Redraw();
-            }
+            if (_panel2.Width <= 0) return;
+            _noteDisplay.Width = _panel2.Width - 32;
+            _chordDisplay.Width = _noteDisplay.Width;
+            _chordNameDisplay.Width = _noteDisplay.Width;
+            _offsetScroll.Width = _noteDisplay.Width;
+            _noteDisplay.Image = new Bitmap(_noteDisplay.Width, _noteDisplay.Height);
+            _chordDisplay.Image = new Bitmap(_chordDisplay.Width, _chordDisplay.Height);
+            _chordNameDisplay.Image = new Bitmap(_chordNameDisplay.Width, _chordNameDisplay.Height);
+            if (_currentFile != null)
+                Redraw();
         }
 
         private void FindBestTunings()
@@ -706,7 +721,7 @@ namespace ChordQuality.views
                         minj = j;
                     }
                 }
-            MessageBox.Show(_tunings[mini].Name + " +" + minj + " (" + Math.Round(minq, 5) + ")", "Best Tuning");
+            MessageBox.Show(_tunings[mini].Name + @" +" + minj + @" (" + Math.Round(minq, 5) + @")", @"Best Tuning");
             _tuningControl1.SetTranspose(minj);
         }
 
@@ -714,7 +729,7 @@ namespace ChordQuality.views
 
         private void Play(int outputDevice)
         {
-            if (_playStart == _playStop)
+            if (Math.Abs(_playStart - _playStop) < 0.001)
             {
                 _pl.Play(outputDevice);
             }
@@ -750,8 +765,7 @@ namespace ChordQuality.views
 
             // update the in memory track display
             _trackDisplay = new TrackDisplay(_currentFile.tracks, _trackColors);
-            var tmessage = new TrackDisplayChangedMessage();
-            tmessage.TrackDisplay = _trackDisplay;
+            var tmessage = new TrackDisplayChangedMessage {TrackDisplay = _trackDisplay};
             _eventAggregator.Publish(tmessage);
 
             Redraw();
@@ -790,12 +804,14 @@ namespace ChordQuality.views
             }
 
             //create a new picture box for our cut row
-            var cutRow = new PictureBox();
-            cutRow.BackColor = Color.White;
-            cutRow.Location = new Point(0, _cutRows.Count*_noteDisplay.Height);
-            cutRow.Size = new Size((int) Math.Round(width), _noteDisplay.Height);
-            cutRow.Cursor = Cursors.SizeWE;
-            cutRow.TabStop = false;
+            var cutRow = new PictureBox
+            {
+                BackColor = Color.White,
+                Location = new Point(0, _cutRows.Count*_noteDisplay.Height),
+                Size = new Size((int) Math.Round(width), _noteDisplay.Height),
+                Cursor = Cursors.SizeWE,
+                TabStop = false
+            };
             cutRow.Image = new Bitmap(cutRow.Width, cutRow.Height);
             _cutRows.Add(new Tuple<int, int>(barStart, barEnd));
 
@@ -834,9 +850,11 @@ namespace ChordQuality.views
             {
                 _playStart = (double) e.X*_zoomValue/_noteDisplay.Width + _offsetScroll.Value;
                 _playStop = _playStart;
-                var pMessage = new PlaySelectionChangedMessage();
-                pMessage.PlayStart = _playStart;
-                pMessage.PlayStop = _playStop;
+                var pMessage = new PlaySelectionChangedMessage
+                {
+                    PlayStart = _playStart,
+                    PlayStop = _playStop
+                };
                 _eventAggregator.Publish(pMessage);
             }
             else if (e.Button == MouseButtons.Right)
@@ -876,9 +894,11 @@ namespace ChordQuality.views
             if ((e.Button == MouseButtons.Left) && (_playStart >= 0))
             {
                 _playStop = (double) e.X*_zoomValue/_noteDisplay.Width + _offsetScroll.Value;
-                var pMessage = new PlaySelectionChangedMessage();
-                pMessage.PlayStart = _playStart;
-                pMessage.PlayStop = _playStop;
+                var pMessage = new PlaySelectionChangedMessage
+                {
+                    PlayStart = _playStart,
+                    PlayStop = _playStop
+                };
                 _eventAggregator.Publish(pMessage);
                 redraw_notes();
             }

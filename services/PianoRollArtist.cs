@@ -60,9 +60,9 @@ namespace ChordQuality.services
             InitializeSubscriptions();
             _noteDisplay = noteDisplay;
             _chordDisplay = chordDisplay;
-            this._tunings = tunings;
-            this._qualityWeights = qualityWeights;
-            this._chordNameDisplay = chordNameDisplay;
+            _tunings = tunings;
+            _qualityWeights = qualityWeights;
+            _chordNameDisplay = chordNameDisplay;
             _orientpen.DashStyle = DashStyle.Dot;
         }
 
@@ -102,7 +102,7 @@ namespace ChordQuality.services
                     if (i > 0)
                         gr.DrawLine(_barpen, i*grw/zoomValue, y0, i*grw/zoomValue, y0 + grh);
                     if ((offset + i)%zoomValue == 0)
-                        gr.DrawString((offset + i + 1).ToString(), _smallFont, _drawBrush, i*grw/zoomValue, y0);
+                        gr.DrawString((offset + i + 1).ToString(), _smallFont, _drawBrush, i*((float)grw)/zoomValue, y0);
                 }
             // draw horizontal orientation lines at each D,F and A
             for (var a = 0; a < 10; a++)
@@ -129,12 +129,9 @@ namespace ChordQuality.services
             }
             //
             // draw notes
-
-            if (_trackDisplay != null)
-            {
-                _trackDisplay.Draw(gr, grw, y0, _currentFile.max_note, offset,
-                    _currentFile.timing, zoomValue, vscale, _relThickness);
-            }
+            //
+            _trackDisplay?.Draw(gr, _currentFile.max_note, offset,
+                _currentFile.timing, zoomValue, vscale, _relThickness);
 
             // draw selection
             if (_playStart >= 0)
@@ -176,10 +173,7 @@ namespace ChordQuality.services
                                      _zoomScrollValue;
                             var q = (int) _tunings[i].Quality(c, _qualityWeights);
                             var y = y0 + grh - 1 - 2*q;
-                            if (c.IsChord)
-                                gr.DrawLine(_pen, x1, y, x2, y);
-                            else
-                                gr.DrawLine(_thinpen, x1, y, x2, y);
+                            gr.DrawLine(c.IsChord ? _pen : _thinpen, x1, y, x2, y);
                         }
                     }
                 }

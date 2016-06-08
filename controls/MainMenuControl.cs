@@ -17,8 +17,8 @@ namespace ChordQuality.controls
         private MidiFileOpener _fileOpener;
         private MidiFileSaver _fileSaver;
         private FileInfoProvider _infoProvider;
-        private ToolStripMenuItem[] _markersMenuAddMenuItems;
-        private ToolStripMenuItem[] _markersMenuRemoveMenuItems;
+        private ToolStripItem[] _markersMenuAddMenuItems;
+        private ToolStripItem[] _markersMenuRemoveMenuItems;
         private ISubscription<FileUpdatedMessage> _midiFileSubscription;
         private MidiToTextWriter _midiTextWriter;
         private ISubscription<PlaySelectionChangedMessage> _playSelectionSubscription;
@@ -45,7 +45,7 @@ namespace ChordQuality.controls
             {
                 _playStart = message.PlayStart;
                 _playStop = message.PlayStop;
-                markersMenuAddMenu.Enabled = _playStop != _playStart;
+                markersMenuAddMenu.Enabled = Math.Abs(_playStop - _playStart) > 0.001;
             });
         }
 
@@ -59,12 +59,12 @@ namespace ChordQuality.controls
             markersMenu.Enabled = true;
             analysisMenu.Enabled = true;
 
-            _markersMenuAddMenuItems = new ToolStripMenuItem[_currentFile.tracks.Length];
+            _markersMenuAddMenuItems = new ToolStripItem[_currentFile.tracks.Length];
             for (var i = 0; i < _currentFile.tracks.Length; i++)
             {
                 _markersMenuAddMenuItems[i] = new ToolStripMenuItem
                 {
-                    Text = "#" + (i + 1) + ": " + _currentFile.tracks[i].name
+                    Text = @"#" + (i + 1) + @": " + _currentFile.tracks[i].name
                 };
                 _markersMenuAddMenuItems[i].Click += AddMenuItemClicked;
             }
@@ -72,12 +72,12 @@ namespace ChordQuality.controls
             markersMenuAddMenu.DropDownItems.AddRange(_markersMenuAddMenuItems);
 
             // create "markers -> remove" menu
-            _markersMenuRemoveMenuItems = new ToolStripMenuItem[_currentFile.tracks.Length];
+            _markersMenuRemoveMenuItems = new ToolStripItem[_currentFile.tracks.Length];
             for (var i = 0; i < _currentFile.tracks.Length; i++)
             {
                 _markersMenuRemoveMenuItems[i] = new ToolStripMenuItem
                 {
-                    Text = "#" + (i + 1) + ": " + _currentFile.tracks[i].name
+                    Text = @"#" + (i + 1) + @": " + _currentFile.tracks[i].name
                 };
                 _markersMenuRemoveMenuItems[i].Click += RemoveMenuItemClicked;
             }
@@ -91,7 +91,7 @@ namespace ChordQuality.controls
             {
                 if (sender == _markersMenuRemoveMenuItems[i])
                 {
-                    if (_playStart != _playStop)
+                    if (Math.Abs(_playStart - _playStop) > 0.001)
                     {
                         _currentFile.RemoveMarkers(
                             i, (int) (_playStart*4*_currentFile.timing), (int) (_playStop*4*_currentFile.timing));

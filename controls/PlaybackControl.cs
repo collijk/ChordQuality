@@ -46,7 +46,7 @@ namespace ChordQuality.controls
                 var sr = new StreamReader("MIDI_PatchMap.txt");
                 // TODO : fix this bit of code to handle input read errors.
                 for (var i = 0; i < 128; i++)
-                    instrumentComboBox.Items.Add(item: sr.ReadLine());
+                    instrumentComboBox.Items.Add(sr.ReadLine());
                 sr.Close();
             }
             else
@@ -67,7 +67,7 @@ namespace ChordQuality.controls
             {
                 _player.Tempo = file.tempo;
                 tempoTrackBar.Value = (int) file.tempo;
-                bpmLabel.Text = tempoTrackBar.Value + " bpm";
+                bpmLabel.Text = tempoTrackBar.Value + @" bpm";
             }
             if (file.instrument >= 0)
             {
@@ -132,7 +132,7 @@ namespace ChordQuality.controls
         private void tempoTrackBar_Scroll(object sender, EventArgs e)
         {
             _player.Tempo = tempoTrackBar.Value;
-            bpmLabel.Text = tempoTrackBar.Value + " bpm";
+            bpmLabel.Text = tempoTrackBar.Value + @" bpm";
         }
 
         private void volumeTrackBar_Scroll(object sender, EventArgs e)

@@ -31,11 +31,7 @@ namespace ChordQuality.services.io
             {
                 lock (Padlock)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new MidiToTextWriter();
-                    }
-                    return _instance;
+                    return _instance ?? (_instance = new MidiToTextWriter());
                 }
             }
         }
@@ -45,7 +41,7 @@ namespace ChordQuality.services.io
             _saveMidiToTextDialog = new SaveFileDialog
             {
                 DefaultExt = "txt",
-                Filter = "TXT-Files|*.txt"
+                Filter = @"TXT-Files|*.txt"
             };
             _saveMidiToTextDialog.FileOk += SaveFileDialogFileOk;
         }

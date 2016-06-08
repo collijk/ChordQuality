@@ -28,11 +28,7 @@ namespace ChordQuality.services.io
             {
                 lock (Padlock)
                 {
-                    if (_instance == null)
-                    {
-                        _instance = new MidiFileSaver();
-                    }
-                    return _instance;
+                    return _instance ?? (_instance = new MidiFileSaver());
                 }
             }
         }
@@ -47,7 +43,7 @@ namespace ChordQuality.services.io
             _saveMidiFileDialog = new SaveFileDialog
             {
                 DefaultExt = "mid",
-                Filter = "MIDI-Files|*.mid"
+                Filter = @"MIDI-Files|*.mid"
             };
             _saveMidiFileDialog.FileOk += SaveFileDialogFileOk;
         }
