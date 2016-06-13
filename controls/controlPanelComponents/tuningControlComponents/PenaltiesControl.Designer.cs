@@ -72,7 +72,6 @@
             this.thresholdUpDown.TabIndex = 55;
             this.thresholdUpDown.Text = "1";
             this.thresholdUpDown.Wrap = true;
-            this.thresholdUpDown.SelectedItemChanged += new System.EventHandler(this.thresholdUpDown_SelectedItemChanged);
             // 
             // penaltyShortLabel
             // 
@@ -100,7 +99,6 @@
             this.penaltyShortVScroll.Name = "penaltyShortVScroll";
             this.penaltyShortVScroll.Size = new System.Drawing.Size(17, 85);
             this.penaltyShortVScroll.TabIndex = 3;
-            this.penaltyShortVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.penaltyShortVScroll_Scroll);
             // 
             // penaltyAddVScroll
             // 
@@ -110,7 +108,6 @@
             this.penaltyAddVScroll.Name = "penaltyAddVScroll";
             this.penaltyAddVScroll.Size = new System.Drawing.Size(17, 85);
             this.penaltyAddVScroll.TabIndex = 2;
-            this.penaltyAddVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.penaltyAddVScroll_Scroll);
             // 
             // thresholdLabel
             // 

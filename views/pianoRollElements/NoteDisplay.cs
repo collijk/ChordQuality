@@ -7,8 +7,8 @@ namespace ChordQuality.views
 {
     public partial class NoteDisplay : PictureBox
     {
-        private readonly IMidiDisplayModel _displayModel;
-        private readonly IMidiDataModel _dataModel;
+        private IMidiDisplayModel _displayModel;
+        private IMidiDataModel _dataModel;
 
         private Graphics _graphics;
         private readonly Pen _barpen = new Pen(Color.LightGray, 1);
@@ -17,26 +17,48 @@ namespace ChordQuality.views
         private const int YStart = 0;
         private const int XStart = 0;
 
+
+        public IMidiDisplayModel DisplayModel
+        {
+            get { return _displayModel; }
+            set
+            {
+                _displayModel = value;
+                if(value != null)
+                {
+                    Height = (_displayModel.MaxNote - _displayModel.MinNote) * 2 + 1;
+                    Image = new Bitmap(Width, Height);
+                    _graphics = Graphics.FromImage(Image);
+                    Refresh();
+                }
+            }
+        }
+
+        public IMidiDataModel DataModel
+        {
+            get { return _dataModel; }
+            set
+            {
+                _dataModel = value;
+                if (value != null)
+                    Refresh();
+            }
+        }
+
         public NoteDisplay()
         {
             InitializeComponent();
             Image = new Bitmap(Width, Height);
             _graphics = Graphics.FromImage(Image);
         }
+        
 
-        public NoteDisplay(IMidiDisplayModel displayModel, IMidiDataModel dataModel)
+        protected override void OnSizeChanged(EventArgs e)
         {
-            _displayModel = displayModel;
-            _dataModel = dataModel;
+            base.OnSizeChanged(e);
             Image = new Bitmap(Width, Height);
             _graphics = Graphics.FromImage(Image);
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            Image = new Bitmap(Width, Height);
-            _graphics = Graphics.FromImage(Image);
+            Refresh();
         }
 
         protected override void OnPaint(PaintEventArgs pe)
@@ -45,12 +67,11 @@ namespace ChordQuality.views
             // Clear current noteDisplay contents
             _graphics.Clear(Color.White);
 
-            if(_displayModel != null)
+            if(_displayModel != null && _dataModel != null)
             {
                 DrawBars();
                 DrawScale();
                 DrawNotes();
-                Refresh();
             }
         }
 

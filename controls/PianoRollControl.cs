@@ -16,5 +16,7 @@ namespace ChordQuality.controls
         {
             InitializeComponent();
         }
+
+        
     }
 }

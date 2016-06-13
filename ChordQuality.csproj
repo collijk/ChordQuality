@@ -85,6 +85,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChordQualityApp.cs" />
+    <Compile Include="model\MidiPlaybackModel.cs" />
+    <Compile Include="views\pianoRollElements\ChordNameDisplay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="views\pianoRollElements\ChordNameDisplay.Designer.cs">
+      <DependentUpon>ChordNameDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="views\pianoRollElements\ChordDisplay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="views\pianoRollElements\ChordDisplay.Designer.cs">
+      <DependentUpon>ChordDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="controls\ControlPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -97,16 +110,16 @@
     <Compile Include="views\pianoRollElements\NoteDisplay.Designer.cs">
       <DependentUpon>NoteDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="controls\FileTransposeControl.cs">
+    <Compile Include="controls\controlPanelComponents\FileTransposeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\FileTransposeControl.Designer.cs">
+    <Compile Include="controls\controlPanelComponents\FileTransposeControl.Designer.cs">
       <DependentUpon>FileTransposeControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="controls\CutControl.cs">
+    <Compile Include="controls\controlPanelComponents\CutControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\CutControl.Designer.cs">
+    <Compile Include="controls\controlPanelComponents\CutControl.Designer.cs">
       <DependentUpon>CutControl.cs</DependentUpon>
     </Compile>
     <Compile Include="controls\MainMenuControl.cs">
@@ -115,10 +128,10 @@
     <Compile Include="controls\MainMenuControl.Designer.cs">
       <DependentUpon>MainMenuControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="controls\PenaltiesControl.cs">
+    <Compile Include="controls\controlPanelComponents\tuningControlComponents\PenaltiesControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\PenaltiesControl.Designer.cs">
+    <Compile Include="controls\controlPanelComponents\tuningControlComponents\PenaltiesControl.Designer.cs">
       <DependentUpon>PenaltiesControl.cs</DependentUpon>
     </Compile>
     <Compile Include="controls\PianoRollControl.cs">
@@ -127,34 +140,34 @@
     <Compile Include="controls\PianoRollControl.Designer.cs">
       <DependentUpon>PianoRollControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="controls\PrintingControl.cs">
+    <Compile Include="controls\controlPanelComponents\PrintingControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\PrintingControl.Designer.cs">
+    <Compile Include="controls\controlPanelComponents\PrintingControl.Designer.cs">
       <DependentUpon>PrintingControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="controls\TrackControl.cs">
+    <Compile Include="controls\controlPanelComponents\TrackControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\TrackControl.Designer.cs">
+    <Compile Include="controls\controlPanelComponents\TrackControl.Designer.cs">
       <DependentUpon>TrackControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="controls\TuningControl.cs">
+    <Compile Include="controls\controlPanelComponents\TuningControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\TuningControl.Designer.cs">
+    <Compile Include="controls\controlPanelComponents\TuningControl.Designer.cs">
       <DependentUpon>TuningControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="controls\QualityWeightsControl.cs">
+    <Compile Include="controls\controlPanelComponents\tuningControlComponents\QualityWeightsControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\QualityWeightsControl.Designer.cs">
+    <Compile Include="controls\controlPanelComponents\tuningControlComponents\QualityWeightsControl.Designer.cs">
       <DependentUpon>QualityWeightsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="controls\ZoomControl.cs">
+    <Compile Include="controls\controlPanelComponents\ZoomControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\ZoomControl.Designer.cs">
+    <Compile Include="controls\controlPanelComponents\ZoomControl.Designer.cs">
       <DependentUpon>ZoomControl.cs</DependentUpon>
     </Compile>
     <Compile Include="events\EventAggregator.cs" />
@@ -168,30 +181,24 @@
     <Compile Include="events\messages\PlaybackMessage.cs" />
     <Compile Include="events\messages\PrintSettingsMesage.cs" />
     <Compile Include="events\Subscription.cs" />
-    <Compile Include="model\IMidiDataModel.cs" />
-    <Compile Include="views\pianoRollElements\ChordDisplay.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="views\pianoRollElements\ChordNameDisplay.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="model\MidiDataModel.cs" />
     <Compile Include="views\TransparentPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="model\IMidiQualityModel.cs" />
-    <Compile Include="model\IMidiTuningModel.cs" />
-    <Compile Include="model\IMidiDisplayModel.cs" />
+    <Compile Include="model\MidiQualityModel.cs" />
+    <Compile Include="model\MidiTuningModel.cs" />
+    <Compile Include="model\MidiDisplayModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="views\FileInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="controls\PlaybackControl.cs">
+    <Compile Include="controls\controlPanelComponents\PlaybackControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="controls\PlaybackControl.Designer.cs">
+    <Compile Include="controls\controlPanelComponents\PlaybackControl.Designer.cs">
       <DependentUpon>PlaybackControl.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="controls\ControlPanel.resx">
@@ -200,34 +207,34 @@
     <EmbeddedResource Include="controls\MainMenuControl.resx">
       <DependentUpon>MainMenuControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controls\PenaltiesControl.resx">
+    <EmbeddedResource Include="controls\controlPanelComponents\tuningControlComponents\PenaltiesControl.resx">
       <DependentUpon>PenaltiesControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="controls\PianoRollControl.resx">
       <DependentUpon>PianoRollControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controls\PlaybackControl.resx">
+    <EmbeddedResource Include="controls\controlPanelComponents\PlaybackControl.resx">
       <DependentUpon>PlaybackControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controls\FileTransposeControl.resx">
+    <EmbeddedResource Include="controls\controlPanelComponents\FileTransposeControl.resx">
       <DependentUpon>FileTransposeControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controls\CutControl.resx">
+    <EmbeddedResource Include="controls\controlPanelComponents\CutControl.resx">
       <DependentUpon>CutControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controls\PrintingControl.resx">
+    <EmbeddedResource Include="controls\controlPanelComponents\PrintingControl.resx">
       <DependentUpon>PrintingControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controls\QualityWeightsControl.resx">
+    <EmbeddedResource Include="controls\controlPanelComponents\tuningControlComponents\QualityWeightsControl.resx">
       <DependentUpon>QualityWeightsControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controls\TrackControl.resx">
+    <EmbeddedResource Include="controls\controlPanelComponents\TrackControl.resx">
       <DependentUpon>TrackControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controls\TuningControl.resx">
+    <EmbeddedResource Include="controls\controlPanelComponents\TuningControl.resx">
       <DependentUpon>TuningControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="controls\ZoomControl.resx">
+    <EmbeddedResource Include="controls\controlPanelComponents\ZoomControl.resx">
       <DependentUpon>ZoomControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="views\FileInfoForm.resx">

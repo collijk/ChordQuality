@@ -3,16 +3,47 @@ using System.IO;
 using System.Windows.Forms;
 using ChordQuality.events;
 using ChordQuality.events.messages;
+using ChordQuality.model;
 using Janus.ManagedMIDI;
 
 namespace ChordQuality.controls
 {
     public partial class PlaybackControl : UserControl
     {
+        private MidiPlaybackModel _playbackModel;
+        
         private MidiOutDevs _devices;
         private IEventAggregator _eventAggregator;
         private ISubscription<FileUpdatedMessage> _fileUpdatedSubscription;
         private MidiFilePlayer _player;
+        private MidiDataModel _dataModel;
+
+
+        public MidiPlaybackModel PlaybackModel
+        {
+            get { return _playbackModel; }
+            set
+            {
+                if (value == _playbackModel)
+                    return;
+
+                _playbackModel = value;
+                EnableControls();
+            }
+        }
+
+        public MidiDataModel DataModel
+        {
+            get { return _dataModel; }
+            set
+            {
+                if (value == _dataModel)
+                    return;
+
+                _dataModel = value;
+                EnableControls();
+            }
+        }
 
         public PlaybackControl()
         {
@@ -39,6 +70,10 @@ namespace ChordQuality.controls
             midiOutComboBox.SelectedIndex = 0;
         }
 
+        private void EnableControls()
+        {
+
+        }
         private void InitializeInstruments()
         {
             if (File.Exists("MIDI_PatchMap.txt"))
@@ -141,5 +176,10 @@ namespace ChordQuality.controls
         }
 
         #endregion
+
+        private void midiOutComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //TODO : Enable user to select midi out devices.
+        }
     }
 }

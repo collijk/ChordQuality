@@ -116,6 +116,7 @@
             this.midiOutComboBox.Name = "midiOutComboBox";
             this.midiOutComboBox.Size = new System.Drawing.Size(231, 21);
             this.midiOutComboBox.TabIndex = 59;
+            this.midiOutComboBox.SelectedIndexChanged += new System.EventHandler(this.midiOutComboBox_SelectedIndexChanged);
             // 
             // instrumentLabel
             // 

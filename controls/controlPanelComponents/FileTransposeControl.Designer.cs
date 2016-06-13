@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.offsetValueLabel = new System.Windows.Forms.Label();
             this.offsetLabel = new System.Windows.Forms.Label();

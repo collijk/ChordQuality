@@ -109,7 +109,6 @@
             this.thirdMajorChordVScroll.Size = new System.Drawing.Size(17, 88);
             this.thirdMajorChordVScroll.TabIndex = 1;
             this.thirdMajorChordVScroll.Value = 10;
-            this.thirdMajorChordVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.thirdMajorChordVScroll_Scroll);
             // 
             // fifthChordVScroll
             // 
@@ -122,7 +121,6 @@
             this.fifthChordVScroll.Size = new System.Drawing.Size(17, 88);
             this.fifthChordVScroll.TabIndex = 0;
             this.fifthChordVScroll.Value = 10;
-            this.fifthChordVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.fifthChordVScroll_Scroll);
             // 
             // intervalBox
             // 
@@ -152,14 +150,13 @@
             // 
             this.thirdMajorIntervalVScroll.Enabled = false;
             this.thirdMajorIntervalVScroll.LargeChange = 1;
-            this.thirdMajorIntervalVScroll.Location = new System.Drawing.Point(121, 24);
+            this.thirdMajorIntervalVScroll.Location = new System.Drawing.Point(121, 27);
             this.thirdMajorIntervalVScroll.Margin = new System.Windows.Forms.Padding(5);
             this.thirdMajorIntervalVScroll.Maximum = 20;
             this.thirdMajorIntervalVScroll.Name = "thirdMajorIntervalVScroll";
             this.thirdMajorIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.thirdMajorIntervalVScroll.TabIndex = 10;
             this.thirdMajorIntervalVScroll.Value = 10;
-            this.thirdMajorIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.thirdMajorIntervalVScroll_Scroll);
             // 
             // fourthIntervalLabel
             // 
@@ -181,7 +178,6 @@
             this.fourthIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.fourthIntervalVScroll.TabIndex = 9;
             this.fourthIntervalVScroll.Value = 10;
-            this.fourthIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.fourthIntervalVScroll_Scroll);
             // 
             // thirdMinorIntervalLabel
             // 
@@ -221,7 +217,6 @@
             this.fifthIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.fifthIntervalVScroll.TabIndex = 8;
             this.fifthIntervalVScroll.Value = 10;
-            this.fifthIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.fifthIntervalVScroll_Scroll);
             // 
             // thirdMinorIntervalVScroll
             // 
@@ -234,7 +229,6 @@
             this.thirdMinorIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.thirdMinorIntervalVScroll.TabIndex = 11;
             this.thirdMinorIntervalVScroll.Value = 10;
-            this.thirdMinorIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.thirdMinorIntervalVScroll_Scroll);
             // 
             // sixthMinorIntervalLabel
             // 
@@ -265,7 +259,6 @@
             this.sixthMinorIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.sixthMinorIntervalVScroll.TabIndex = 7;
             this.sixthMinorIntervalVScroll.Value = 10;
-            this.sixthMinorIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sixthMinorIntervalVScroll_Scroll);
             // 
             // sixthMajorIntervalVScroll
             // 
@@ -278,7 +271,6 @@
             this.sixthMajorIntervalVScroll.Size = new System.Drawing.Size(17, 88);
             this.sixthMajorIntervalVScroll.TabIndex = 6;
             this.sixthMajorIntervalVScroll.Value = 10;
-            this.sixthMajorIntervalVScroll.Scroll += new System.Windows.Forms.ScrollEventHandler(this.sixthMajorIntervalVScroll_Scroll);
             // 
             // QualityWeightsControl
             // 
