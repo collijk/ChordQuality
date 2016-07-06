@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using ChordQuality.events;
-using ChordQuality.events.messages;
 using ChordQuality.model;
-using Janus.ManagedMIDI;
 
 namespace ChordQuality.controls
 {
@@ -49,13 +46,13 @@ namespace ChordQuality.controls
                 return;
 
             thresholdUpDown.Enabled = true;
-            var thresholdBinding = new Binding("SelectedIndex",QualityModel,"Threshold");
+            var thresholdBinding = new Binding("SelectedIndex", QualityModel, "Threshold");
             thresholdBinding.Format += new ConvertEventHandler(ThresholdToSelectedIndex);
             thresholdBinding.Parse += new ConvertEventHandler(SelectedIndexToThreshold);
             thresholdUpDown.DataBindings.Add(thresholdBinding);
 
             penaltyAddVScroll.Enabled = true;
-            var addBinding = new Binding("Value",QualityModel,"Add");
+            var addBinding = new Binding("Value", QualityModel, "Add");
             addBinding.Format += new ConvertEventHandler(AddShortToVScrollValue);
             addBinding.Parse += new ConvertEventHandler(VScrollValueToAddShort);
             penaltyAddVScroll.DataBindings.Add(addBinding);

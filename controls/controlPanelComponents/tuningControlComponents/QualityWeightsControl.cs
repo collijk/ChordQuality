@@ -1,8 +1,5 @@
 ﻿using System.Windows.Forms;
-using ChordQuality.events;
-using ChordQuality.events.messages;
 using ChordQuality.model;
-using Janus.ManagedMIDI;
 
 namespace ChordQuality.controls
 {
@@ -30,6 +27,9 @@ namespace ChordQuality.controls
 
         private void EnableControl()
         {
+            if (_qualityModel == null)
+                return; 
+
             sixthMajorIntervalVScroll.Enabled = true;
             sixthMajorIntervalVScroll.DataBindings.Add("Value", QualityModel, "SixthMajorInterval");
 

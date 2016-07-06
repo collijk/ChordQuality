@@ -1,23 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using ChordQuality.events;
-using ChordQuality.events.messages;
 using ChordQuality.model;
-using Janus.ManagedMIDI;
 
 namespace ChordQuality.controls
 {
     public partial class PlaybackControl : UserControl
     {
         private MidiPlaybackModel _playbackModel;
-        
-        private MidiOutDevs _devices;
-        private IEventAggregator _eventAggregator;
-        private ISubscription<FileUpdatedMessage> _fileUpdatedSubscription;
-        private MidiFilePlayer _player;
         private MidiDataModel _dataModel;
-
+        private MidiPlaybackModel.PlaybackState _playState;
 
         public MidiPlaybackModel PlaybackModel
         {
@@ -45,35 +37,56 @@ namespace ChordQuality.controls
             }
         }
 
+        public MidiPlaybackModel.PlaybackState PlayState
+        {
+            get { return _playState; }
+            set
+            {
+                if (value == _playState)
+                    return;
+
+                _playState = value;
+                OnPlayStateChanged();
+            }
+        }
+
         public PlaybackControl()
         {
             InitializeComponent();
-            InitializeSubscriptions();
-            InitializeDevices();
-            InitializeInstruments();
+            var bpmBinding = new Binding("Text", tempoTrackBar, "Value");
+            bpmBinding.Format += TempoToBpmLabel;
+            bpmLabel.DataBindings.Add(bpmBinding);
         }
 
-        private void InitializeSubscriptions()
+        private static void TempoToBpmLabel(object sender, ConvertEventArgs e)
         {
-            _eventAggregator = EventAggregator.Instance;
-            _fileUpdatedSubscription =
-                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { OnFileUpdated(message.File); });
-        }
+            if (e.DesiredType != typeof(string))
+                return;
 
-        private void InitializeDevices()
-        {
-            _devices = new MidiOutDevs();
-            for (var i = 0; i < _devices.NumDevs; i++)
-            {
-                midiOutComboBox.Items.Add(_devices.Label(i));
-            }
-            midiOutComboBox.SelectedIndex = 0;
+            e.Value = ((int)e.Value - 1) + " bpm";
         }
 
         private void EnableControls()
         {
+            if (_dataModel == null || _playbackModel == null)
+                return;
 
+            InitializeDevices();
+            InitializeInstruments();
+            this.DataBindings.Add("PlayState", PlaybackModel, "PlayState");
+            tempoTrackBar.DataBindings.Add("Value", PlaybackModel, "Tempo");
+            volumeTrackBar.DataBindings.Add("Value", PlaybackModel, "Volume");
         }
+
+        private void InitializeDevices()
+        {
+            for (var i = 0; i < _playbackModel.OutputDevices.NumDevs; i++)
+            {
+                midiOutComboBox.Items.Add(_playbackModel.OutputDevices.Label(i));
+            }
+            midiOutComboBox.DataBindings.Add("SelectedIndex", PlaybackModel, "SelectedOutputDevice");
+        }
+        
         private void InitializeInstruments()
         {
             if (File.Exists("MIDI_PatchMap.txt"))
@@ -89,97 +102,65 @@ namespace ChordQuality.controls
                 for (var i = 1; i < 129; i++)
                     instrumentComboBox.Items.Add(i.ToString().PadLeft(3, '0'));
             }
-            instrumentComboBox.SelectedIndex = 0;
+            instrumentComboBox.DataBindings.Add("SelectedIndex", PlaybackModel, "SelectedInstrument") ;
         }
 
-
-        private void OnFileUpdated(MidiFile file)
+        private void OnPlayStateChanged()
         {
-            _player = new MidiFilePlayer(file);
-
-            if (file.tempo >= tempoTrackBar.Minimum &&
-                file.tempo <= tempoTrackBar.Maximum)
+            switch (_playState)
             {
-                _player.Tempo = file.tempo;
-                tempoTrackBar.Value = (int) file.tempo;
-                bpmLabel.Text = tempoTrackBar.Value + @" bpm";
+                case MidiPlaybackModel.PlaybackState.Uninitialized:
+                    playButton.Enabled = false;
+                    pauseButton.Enabled = false;
+                    stopButton.Enabled = false;
+                    volumeTrackBar.Enabled = false;
+                    tempoTrackBar.Enabled = false;
+                    midiOutComboBox.Enabled = false;
+                    instrumentComboBox.Enabled = false;
+                    break;
+                case MidiPlaybackModel.PlaybackState.Play:
+                    playButton.Enabled = false;
+                    pauseButton.Enabled = true;
+                    stopButton.Enabled = true;
+                    volumeTrackBar.Enabled = true;
+                    tempoTrackBar.Enabled = true;
+                    midiOutComboBox.Enabled = true;
+                    instrumentComboBox.Enabled = true;
+                    break;
+                case MidiPlaybackModel.PlaybackState.Pause:
+                    playButton.Enabled = true;
+                    pauseButton.Enabled = false;
+                    stopButton.Enabled = true;
+                    volumeTrackBar.Enabled = true;
+                    tempoTrackBar.Enabled = true;
+                    midiOutComboBox.Enabled = true;
+                    instrumentComboBox.Enabled = true;
+                    break;
+                case MidiPlaybackModel.PlaybackState.Stop:
+                    playButton.Enabled = true;
+                    pauseButton.Enabled = true;
+                    stopButton.Enabled = false;
+                    volumeTrackBar.Enabled = true;
+                    tempoTrackBar.Enabled = true;
+                    midiOutComboBox.Enabled = true;
+                    instrumentComboBox.Enabled = true;
+                    break;
             }
-            if (file.instrument >= 0)
-            {
-                _player.Instrument = file.instrument;
-                instrumentComboBox.SelectedIndex = file.instrument;
-            }
-            if (stopButton.Enabled)
-            {
-                _eventAggregator.Publish(new StopMessage());
-            }
-
-            playButton.Enabled = true;
-            pauseButton.Enabled = false;
-            stopButton.Enabled = false;
-            volumeTrackBar.Enabled = true;
-            tempoTrackBar.Enabled = true;
-            midiOutComboBox.Enabled = true;
-            instrumentComboBox.Enabled = true;
-
-            var message = new MidiPlayerUpdatedMessage {Player = _player};
-            _eventAggregator.Publish(message);
         }
-
-        #region Local Event Handlers
 
         private void playButton_Click(object sender, EventArgs e)
         {
-            playButton.Enabled = false;
-            pauseButton.Enabled = true;
-            stopButton.Enabled = true;
-            midiOutComboBox.Enabled = false;
-            var message = new PlayMessage {DeviceIndex = midiOutComboBox.SelectedIndex};
-            _eventAggregator.Publish(message);
+            PlayState = MidiPlaybackModel.PlaybackState.Play;
         }
 
         private void pauseButton_Click(object sender, EventArgs e)
         {
-            playButton.Enabled = true;
-            pauseButton.Enabled = false;
-            stopButton.Enabled = true;
-            midiOutComboBox.Enabled = false;
-            _eventAggregator.Publish(new PauseMessage());
+            PlayState = MidiPlaybackModel.PlaybackState.Pause;
         }
 
         private void stopButton_Click(object sender, EventArgs e)
         {
-            playButton.Enabled = true;
-            pauseButton.Enabled = false;
-            stopButton.Enabled = false;
-            midiOutComboBox.Enabled = true;
-            _eventAggregator.Publish(new StopMessage());
-        }
-
-        private void instrumentComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_player != null)
-            {
-                _player.Instrument = instrumentComboBox.SelectedIndex;
-            }
-        }
-
-        private void tempoTrackBar_Scroll(object sender, EventArgs e)
-        {
-            _player.Tempo = tempoTrackBar.Value;
-            bpmLabel.Text = tempoTrackBar.Value + @" bpm";
-        }
-
-        private void volumeTrackBar_Scroll(object sender, EventArgs e)
-        {
-            _player.Volume = volumeTrackBar.Value;
-        }
-
-        #endregion
-
-        private void midiOutComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            //TODO : Enable user to select midi out devices.
+            PlayState = MidiPlaybackModel.PlaybackState.Stop;
         }
     }
 }

@@ -7,8 +7,8 @@ namespace ChordQuality.views
 {
     public partial class NoteDisplay : PictureBox
     {
-        private IMidiDisplayModel _displayModel;
-        private IMidiDataModel _dataModel;
+        private MidiDisplayModel _displayModel;
+        private MidiDataModel _dataModel;
 
         private Graphics _graphics;
         private readonly Pen _barpen = new Pen(Color.LightGray, 1);
@@ -18,7 +18,7 @@ namespace ChordQuality.views
         private const int XStart = 0;
 
 
-        public IMidiDisplayModel DisplayModel
+        public MidiDisplayModel DisplayModel
         {
             get { return _displayModel; }
             set
@@ -26,7 +26,7 @@ namespace ChordQuality.views
                 _displayModel = value;
                 if(value != null)
                 {
-                    Height = (_displayModel.MaxNote - _displayModel.MinNote) * 2 + 1;
+                    Height = (_dataModel.MaxNote - _dataModel.MinNote) * 2 + 1;
                     Image = new Bitmap(Width, Height);
                     _graphics = Graphics.FromImage(Image);
                     Refresh();
@@ -34,7 +34,7 @@ namespace ChordQuality.views
             }
         }
 
-        public IMidiDataModel DataModel
+        public MidiDataModel DataModel
         {
             get { return _dataModel; }
             set
@@ -78,7 +78,7 @@ namespace ChordQuality.views
         private void DrawBars()
         {
             var displayWidth = _graphics.VisibleClipBounds.Width;
-            var displayHeight = _displayModel.VerticalScale * (_displayModel.MaxNote - _displayModel.MinNote);
+            var displayHeight = _displayModel.VerticalScale * (_dataModel.MaxNote - _dataModel.MinNote);
 
             var barWidth = displayWidth / _displayModel.NumberOfBars;
             var currentBar = _displayModel.FirstBar;
@@ -122,16 +122,16 @@ namespace ChordQuality.views
         private void DrawScaleLine(int b)
         {
             var displayWidth = _graphics.VisibleClipBounds.Width;
-            if(b < _displayModel.MaxNote && b > _displayModel.MinNote)
+            if(b < _dataModel.MaxNote && b > _dataModel.MinNote)
             {
-                var y = _displayModel.VerticalScale * (_displayModel.MaxNote - b) + YStart;
+                var y = _displayModel.VerticalScale * (_dataModel.MaxNote - b) + YStart;
                 _graphics.DrawLine(_barpen, XStart, y, displayWidth, y);
             }
         }
 
         private void DrawNotes()
         {
-            _displayModel.Tracks?.Draw(_graphics, _displayModel.MaxNote, _displayModel.FirstBar,
+            _displayModel.Tracks?.Draw(_graphics, _dataModel.MaxNote, _displayModel.FirstBar,
                 _dataModel.Timing, _displayModel.NumberOfBars, _displayModel.VerticalScale, _displayModel.RelThickness);
         }
     }

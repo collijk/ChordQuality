@@ -1,6 +1,6 @@
 ﻿namespace ChordQuality.views
 {
-    partial class ChordDisplay
+    partial class ChordDisplay : Control
     {
         /// <summary>
         /// Required designer variable.

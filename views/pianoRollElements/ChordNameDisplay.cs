@@ -8,9 +8,9 @@ namespace ChordQuality.views
 {
     public partial class ChordNameDisplay : PictureBox
     {
-        private IMidiDisplayModel _displayModel;
+        private MidiDisplayModel _displayModel;
         private MidiQualityModel _qualityModel;
-        private IMidiDataModel _dataModel;
+        private MidiDataModel _dataModel;
         private const int YStart = 0;
 
         private Graphics _graphics;
@@ -18,7 +18,7 @@ namespace ChordQuality.views
         private readonly Font _drawFont = new Font("Courier New", 10);
         private readonly Font _smallFont = new Font("Courier New", 6);
 
-        public IMidiDisplayModel DisplayModel
+        public MidiDisplayModel DisplayModel
         {
             get { return _displayModel; }
             set
@@ -40,7 +40,7 @@ namespace ChordQuality.views
             }
         }
 
-        public IMidiDataModel DataModel
+        public MidiDataModel DataModel
         {
             get { return _dataModel; }
             set

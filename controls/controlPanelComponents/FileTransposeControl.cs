@@ -1,9 +1,5 @@
-﻿using System;
-using System.Windows.Forms;
-using ChordQuality.events;
-using ChordQuality.events.messages;
+﻿using System.Windows.Forms;
 using ChordQuality.model;
-using Janus.ManagedMIDI;
 
 namespace ChordQuality.controls
 {
@@ -11,7 +7,6 @@ namespace ChordQuality.controls
     {
         private MidiDataModel _dataModel;
         private MidiDisplayModel _displayModel;
-        
 
         public MidiDataModel DataModel
         {
@@ -55,16 +50,16 @@ namespace ChordQuality.controls
             fileTransposeUpDown.Enabled = true;
 
             var offsetBinding = new Binding("Text", DisplayModel, "FirstBar");
-            offsetBinding.Format += new ConvertEventHandler(BarToOffsetLabel);
+            offsetBinding.Format += BarToOffsetLabel;
             offsetLabel.DataBindings.Add(offsetBinding);
         }
 
-        private void BarToOffsetLabel(object sender, ConvertEventArgs e)
+        private static void BarToOffsetLabel(object sender, ConvertEventArgs e)
         {
             if (e.DesiredType != typeof(string))
                 return;
 
-            e.Value = ((int) e.Value - 1).ToString() + " Bars";
+            e.Value = ((int) e.Value - 1) + " Bars";
 
         }
     }
