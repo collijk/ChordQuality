@@ -33,7 +33,6 @@
             this.barsPerPageTextBox = new System.Windows.Forms.TextBox();
             this.pagesLabel = new System.Windows.Forms.Label();
             this.barsPerPageLabel = new System.Windows.Forms.Label();
-            this.applyPrintSettingsButton = new System.Windows.Forms.Button();
             this.relativeThicknessTextBox = new System.Windows.Forms.TextBox();
             this.rowsPerPageTextBox = new System.Windows.Forms.TextBox();
             this.barsPerRowTextBox = new System.Windows.Forms.TextBox();
@@ -51,7 +50,6 @@
             this.printLayoutBox.Controls.Add(this.barsPerPageTextBox);
             this.printLayoutBox.Controls.Add(this.pagesLabel);
             this.printLayoutBox.Controls.Add(this.barsPerPageLabel);
-            this.printLayoutBox.Controls.Add(this.applyPrintSettingsButton);
             this.printLayoutBox.Controls.Add(this.relativeThicknessTextBox);
             this.printLayoutBox.Controls.Add(this.rowsPerPageTextBox);
             this.printLayoutBox.Controls.Add(this.barsPerRowTextBox);
@@ -107,16 +105,6 @@
             this.barsPerPageLabel.TabIndex = 7;
             this.barsPerPageLabel.Text = "Bars/Page:";
             // 
-            // applyPrintSettingsButton
-            // 
-            this.applyPrintSettingsButton.Location = new System.Drawing.Point(13, 92);
-            this.applyPrintSettingsButton.Name = "applyPrintSettingsButton";
-            this.applyPrintSettingsButton.Size = new System.Drawing.Size(101, 23);
-            this.applyPrintSettingsButton.TabIndex = 6;
-            this.applyPrintSettingsButton.Text = "Apply Settings";
-            this.applyPrintSettingsButton.UseVisualStyleBackColor = true;
-            this.applyPrintSettingsButton.Click += new System.EventHandler(this.applyPrintSettingsButton_Click);
-            // 
             // relativeThicknessTextBox
             // 
             this.relativeThicknessTextBox.Location = new System.Drawing.Point(85, 66);
@@ -141,7 +129,7 @@
             this.barsPerRowTextBox.Name = "barsPerRowTextBox";
             this.barsPerRowTextBox.Size = new System.Drawing.Size(29, 20);
             this.barsPerRowTextBox.TabIndex = 3;
-            this.barsPerRowTextBox.Text = "13";
+            this.barsPerRowTextBox.Text = "1";
             this.barsPerRowTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // relativeThicknessLabel
@@ -199,7 +187,6 @@
         private System.Windows.Forms.TextBox relativeThicknessTextBox;
         private System.Windows.Forms.TextBox rowsPerPageTextBox;
         private System.Windows.Forms.TextBox barsPerRowTextBox;
-        private System.Windows.Forms.Button applyPrintSettingsButton;
         private System.Windows.Forms.Label pagesLabel;
         private System.Windows.Forms.Label barsPerPageLabel;
         private System.Windows.Forms.TextBox pagesTextBox;

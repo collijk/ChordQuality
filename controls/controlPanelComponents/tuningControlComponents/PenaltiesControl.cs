@@ -47,20 +47,20 @@ namespace ChordQuality.controls
 
             thresholdUpDown.Enabled = true;
             var thresholdBinding = new Binding("SelectedIndex", QualityModel, "Threshold");
-            thresholdBinding.Format += new ConvertEventHandler(ThresholdToSelectedIndex);
-            thresholdBinding.Parse += new ConvertEventHandler(SelectedIndexToThreshold);
+            thresholdBinding.Format += ThresholdToSelectedIndex;
+            thresholdBinding.Parse += SelectedIndexToThreshold;
             thresholdUpDown.DataBindings.Add(thresholdBinding);
 
             penaltyAddVScroll.Enabled = true;
             var addBinding = new Binding("Value", QualityModel, "Add");
-            addBinding.Format += new ConvertEventHandler(AddShortToVScrollValue);
-            addBinding.Parse += new ConvertEventHandler(VScrollValueToAddShort);
+            addBinding.Format += AddShortToVScrollValue;
+            addBinding.Parse += VScrollValueToAddShort;
             penaltyAddVScroll.DataBindings.Add(addBinding);
             
             penaltyShortVScroll.Enabled = true;
             var shortBinding = new Binding("Value", QualityModel, "Short");
-            shortBinding.Format += new ConvertEventHandler(AddShortToVScrollValue);
-            shortBinding.Parse += new ConvertEventHandler(VScrollValueToAddShort);
+            shortBinding.Format += AddShortToVScrollValue;
+            shortBinding.Parse += VScrollValueToAddShort;
             penaltyAddVScroll.DataBindings.Add(shortBinding);
         }
 
