@@ -12,6 +12,7 @@ namespace ChordQuality.model
         private byte _maxNote;
         private int _transpose;
         private int _totalBars;
+        private MidiTrack[] _tracks;
 
         public ArrayList Chords
         {
@@ -23,6 +24,19 @@ namespace ChordQuality.model
 
                 _chords = value; 
                 OnPropertyChanged("Chords");
+            }
+        }
+
+        public MidiTrack[] Tracks
+        {
+            get { return _tracks; }
+            set
+            {
+                if (value == _tracks)
+                    return;
+
+                _tracks = value;
+                OnPropertyChanged("Tracks");
             }
         }
 
@@ -94,6 +108,7 @@ namespace ChordQuality.model
         public MidiDataModel(MidiFile file)
         {
             Chords = file.FindChords();
+            Tracks = file.tracks;
             Timing = file.timing;
             MinNote = file.min_note;
             MaxNote = file.max_note;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using ChordQuality.views;
 
 namespace ChordQuality.model
@@ -12,6 +13,7 @@ namespace ChordQuality.model
         private float _verticalScale;
         private TrackDisplay _tracks;
         private float _relThickness;
+        private Color[] _trackColors;
         private const double ComparisonTolerance = 0.001;
 
         public int FirstBar
@@ -94,6 +96,19 @@ namespace ChordQuality.model
             }
         }
 
+        public Color[] TrackColors
+        {
+            get { return _trackColors; }
+            set
+            {
+                if (value == _trackColors)
+                    return;
+
+                _trackColors = value;
+                OnPropertyChanged("TrackColors");
+            }
+        }
+
         public MidiDisplayModel()
         {
             // Default Display Values
@@ -102,7 +117,30 @@ namespace ChordQuality.model
             VerticalScale = 2.0f;
             Tracks = null;
             RelThickness = 0.5f;
+            TrackColors = new Color[]
+            {
+                Color.Black,
+                Color.Red,
+                Color.Green,
+                Color.Orange,
+                Color.Blue,
+                Color.Black,
+                Color.Black,
+                Color.Black,
+                Color.Black,
+                Color.Magenta,
+                Color.Cyan,
+                Color.Pink,
+                Color.LightBlue,
+                Color.Brown,
+                Color.Gold,
+                Color.Silver,
+                Color.Black,
+                Color.Black,
+                Color.Black
+            };
         }
+    
 
         public event PropertyChangedEventHandler PropertyChanged;
 

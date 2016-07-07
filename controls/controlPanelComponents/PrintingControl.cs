@@ -10,10 +10,11 @@ namespace ChordQuality.controls
     public partial class PrintingControl : UserControl
     {
         private MidiDisplayModel _displayModel;
+        private MidiDataModel _dataModel;
+
         private int _barsPerRow;
         private int _rowsPerPage;
         private int _barsPerPage;
-        private MidiDataModel _dataModel;
 
         public MidiDisplayModel DisplayModel
         {
