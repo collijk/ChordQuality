@@ -2,56 +2,56 @@
 using System.Windows.Forms;
 using ChordQuality.events;
 using ChordQuality.events.messages;
+using ChordQuality.model;
 
 namespace ChordQuality.controls
 {
     public partial class ZoomControl : UserControl
     {
-        private ISubscription<BarsPerRowChangedMessage> _barsPerRowSubscription;
-        private IEventAggregator _eventAggregator;
-        private ISubscription<FileUpdatedMessage> _fileUpdatedSubscription;
+        private MidiPlaybackModel _playbackModel;
+        private MidiDisplayModel _displayModel;
+
+        public MidiPlaybackModel PlaybackModel
+        {
+            get { return _playbackModel; }
+            set
+            {
+                if (value == _playbackModel)
+                    return;
+
+                _playbackModel = value;
+                EnableControls();
+            }
+        }
+
+        public MidiDisplayModel DisplayModel
+        {
+            get { return _displayModel; }
+            set
+            {
+                if (value == _displayModel)
+                    return;
+
+                _displayModel = value;
+                EnableControls();
+            }
+        }
+
 
         public ZoomControl()
         {
             InitializeComponent();
-            InitializeSubscriptions();
         }
 
-        private void InitializeSubscriptions()
+        private void EnableControls()
         {
-            _eventAggregator = EventAggregator.Instance;
-            _fileUpdatedSubscription =
-                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { InitializeZoomTrackBar(message.File.bars); });
-            _barsPerRowSubscription = _eventAggregator.Subscribe<BarsPerRowChangedMessage>(message =>
-            {
-                if (zoomTrackBar.Value != message.BarsPerRow)
-                {
-                    zoomTrackBar.Value = message.BarsPerRow;
-                    UpdateZoom();
-                }
-            });
-        }
+            if (_playbackModel == null || _displayModel == null)
+                return;
 
-        private void InitializeZoomTrackBar(int bars)
-        {
-            if (bars < zoomTrackBar.Value)
-            {
-                zoomTrackBar.Value = bars;
-                UpdateZoom();
-            }
-            zoomTrackBar.Maximum = bars;
+            zoomTrackBar.DataBindings.Add("Value", DisplayModel, "NumberOfBars");
             zoomTrackBar.Enabled = true;
         }
 
-        private void UpdateZoom()
-        {
-            var message = new ZoomScrollChangedMessage {ZoomValue = zoomTrackBar.Value};
-            _eventAggregator.Publish(message);
-        }
-
-        private void zoomTrackBar_Scroll(object sender, EventArgs e)
-        {
-            UpdateZoom();
-        }
+        
     }
 }
