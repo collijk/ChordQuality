@@ -8,6 +8,7 @@ namespace ChordQuality.model
         private TuningScheme[] _tunings;
         private TuningScheme _currentTuning;
         private int _numberOfAvailableTunings;
+        private int _transpose;
 
         public TuningScheme[] Tunings
         {
@@ -45,6 +46,25 @@ namespace ChordQuality.model
 
                 _numberOfAvailableTunings = value;
                 OnPropertyChanged("NumberOfAvailableTunings");
+            }
+        }
+
+        public int Transpose
+        {
+            get { return _transpose; }
+            set
+            {
+                if (value == _transpose)
+                    return;
+
+                _transpose = value;
+
+                foreach (var t in _tunings)
+                {
+                    t.Transpose = _transpose;
+                }
+
+                OnPropertyChanged("Transpose");
             }
         }
 

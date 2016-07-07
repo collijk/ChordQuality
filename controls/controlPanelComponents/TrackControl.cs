@@ -55,20 +55,20 @@ namespace ChordQuality.controls
 
         private void EnableControls()
         {
-            if (DataModel == null || DisplayModel == null)
+            if (_dataModel == null || _displayModel == null)
                 return;
 
             trackPanel.Controls.Clear();
-            _trackChecks = new CheckBox[DataModel.Tracks.Length];
+            _trackChecks = new CheckBox[_dataModel.Tracks.Length];
 
-            for (var n = 0; n < DataModel.Tracks.Length; n++)
+            for (var n = 0; n < _dataModel.Tracks.Length; n++)
             {
                 _trackChecks[n] = new CheckBox
                 {
                     Location = new Point(4, 4 + n*16),
                     Size = new Size(192, 16),
-                    ForeColor = DisplayModel.TrackColors[n],
-                    Text = @"#" + (n + 1) + @": " + DataModel.Tracks[n].name,
+                    ForeColor = _displayModel.TrackColors[n],
+                    Text = @"#" + (n + 1) + @": " + _dataModel.Tracks[n].name,
                     Checked = true
                 };
 
@@ -80,27 +80,27 @@ namespace ChordQuality.controls
 
         private void TrackCheckedChanged(object sender, EventArgs e)
         {
-            if (DataModel == null)
+            if (_dataModel == null)
                 return;
 
-            for (var i = 0; i < DataModel.Tracks.Length; i++)
-                DataModel.Tracks[i].enabled = _trackChecks[i].Checked;
+            for (var i = 0; i < _dataModel.Tracks.Length; i++)
+                _dataModel.Tracks[i].enabled = _trackChecks[i].Checked;
         }
 
 
         private void colorMenuItem_Click(object sender, EventArgs e)
         {
-            for (var i = 0; i < DataModel.Tracks.Length; i++)
+            for (var i = 0; i < _dataModel.Tracks.Length; i++)
             {
                 if (colorContextMenu.SourceControl == _trackChecks[i])
                 {
-                    _colorDialog.Color = DisplayModel.TrackColors[i];
+                    _colorDialog.Color = _displayModel.TrackColors[i];
                 }
             }
 
             _colorDialog.ShowDialog();
 
-            for (var i = 0; i < DataModel.Tracks.Length; i++)
+            for (var i = 0; i < _dataModel.Tracks.Length; i++)
             {
                 if (colorContextMenu.SourceControl != _trackChecks[i])
                     continue;

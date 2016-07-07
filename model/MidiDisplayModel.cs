@@ -14,6 +14,8 @@ namespace ChordQuality.model
         private TrackDisplay _tracks;
         private float _relThickness;
         private Color[] _trackColors;
+        private bool _qualityDisplayed;
+        private bool _chordLabelsDisplayed;
         private const double ComparisonTolerance = 0.001;
 
         public int FirstBar
@@ -106,6 +108,32 @@ namespace ChordQuality.model
 
                 _trackColors = value;
                 OnPropertyChanged("TrackColors");
+            }
+        }
+
+        public bool QualityDisplayed
+        {
+            get { return _qualityDisplayed; }
+            set
+            {
+                if (value == _qualityDisplayed)
+                    return;
+
+                _qualityDisplayed = value;
+                OnPropertyChanged("QualityDisplayed");
+            }
+        }
+
+        public bool ChordLabelsDisplayed
+        {
+            get { return _chordLabelsDisplayed; }
+            set
+            {
+                if (value == _chordLabelsDisplayed)
+                    return;
+
+                _chordLabelsDisplayed = value;
+                OnPropertyChanged("ChordLabelsDisplayed");
             }
         }
 

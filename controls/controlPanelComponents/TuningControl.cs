@@ -4,12 +4,16 @@ using System.Drawing;
 using System.Windows.Forms;
 using ChordQuality.events;
 using ChordQuality.events.messages;
+using ChordQuality.model;
 using Janus.ManagedMIDI;
 
 namespace ChordQuality.controls
 {
     public partial class TuningControl : UserControl
     {
+        private CheckBox[] _tuningChecks;
+        private RadioButton[] _tuningRadios;
+
         private readonly Color[] _colors = new Color[]
         {
             Color.Black, Color.Red, Color.Green, Color.Orange,
@@ -19,60 +23,56 @@ namespace ChordQuality.controls
             Color.Black, Color.Black, Color.Black
         };
 
-        private MidiFile _currentFile;
-        private IEventAggregator _eventAggregator;
-        private ISubscription<FileUpdatedMessage> _fileUpdatedSubscription;
-        private MidiFilePlayer _midiPlayer;
-        private ISubscription<MidiPlayerUpdatedMessage> _midiPlayerSubscription;
-        private CheckBox[] _tuningChecks;
-        private RadioButton[] _tuningRadios;
-        private TuningScheme[] _tunings;
-        private ISubscription<TuningsUpdatedMessage> _tuningsSubscription;
+        private MidiTuningModel _tuningModel;
+
+        public MidiTuningModel TuningModel
+        {
+            get { return _tuningModel; }
+            set
+            {
+                if (value == _tuningModel)
+                    return;
+
+                _tuningModel = value;
+                EnableControls();
+            }
+        }
+
 
         public TuningControl()
         {
             InitializeComponent();
-            InitializeSubscriptions();
         }
 
-        private void InitializeSubscriptions()
+        private void EnableControls()
         {
-            _eventAggregator = EventAggregator.Instance;
-            _tuningsSubscription = _eventAggregator.Subscribe<TuningsUpdatedMessage>(message =>
-            {
-                _tunings = message.Tunings;
-                OnTuningsUpdated();
-            });
-            _fileUpdatedSubscription =
-                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { _currentFile = message.File; });
-            _midiPlayerSubscription =
-                _eventAggregator.Subscribe<MidiPlayerUpdatedMessage>(message => { _midiPlayer = message.Player; });
-        }
+            _tuningChecks = new CheckBox[TuningModel.Tunings.Length];
+            _tuningRadios = new RadioButton[TuningModel.Tunings.Length];
 
-        private void OnTuningsUpdated()
-        {
-            _tuningChecks = new CheckBox[_tunings.Length];
-            _tuningRadios = new RadioButton[_tunings.Length];
-            for (var n = 0; n < _tunings.Length; n++)
+            for (var n = 0; n < TuningModel.Tunings.Length; n++)
             {
                 _tuningChecks[n] = new CheckBox
                 {
                     Location = new Point(4, 4 + n*16),
                     Size = new Size(152, 16),
                     ForeColor = _colors[n],
-                    Text = _tunings[n].Name
+                    Text = TuningModel.Tunings[n].Name
                 };
+
                 _tuningChecks[n].CheckedChanged += TuningCheckedChanged;
                 tuningsPanel.Controls.Add(_tuningChecks[n]);
+
                 _tuningRadios[n] = new RadioButton
                 {
                     Location = new Point(156, 4 + n*16),
                     Size = new Size(16, 16),
                     ForeColor = _colors[n]
                 };
+
                 _tuningRadios[n].CheckedChanged += TuningRadioCheckedChanged;
                 tuningsPanel.Controls.Add(_tuningRadios[n]);
             }
+
             _tuningChecks[0].Checked = true;
             OnTuningEnabled();
             _tuningRadios[0].Checked = true;
@@ -86,11 +86,12 @@ namespace ChordQuality.controls
 
         private void OnTuningSelectionChanged()
         {
-            if (_midiPlayer != null)
+            for (var i = 0; i < _tuningRadios.Length; i++)
             {
-                for (var i = 0; i < _tuningRadios.Length; i++)
-                    if (_tuningRadios[i].Checked)
-                        _midiPlayer.Tuning = _tunings[i];
+                if (_tuningRadios[i].Checked)
+                {
+                    TuningModel.CurrentTuning = TuningModel.Tunings[i];
+                }
             }
         }
 
@@ -101,11 +102,9 @@ namespace ChordQuality.controls
 
         private void OnTuningEnabled()
         {
-            if (_currentFile != null)
-            {
+            
                 for (var i = 0; i < _tunings.Length; i++)
                     _tunings[i].enabled = _tuningChecks[i].Checked;
-                _eventAggregator.Publish(new TuningEnabledMessage());
             }
         }
 
