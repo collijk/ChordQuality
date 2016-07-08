@@ -13,6 +13,7 @@ namespace ChordQuality.model
         private int _transpose;
         private int _totalBars;
         private MidiTrack[] _tracks;
+        private string _midiFileName;
 
         public ArrayList Chords
         {
@@ -105,8 +106,22 @@ namespace ChordQuality.model
             }
         }
 
+        public string MidiFileName
+        {
+            get { return _midiFileName; }
+            set
+            {
+                if (value == _midiFileName)
+                    return;
+
+                _midiFileName = value;
+                OnPropertyChanged("MidiFileName");
+            }
+        }
+
         public MidiDataModel(MidiFile file)
         {
+            MidiFileName = file.name;
             Chords = file.FindChords();
             Tracks = file.tracks;
             Timing = file.timing;

@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using ChordQuality.events;
 using ChordQuality.events.messages;
+using ChordQuality.model;
 using Janus.ManagedMIDI;
 using Janus.Misc;
 
@@ -15,24 +16,15 @@ namespace ChordQuality.services.io
         // Thread safe singleton pattern for MidiToTextWriter construction.
         private static AnalysisFileWriter _instance;
         private static readonly object Padlock = new object();
-        private MidiFile _currentFile;
-        private IEventAggregator _eventAggregator;
-        private ISubscription<FileUpdatedMessage> _midiFileSubscription;
-        private ISubscription<PenaltiesChangedMessage> _penaltiesSubscription;
-        private string _penaltiesValue = "1";
-        private QualityWeights _qualityWeights;
-        private ISubscription<QualityWeightsUpdatedMessage> _qualityWeightsSubscription;
         private SaveFileDialog _saveAnalysisDialog;
         protected StreamWriter Sw;
-        private TuningScheme[] _tunings;
-        private ISubscription<TuningsUpdatedMessage> _tuningsSubscription;
-        private ISubscription<TuningsTransposedMessage> _tuningsTransposedSubscription;
-        private int _tuningTransposeValue;
 
+        public MidiDataModel DataModel { get; set; }
+        public MidiTuningModel TuningModel { get; set; }
+        public MidiQualityModel QualityModel { get; set; }
 
         private AnalysisFileWriter()
         {
-            InitializeSubscriptions();
             InitializeDialog();
         }
 
@@ -59,126 +51,110 @@ namespace ChordQuality.services.io
 
         private void SaveFileDialogFileOk(object sender, CancelEventArgs e)
         {
-            WriteTracks(_currentFile);
-            WriteTunings(_tunings);
-            WriteTuningTranspose(_tuningTransposeValue);
-            WriteWeights(_qualityWeights, _penaltiesValue);
-            WriteChords(_currentFile.FindChords(), _currentFile, _tunings, _qualityWeights);
+            WriteTracks();
+            WriteTunings();
+            WriteTuningTranspose();
+            WriteWeights();
+            WriteChords();
             Close();
             Shell.Execute(_saveAnalysisDialog.FileName);
         }
 
-        private void InitializeSubscriptions()
-        {
-            _eventAggregator = EventAggregator.Instance;
-            _midiFileSubscription =
-                _eventAggregator.Subscribe<FileUpdatedMessage>(message => { _currentFile = message.File; });
-            _tuningsSubscription =
-                _eventAggregator.Subscribe<TuningsUpdatedMessage>(message => { _tunings = message.Tunings; });
-            _tuningsTransposedSubscription =
-                _eventAggregator.Subscribe<TuningsTransposedMessage>(
-                    message => { _tuningTransposeValue = message.TransposeValue; });
-            _qualityWeightsSubscription =
-                _eventAggregator.Subscribe<QualityWeightsUpdatedMessage>(
-                    message => { _qualityWeights = message.QualityWeights; });
-            _penaltiesSubscription =
-                _eventAggregator.Subscribe<PenaltiesChangedMessage>(message => { _penaltiesValue = message.Penalties; });
-        }
-
         public void WriteAnalysis()
         {
-            _saveAnalysisDialog.FileName = Path.ChangeExtension(_currentFile.name, null);
+            _saveAnalysisDialog.FileName = Path.ChangeExtension(DataModel.MidiFileName, null);
             _saveAnalysisDialog.FileName += "_analysis.txt";
             _saveAnalysisDialog.ShowDialog();
         }
 
-        public void WriteTracks(MidiFile f)
+        public void WriteTracks()
         {
             Sw.WriteLine("<<< SOURCE FILE >>>");
-            Sw.WriteLine(f.name);
+            Sw.WriteLine(DataModel.MidiFileName);
             Sw.WriteLine();
             Sw.WriteLine("<<< TRANSPOSE >>>");
-            Sw.WriteLine(f.transpose);
+            Sw.WriteLine(DataModel.Transpose);
             Sw.WriteLine();
             Sw.WriteLine("<<< TRACKS >>>");
-            for (var i = 0; i < f.tracks.Length; i++)
+            for (var i = 0; i < DataModel.Tracks.Length; i++)
             {
                 Sw.Write("[");
-                Sw.Write(f.tracks[i].enabled ? "X" : " ");
-                Sw.WriteLine("] #" + (i + 1) + ": " + f.tracks[i].name);
+                Sw.Write(DataModel.Tracks[i].enabled ? "X" : " ");
+                Sw.WriteLine("] #" + (i + 1) + ": " + DataModel.Tracks[i].name);
             }
             Sw.WriteLine();
         }
 
-        public void WriteTunings(TuningScheme[] tun)
+        public void WriteTunings()
         {
             Sw.WriteLine("<<< TUNINGS >>>");
-            foreach (TuningScheme t in tun)
+            foreach (var tuning in TuningModel.Tunings)
             {
-                if (t.enabled)
-                    Sw.WriteLine(t.ToString());
+                if (tuning.enabled)
+                    Sw.WriteLine(tuning.ToString());
             }
             Sw.WriteLine();
         }
 
-        public void WriteTuningTranspose(int t)
+        public void WriteTuningTranspose()
         {
             Sw.WriteLine("<<< TUNING TRANSPOSE >>>");
-            Sw.WriteLine(t);
+            Sw.WriteLine(TuningModel.Transpose);
             Sw.WriteLine();
         }
 
-        public void WriteWeights(QualityWeights w, string penalties)
+        public void WriteWeights()
         {
             Sw.WriteLine("<<< QUALITY WEIGHTS >>>");
             Sw.WriteLine("INTERVALS:");
-            Sw.WriteLine("6M:\t" + w.M6);
-            Sw.WriteLine("6m:\t" + w.m6);
-            Sw.WriteLine("5:\t" + w.fifth);
-            Sw.WriteLine("4:\t" + w.fourth);
-            Sw.WriteLine("3M:\t" + w.M3);
-            Sw.WriteLine("3m:\t" + w.m3);
+            Sw.WriteLine("6M:\t" + QualityModel.SixthMajorInterval);
+            Sw.WriteLine("6m:\t" + QualityModel.SixthMinorInterval);
+            Sw.WriteLine("5:\t"  + QualityModel.FifthInterval);
+            Sw.WriteLine("4:\t"  + QualityModel.FourthInterval);
+            Sw.WriteLine("3M:\t" + QualityModel.ThirdMajorInterval);
+            Sw.WriteLine("3m:\t" + QualityModel.ThirdMinorInterval);
             Sw.WriteLine("CHORDS:");
-            Sw.WriteLine("5:\t" + w.Ch5);
-            Sw.WriteLine("3M:\t" + w.Ch3);
+            Sw.WriteLine("5:\t"  + QualityModel.FifthChord);
+            Sw.WriteLine("3M:\t" + QualityModel.ThirdMajorChord);
             Sw.WriteLine();
             Sw.WriteLine("<<< PENALTIES >>>");
-            Sw.WriteLine("Additional Notes:\t" + w.Add);
-            Sw.WriteLine("Short Notes:\t" + w.Short);
-            Sw.WriteLine("Threshold for Short Notes:\t" + penalties);
+            Sw.WriteLine("Additional Notes:\t" + QualityModel.Add);
+            Sw.WriteLine("Short Notes:\t" + QualityModel.Short);
+            Sw.WriteLine("Threshold for Short Notes:\t" + QualityModel.Threshold);
             Sw.WriteLine();
         }
 
-        public void WriteChords(ArrayList chords, MidiFile f, TuningScheme[] t, QualityWeights w)
+        public void WriteChords()
         {
             Sw.WriteLine();
             Sw.WriteLine("<<< CHORDS & INTERVALS >>>");
             Sw.WriteLine();
             Sw.Write("POS\tNAME\tDUR");
-            foreach (TuningScheme t1 in t)
-                if (t1.enabled)
-                    Sw.Write("\t" + t1.Name);
+            foreach (var tuning in TuningModel.Tunings)
+                if (tuning.enabled)
+                    Sw.Write("\t" + tuning.Name);
             Sw.WriteLine();
-            foreach (TimeInfo c in chords)
+            foreach (TimeInfo chord in DataModel.Chords)
             {
-                if (!w.enabled(c))
+                if (!QualityModel.QualityWeights.enabled(chord))
                     continue;
-                Sw.Write(Math.Round(c.Time/4.0/f.timing, 2) + "\t" + c.Name + "\t" +
-                         Math.Round(c.Duration/4.0/f.timing, 2));
-                foreach (TuningScheme t1 in t)
-                    if (t1.enabled)
-                        Sw.Write("\t" + t1.Quality(c, w));
+                Sw.Write(Math.Round(chord.Time/4.0/DataModel.Timing, 2) + "\t" + 
+                         chord.Name + "\t" +
+                         Math.Round(chord.Duration/4.0/DataModel.Timing, 2));
+                foreach (var tuning in TuningModel.Tunings)
+                    if (tuning.enabled)
+                        Sw.Write("\t" + tuning.Quality(chord, QualityModel.QualityWeights));
                 Sw.WriteLine();
             }
             Sw.Write("POS\tNAME\tDUR");
-            foreach (TuningScheme t1 in t)
-                if (t1.enabled)
-                    Sw.Write("\t" + t1.Name);
+            foreach (var tuning in TuningModel.Tunings)
+                if (tuning.enabled)
+                    Sw.Write("\t" + tuning.Name);
             Sw.WriteLine();
             Sw.Write("AVERAGE:\t\t");
-            foreach (TuningScheme t1 in t)
-                if (t1.enabled)
-                    Sw.Write("\t" + Math.Round(t1.AvgQuality(chords, w), 1));
+            foreach (var tuning in TuningModel.Tunings)
+                if (tuning.enabled)
+                    Sw.Write("\t" + Math.Round(tuning.AvgQuality(DataModel.Chords, QualityModel.QualityWeights), 1));
         }
 
         public void Close()

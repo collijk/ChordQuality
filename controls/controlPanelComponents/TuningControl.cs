@@ -24,6 +24,7 @@ namespace ChordQuality.controls
         };
 
         private MidiTuningModel _tuningModel;
+        private MidiDisplayModel _displayModel;
 
         public MidiTuningModel TuningModel
         {
@@ -38,6 +39,18 @@ namespace ChordQuality.controls
             }
         }
 
+        public MidiDisplayModel DisplayModel
+        {
+            get { return _displayModel; }
+            set
+            {
+                if (value == _displayModel)
+                    return;
+
+                _displayModel = value;
+                EnableControls();
+            }
+        }
 
         public TuningControl()
         {
@@ -46,17 +59,23 @@ namespace ChordQuality.controls
 
         private void EnableControls()
         {
-            _tuningChecks = new CheckBox[TuningModel.Tunings.Length];
-            _tuningRadios = new RadioButton[TuningModel.Tunings.Length];
+            if (_displayModel == null || _tuningModel == null)
+                return;
 
-            for (var n = 0; n < TuningModel.Tunings.Length; n++)
+            _tuningChecks = new CheckBox[_tuningModel.Tunings.Length];
+            _tuningRadios = new RadioButton[_tuningModel.Tunings.Length];
+            tuningTransposeUpDown.DataBindings.Add("Value", TuningModel, "Transpose");
+            qualityCheckBox.DataBindings.Add("Checked", DisplayModel, "QualityDisplayed");
+            labelCheckBox.DataBindings.Add("Checked", DisplayModel, "ChordLabelsDisplayed");
+
+            for (var n = 0; n < _tuningModel.Tunings.Length; n++)
             {
                 _tuningChecks[n] = new CheckBox
                 {
                     Location = new Point(4, 4 + n*16),
                     Size = new Size(152, 16),
                     ForeColor = _colors[n],
-                    Text = TuningModel.Tunings[n].Name
+                    Text = _tuningModel.Tunings[n].Name
                 };
 
                 _tuningChecks[n].CheckedChanged += TuningCheckedChanged;
@@ -90,7 +109,7 @@ namespace ChordQuality.controls
             {
                 if (_tuningRadios[i].Checked)
                 {
-                    TuningModel.CurrentTuning = TuningModel.Tunings[i];
+                    TuningModel.CurrentTuning = _tuningModel.Tunings[i];
                 }
             }
         }
@@ -102,52 +121,17 @@ namespace ChordQuality.controls
 
         private void OnTuningEnabled()
         {
-            
-                for (var i = 0; i < _tunings.Length; i++)
-                    _tunings[i].enabled = _tuningChecks[i].Checked;
-            }
-        }
-
-        private void tuningTransposeUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            foreach (TuningScheme t in _tunings)
-            {
-                t.Transpose = (int) tuningTransposeUpDown.Value;
-            }
-            if (_midiPlayer != null)
-            {
-                for (var i = 0; i < _tuningRadios.Length; i++)
-                    if (_tuningRadios[i].Checked)
-                        _midiPlayer.Tuning = _tunings[i];
-            }
-            var tMessage = new TuningsTransposedMessage {TransposeValue = (int) tuningTransposeUpDown.Value};
-            _eventAggregator.Publish(tMessage);
-        }
-
-        public void SetTranspose(int transposeValue)
-        {
-            tuningTransposeUpDown.Value = transposeValue;
+            for (var i = 0; i < _tuningModel.Tunings.Length; i++)
+                TuningModel.Tunings[i].enabled = _tuningChecks[i].Checked;
         }
 
         internal void UpdateTuningAverage(ArrayList chords, QualityWeights qualityWeights)
         {
-            for (var i = 0; i < _tunings.Length; i++)
+            for (var i = 0; i < _tuningModel.Tunings.Length; i++)
             {
-                double q = Math.Round(_tunings[i].AvgQuality(chords, qualityWeights), 1);
-                _tuningChecks[i].Text = _tunings[i].Name + @" (" + q + @")";
+                var q = Math.Round(_tuningModel.Tunings[i].AvgQuality(chords, qualityWeights), 1);
+                _tuningChecks[i].Text = _tuningModel.Tunings[i].Name + @" (" + q + @")";
             }
-        }
-
-        private void qualityCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            var qMessage = new QualityCheckChangedMessage {CheckStatus = qualityCheckBox.Checked};
-            _eventAggregator.Publish(qMessage);
-        }
-
-        private void labelCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            var lMessage = new LabelCheckChangedMessage {CheckStatus = labelCheckBox.Checked};
-            _eventAggregator.Publish(lMessage);
         }
     }
 }
