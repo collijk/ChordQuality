@@ -2,21 +2,22 @@
 using System.Windows.Forms;
 using ChordQuality.events;
 using ChordQuality.events.messages;
+using ChordQuality.model;
 using Janus.ManagedMIDI;
 
 namespace ChordQuality.services.io
 {
     internal class MidiFileOpener
     {
+        private OpenFileDialog _openMidiFileDialog;
         // Thread safe singleton pattern for MidiFileOpener construction.
         private static MidiFileOpener _instance;
         private static readonly object Padlock = new object();
-        private IEventAggregator _eventAggregator;
-        private OpenFileDialog _openMidiFileDialog;
+        
+        public MidiDataModel DataModel { get; set; }
 
         private MidiFileOpener()
         {
-            InitializeServices();
             InitializeDialog();
         }
 
@@ -29,11 +30,6 @@ namespace ChordQuality.services.io
                     return _instance ?? (_instance = new MidiFileOpener());
                 }
             }
-        }
-
-        private void InitializeServices()
-        {
-            _eventAggregator = EventAggregator.Instance;
         }
 
         private void InitializeDialog()
