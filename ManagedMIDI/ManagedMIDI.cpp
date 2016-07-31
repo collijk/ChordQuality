@@ -1905,6 +1905,7 @@ public ref class TuningScheme
 }
 TuningScheme(String^ filename)
 {
+	t = gcnew array<int>(12);
 	Name = Path::ChangeExtension(filename,nullptr);
 	StreamReader^ sr = gcnew StreamReader(filename);
 	for (int i = 0;i<12;i++)

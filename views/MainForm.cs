@@ -9,6 +9,7 @@ using ChordQuality.events;
 using ChordQuality.events.messages;
 using ChordQuality.services;
 using Janus.ManagedMIDI;
+using System.Collections.Generic;
 
 namespace ChordQuality.views
 {
@@ -111,314 +112,303 @@ namespace ChordQuality.views
         /// </summary>
         private void InitializeComponent()
         {
-            components = new Container();
-            _chordDisplay = new PictureBox();
-            _offsetScroll = new HScrollBar();
-            _panel1 = new Panel();
-            _zoomControl1 = new ZoomControl();
-            _printingControl1 = new PrintingControl();
-            _tuningControl1 = new TuningControl();
-            _trackControl1 = new TrackControl();
-            _fileTransposeControl1 = new FileTransposeControl();
-            _playbackControl = new PlaybackControl();
-            _groupBox1 = new GroupBox();
-            _cutClrBtn = new Button();
-            _cutCutBtn = new Button();
-            _cutResetBtn = new Button();
-            _panel2 = new Panel();
-            _cutPanel = new Panel();
-            _cutBarSecond = new TransparentPanel();
-            _cutBarFirst = new TransparentPanel();
-            _chordNameDisplay = new PictureBox();
-            _cursor = new Panel();
-            _hoverBar = new TransparentPanel();
-            _noteDisplay = new PictureBox();
-            _toolTip1 = new ToolTip(components);
-            _timer1 = new Timer(components);
-            _printPreviewDialog1 = new PrintPreviewControl();
-            _cutRowCursor = new Panel();
-            _mainMenuControl1 = new MainMenuControl();
-            ((ISupportInitialize) _chordDisplay).BeginInit();
-            _panel1.SuspendLayout();
-            _groupBox1.SuspendLayout();
-            _panel2.SuspendLayout();
-            ((ISupportInitialize) _chordNameDisplay).BeginInit();
-            ((ISupportInitialize) _noteDisplay).BeginInit();
-            SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            this._chordDisplay = new System.Windows.Forms.PictureBox();
+            this._offsetScroll = new System.Windows.Forms.HScrollBar();
+            this._panel1 = new System.Windows.Forms.Panel();
+            this._groupBox1 = new System.Windows.Forms.GroupBox();
+            this._cutClrBtn = new System.Windows.Forms.Button();
+            this._cutCutBtn = new System.Windows.Forms.Button();
+            this._cutResetBtn = new System.Windows.Forms.Button();
+            this._panel2 = new System.Windows.Forms.Panel();
+            this._cutPanel = new System.Windows.Forms.Panel();
+            this._chordNameDisplay = new System.Windows.Forms.PictureBox();
+            this._cursor = new System.Windows.Forms.Panel();
+            this._noteDisplay = new System.Windows.Forms.PictureBox();
+            this._toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this._timer1 = new System.Windows.Forms.Timer(this.components);
+            this._printPreviewDialog1 = new System.Windows.Forms.PrintPreviewControl();
+            this._cutRowCursor = new System.Windows.Forms.Panel();
+            this._zoomControl1 = new ChordQuality.controls.ZoomControl();
+            this._printingControl1 = new ChordQuality.controls.PrintingControl();
+            this._tuningControl1 = new ChordQuality.controls.TuningControl();
+            this._trackControl1 = new ChordQuality.controls.TrackControl();
+            this._fileTransposeControl1 = new ChordQuality.controls.FileTransposeControl();
+            this._playbackControl = new ChordQuality.controls.PlaybackControl();
+            this._mainMenuControl1 = new ChordQuality.controls.MainMenuControl();
+            this._cutBarSecond = new ChordQuality.views.TransparentPanel();
+            this._cutBarFirst = new ChordQuality.views.TransparentPanel();
+            this._hoverBar = new ChordQuality.views.TransparentPanel();
+            ((System.ComponentModel.ISupportInitialize)(this._chordDisplay)).BeginInit();
+            this._panel1.SuspendLayout();
+            this._groupBox1.SuspendLayout();
+            this._panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._chordNameDisplay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._noteDisplay)).BeginInit();
+            this.SuspendLayout();
             // 
-            // chordDisplay
+            // _chordDisplay
             // 
-            _chordDisplay.BackColor = Color.White;
-            _chordDisplay.Location = new Point(8, 56);
-            _chordDisplay.Name = "_chordDisplay";
-            _chordDisplay.Size = new Size(960, 48);
-            _chordDisplay.TabIndex = 42;
-            _chordDisplay.TabStop = false;
-            _chordDisplay.MouseMove += ChordDisplayMouseMove;
+            this._chordDisplay.BackColor = System.Drawing.Color.White;
+            this._chordDisplay.Location = new System.Drawing.Point(8, 56);
+            this._chordDisplay.Name = "_chordDisplay";
+            this._chordDisplay.Size = new System.Drawing.Size(960, 48);
+            this._chordDisplay.TabIndex = 42;
+            this._chordDisplay.TabStop = false;
             // 
-            // offsetScroll
+            // _offsetScroll
             // 
-            _offsetScroll.LargeChange = 1;
-            _offsetScroll.Location = new Point(8, 125);
-            _offsetScroll.Maximum = 0;
-            _offsetScroll.Name = "_offsetScroll";
-            _offsetScroll.Size = new Size(960, 12);
-            _offsetScroll.TabIndex = 41;
-            _offsetScroll.ValueChanged += OffsetScrollValueChanged;
+            this._offsetScroll.LargeChange = 1;
+            this._offsetScroll.Location = new System.Drawing.Point(8, 125);
+            this._offsetScroll.Maximum = 0;
+            this._offsetScroll.Name = "_offsetScroll";
+            this._offsetScroll.Size = new System.Drawing.Size(960, 12);
+            this._offsetScroll.TabIndex = 41;
             // 
-            // panel1
+            // _panel1
             // 
-            _panel1.AutoScroll = true;
-            _panel1.AutoSize = true;
-            _panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            _panel1.BackColor = SystemColors.ControlLight;
-            _panel1.Controls.Add(_zoomControl1);
-            _panel1.Controls.Add(_printingControl1);
-            _panel1.Controls.Add(_tuningControl1);
-            _panel1.Controls.Add(_trackControl1);
-            _panel1.Controls.Add(_fileTransposeControl1);
-            _panel1.Controls.Add(_playbackControl);
-            _panel1.Controls.Add(_groupBox1);
-            _panel1.Dock = DockStyle.Top;
-            _panel1.Location = new Point(0, 24);
-            _panel1.Name = "_panel1";
-            _panel1.Size = new Size(1280, 313);
-            _panel1.TabIndex = 45;
+            this._panel1.AutoScroll = true;
+            this._panel1.AutoSize = true;
+            this._panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._panel1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this._panel1.Controls.Add(this._zoomControl1);
+            this._panel1.Controls.Add(this._printingControl1);
+            this._panel1.Controls.Add(this._tuningControl1);
+            this._panel1.Controls.Add(this._trackControl1);
+            this._panel1.Controls.Add(this._fileTransposeControl1);
+            this._panel1.Controls.Add(this._playbackControl);
+            this._panel1.Controls.Add(this._groupBox1);
+            this._panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this._panel1.Location = new System.Drawing.Point(0, 24);
+            this._panel1.Name = "_panel1";
+            this._panel1.Size = new System.Drawing.Size(1280, 313);
+            this._panel1.TabIndex = 45;
             // 
-            // zoomControl1
+            // _groupBox1
             // 
-            _zoomControl1.AutoSize = true;
-            _zoomControl1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            _zoomControl1.Location = new Point(175, 217);
-            _zoomControl1.Name = "_zoomControl1";
-            _zoomControl1.Size = new Size(209, 86);
-            _zoomControl1.TabIndex = 0;
+            this._groupBox1.Controls.Add(this._cutClrBtn);
+            this._groupBox1.Controls.Add(this._cutCutBtn);
+            this._groupBox1.Controls.Add(this._cutResetBtn);
+            this._groupBox1.Location = new System.Drawing.Point(554, 250);
+            this._groupBox1.Name = "_groupBox1";
+            this._groupBox1.Size = new System.Drawing.Size(200, 60);
+            this._groupBox1.TabIndex = 55;
+            this._groupBox1.TabStop = false;
+            this._groupBox1.Text = "Cut";
             // 
-            // printingControl1
+            // _cutClrBtn
             // 
-            _printingControl1.AutoSize = true;
-            _printingControl1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            _printingControl1.Location = new Point(1126, 6);
-            _printingControl1.Name = "_printingControl1";
-            _printingControl1.Size = new Size(127, 195);
-            _printingControl1.TabIndex = 61;
+            this._cutClrBtn.Location = new System.Drawing.Point(133, 17);
+            this._cutClrBtn.Name = "_cutClrBtn";
+            this._cutClrBtn.Size = new System.Drawing.Size(56, 37);
+            this._cutClrBtn.TabIndex = 2;
+            this._cutClrBtn.Text = "Clear\r\nDisplay";
+            this._cutClrBtn.UseVisualStyleBackColor = true;
             // 
-            // tuningControl1
+            // _cutCutBtn
             // 
-            _tuningControl1.AutoSize = true;
-            _tuningControl1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            _tuningControl1.Location = new Point(554, 6);
-            _tuningControl1.Name = "_tuningControl1";
-            _tuningControl1.Size = new Size(566, 238);
-            _tuningControl1.TabIndex = 51;
+            this._cutCutBtn.Location = new System.Drawing.Point(70, 17);
+            this._cutCutBtn.Name = "_cutCutBtn";
+            this._cutCutBtn.Size = new System.Drawing.Size(56, 37);
+            this._cutCutBtn.TabIndex = 1;
+            this._cutCutBtn.Text = "Cut";
+            this._cutCutBtn.UseVisualStyleBackColor = true;
             // 
-            // trackControl1
+            // _cutResetBtn
             // 
-            _trackControl1.AutoSize = true;
-            _trackControl1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            _trackControl1.Location = new Point(317, 3);
-            _trackControl1.Name = "_trackControl1";
-            _trackControl1.Size = new Size(231, 179);
-            _trackControl1.TabIndex = 60;
+            this._cutResetBtn.Location = new System.Drawing.Point(8, 17);
+            this._cutResetBtn.Name = "_cutResetBtn";
+            this._cutResetBtn.Size = new System.Drawing.Size(56, 37);
+            this._cutResetBtn.TabIndex = 0;
+            this._cutResetBtn.Text = "Reset\r\nMarker";
+            this._cutResetBtn.UseVisualStyleBackColor = true;
             // 
-            // fileTransposeControl1
+            // _panel2
             // 
-            _fileTransposeControl1.AutoSize = true;
-            _fileTransposeControl1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            _fileTransposeControl1.Location = new Point(8, 217);
-            _fileTransposeControl1.Name = "_fileTransposeControl1";
-            _fileTransposeControl1.Size = new Size(161, 73);
-            _fileTransposeControl1.TabIndex = 1;
+            this._panel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._panel2.BackColor = System.Drawing.SystemColors.ControlLight;
+            this._panel2.Controls.Add(this._cutPanel);
+            this._panel2.Controls.Add(this._cutBarSecond);
+            this._panel2.Controls.Add(this._cutBarFirst);
+            this._panel2.Controls.Add(this._chordNameDisplay);
+            this._panel2.Controls.Add(this._chordDisplay);
+            this._panel2.Controls.Add(this._offsetScroll);
+            this._panel2.Controls.Add(this._cursor);
+            this._panel2.Controls.Add(this._hoverBar);
+            this._panel2.Controls.Add(this._noteDisplay);
+            this._panel2.Location = new System.Drawing.Point(0, 314);
+            this._panel2.Name = "_panel2";
+            this._panel2.Size = new System.Drawing.Size(1280, 396);
+            this._panel2.TabIndex = 46;
             // 
-            // playbackControl
+            // _cutPanel
             // 
-            _playbackControl.AutoSize = true;
-            _playbackControl.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            _playbackControl.Location = new Point(8, 3);
-            _playbackControl.Name = "_playbackControl";
-            _playbackControl.Size = new Size(303, 208);
-            _playbackControl.TabIndex = 59;
+            this._cutPanel.AutoScroll = true;
+            this._cutPanel.Location = new System.Drawing.Point(8, 140);
+            this._cutPanel.Name = "_cutPanel";
+            this._cutPanel.Size = new System.Drawing.Size(976, 235);
+            this._cutPanel.TabIndex = 47;
             // 
-            // groupBox1
+            // _chordNameDisplay
             // 
-            _groupBox1.Controls.Add(_cutClrBtn);
-            _groupBox1.Controls.Add(_cutCutBtn);
-            _groupBox1.Controls.Add(_cutResetBtn);
-            _groupBox1.Location = new Point(554, 250);
-            _groupBox1.Name = "_groupBox1";
-            _groupBox1.Size = new Size(200, 60);
-            _groupBox1.TabIndex = 55;
-            _groupBox1.TabStop = false;
-            _groupBox1.Text = "Cut";
+            this._chordNameDisplay.BackColor = System.Drawing.Color.White;
+            this._chordNameDisplay.Location = new System.Drawing.Point(8, 109);
+            this._chordNameDisplay.Name = "_chordNameDisplay";
+            this._chordNameDisplay.Size = new System.Drawing.Size(960, 25);
+            this._chordNameDisplay.TabIndex = 46;
+            this._chordNameDisplay.TabStop = false;
             // 
-            // cutClrBtn
+            // _cursor
             // 
-            _cutClrBtn.Location = new Point(133, 17);
-            _cutClrBtn.Name = "_cutClrBtn";
-            _cutClrBtn.Size = new Size(56, 37);
-            _cutClrBtn.TabIndex = 2;
-            _cutClrBtn.Text = "Clear\r\nDisplay";
-            _cutClrBtn.UseVisualStyleBackColor = true;
-            _cutClrBtn.Click += cutClrBtn_Click;
+            this._cursor.BackColor = System.Drawing.Color.Red;
+            this._cursor.Location = new System.Drawing.Point(8, 6);
+            this._cursor.Name = "_cursor";
+            this._cursor.Size = new System.Drawing.Size(1, 47);
+            this._cursor.TabIndex = 30;
             // 
-            // cutCutBtn
+            // _noteDisplay
             // 
-            _cutCutBtn.Location = new Point(70, 17);
-            _cutCutBtn.Name = "_cutCutBtn";
-            _cutCutBtn.Size = new Size(56, 37);
-            _cutCutBtn.TabIndex = 1;
-            _cutCutBtn.Text = "Cut";
-            _cutCutBtn.UseVisualStyleBackColor = true;
-            _cutCutBtn.Click += cutCutBtn_Click;
+            this._noteDisplay.BackColor = System.Drawing.Color.White;
+            this._noteDisplay.Location = new System.Drawing.Point(8, 6);
+            this._noteDisplay.Name = "_noteDisplay";
+            this._noteDisplay.Size = new System.Drawing.Size(960, 47);
+            this._noteDisplay.TabIndex = 29;
+            this._noteDisplay.TabStop = false;
             // 
-            // cutResetBtn
+            // _timer1
             // 
-            _cutResetBtn.Location = new Point(8, 17);
-            _cutResetBtn.Name = "_cutResetBtn";
-            _cutResetBtn.Size = new Size(56, 37);
-            _cutResetBtn.TabIndex = 0;
-            _cutResetBtn.Text = "Reset\r\nMarker";
-            _cutResetBtn.UseVisualStyleBackColor = true;
-            _cutResetBtn.Click += cutResetBtn_Click;
+            this._timer1.Interval = 10;
             // 
-            // panel2
+            // _printPreviewDialog1
             // 
-            _panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            _panel2.BackColor = SystemColors.ControlLight;
-            _panel2.Controls.Add(_cutPanel);
-            _panel2.Controls.Add(_cutBarSecond);
-            _panel2.Controls.Add(_cutBarFirst);
-            _panel2.Controls.Add(_chordNameDisplay);
-            _panel2.Controls.Add(_chordDisplay);
-            _panel2.Controls.Add(_offsetScroll);
-            _panel2.Controls.Add(_cursor);
-            _panel2.Controls.Add(_hoverBar);
-            _panel2.Controls.Add(_noteDisplay);
-            _panel2.Location = new Point(0, 314);
-            _panel2.Name = "_panel2";
-            _panel2.Size = new Size(1280, 396);
-            _panel2.TabIndex = 46;
-            _panel2.Resize += Panel2Resize;
+            this._printPreviewDialog1.Location = new System.Drawing.Point(0, 0);
+            this._printPreviewDialog1.Name = "_printPreviewDialog1";
+            this._printPreviewDialog1.Size = new System.Drawing.Size(100, 100);
+            this._printPreviewDialog1.TabIndex = 0;
             // 
-            // cutPanel
+            // _cutRowCursor
             // 
-            _cutPanel.AutoScroll = true;
-            _cutPanel.Location = new Point(8, 140);
-            _cutPanel.Name = "_cutPanel";
-            _cutPanel.Size = new Size(976, 235);
-            _cutPanel.TabIndex = 47;
+            this._cutRowCursor.BackColor = System.Drawing.Color.Red;
+            this._cutRowCursor.Location = new System.Drawing.Point(8, 6);
+            this._cutRowCursor.Name = "_cutRowCursor";
+            this._cutRowCursor.Size = new System.Drawing.Size(1, 47);
+            this._cutRowCursor.TabIndex = 0;
+            this._cutRowCursor.Visible = false;
             // 
-            // cutBarSecond
+            // _zoomControl1
             // 
-            _cutBarSecond.BackColor = Color.BlueViolet;
-            _cutBarSecond.Location = new Point(8, 6);
-            _cutBarSecond.Name = "_cutBarSecond";
-            _cutBarSecond.Size = new Size(1, 47);
-            _cutBarSecond.TabIndex = 31;
-            _cutBarSecond.Visible = false;
+            this._zoomControl1.AutoSize = true;
+            this._zoomControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._zoomControl1.Location = new System.Drawing.Point(175, 217);
+            this._zoomControl1.Name = "_zoomControl1";
+            this._zoomControl1.Size = new System.Drawing.Size(209, 86);
+            this._zoomControl1.TabIndex = 0;
             // 
-            // cutBarFirst
+            // _printingControl1
             // 
-            _cutBarFirst.BackColor = Color.BlueViolet;
-            _cutBarFirst.Location = new Point(8, 6);
-            _cutBarFirst.Name = "_cutBarFirst";
-            _cutBarFirst.Size = new Size(1, 47);
-            _cutBarFirst.TabIndex = 31;
-            _cutBarFirst.Visible = false;
+            this._printingControl1.AutoSize = true;
+            this._printingControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._printingControl1.Location = new System.Drawing.Point(1126, 6);
+            this._printingControl1.Name = "_printingControl1";
+            this._printingControl1.Size = new System.Drawing.Size(127, 195);
+            this._printingControl1.TabIndex = 61;
             // 
-            // chordNameDisplay
+            // _tuningControl1
             // 
-            _chordNameDisplay.BackColor = Color.White;
-            _chordNameDisplay.Location = new Point(8, 109);
-            _chordNameDisplay.Name = "_chordNameDisplay";
-            _chordNameDisplay.Size = new Size(960, 38);
-            _chordNameDisplay.TabIndex = 46;
-            _chordNameDisplay.TabStop = false;
+            this._tuningControl1.AutoSize = true;
+            this._tuningControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._tuningControl1.Location = new System.Drawing.Point(554, 6);
+            this._tuningControl1.Name = "_tuningControl1";
+            this._tuningControl1.Size = new System.Drawing.Size(566, 238);
+            this._tuningControl1.TabIndex = 51;
             // 
-            // cursor
+            // _trackControl1
             // 
-            _cursor.BackColor = Color.Red;
-            _cursor.Location = new Point(8, 6);
-            _cursor.Name = "_cursor";
-            _cursor.Size = new Size(1, 47);
-            _cursor.TabIndex = 30;
+            this._trackControl1.AutoSize = true;
+            this._trackControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._trackControl1.Location = new System.Drawing.Point(317, 3);
+            this._trackControl1.Name = "_trackControl1";
+            this._trackControl1.Size = new System.Drawing.Size(231, 179);
+            this._trackControl1.TabIndex = 60;
             // 
-            // hoverBar
+            // _fileTransposeControl1
             // 
-            _hoverBar.BackColor = Color.DarkGray;
-            _hoverBar.Location = new Point(8, 6);
-            _hoverBar.Name = "_hoverBar";
-            _hoverBar.Size = new Size(1, 47);
-            _hoverBar.TabIndex = 31;
-            _hoverBar.Visible = false;
+            this._fileTransposeControl1.AutoSize = true;
+            this._fileTransposeControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._fileTransposeControl1.Location = new System.Drawing.Point(8, 217);
+            this._fileTransposeControl1.Name = "_fileTransposeControl1";
+            this._fileTransposeControl1.Size = new System.Drawing.Size(161, 73);
+            this._fileTransposeControl1.TabIndex = 1;
             // 
-            // noteDisplay
+            // _playbackControl
             // 
-            _noteDisplay.BackColor = Color.White;
-            _noteDisplay.Location = new Point(8, 6);
-            _noteDisplay.Name = "_noteDisplay";
-            _noteDisplay.Size = new Size(960, 47);
-            _noteDisplay.TabIndex = 29;
-            _noteDisplay.TabStop = false;
-            _noteDisplay.MouseDown += NoteDisplayMouseDown;
-            _noteDisplay.MouseLeave += NoteDisplayOnMouseLeave;
-            _noteDisplay.MouseMove += NoteDisplayMouseMove;
+            this._playbackControl.AutoSize = true;
+            this._playbackControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._playbackControl.Location = new System.Drawing.Point(8, 3);
+            this._playbackControl.Name = "_playbackControl";
+            this._playbackControl.Size = new System.Drawing.Size(303, 208);
+            this._playbackControl.TabIndex = 59;
             // 
-            // timer1
+            // _mainMenuControl1
             // 
-            _timer1.Interval = 10;
-            _timer1.Tick += Timer1Tick;
+            this._mainMenuControl1.AccessibleRole = System.Windows.Forms.AccessibleRole.MenuBar;
+            this._mainMenuControl1.AutoSize = true;
+            this._mainMenuControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this._mainMenuControl1.BackColor = System.Drawing.SystemColors.MenuBar;
+            this._mainMenuControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this._mainMenuControl1.Location = new System.Drawing.Point(0, 0);
+            this._mainMenuControl1.Name = "_mainMenuControl1";
+            this._mainMenuControl1.Size = new System.Drawing.Size(1280, 24);
+            this._mainMenuControl1.TabIndex = 60;
             // 
-            // printPreviewDialog1
+            // _cutBarSecond
             // 
-            _printPreviewDialog1.Location = new Point(0, 0);
-            _printPreviewDialog1.Name = "_printPreviewDialog1";
-            _printPreviewDialog1.Size = new Size(100, 100);
-            _printPreviewDialog1.TabIndex = 0;
+            this._cutBarSecond.BackColor = System.Drawing.Color.BlueViolet;
+            this._cutBarSecond.Location = new System.Drawing.Point(8, 6);
+            this._cutBarSecond.Name = "_cutBarSecond";
+            this._cutBarSecond.Size = new System.Drawing.Size(1, 47);
+            this._cutBarSecond.TabIndex = 31;
+            this._cutBarSecond.Visible = false;
             // 
-            // cutRowCursor
+            // _cutBarFirst
             // 
-            _cutRowCursor.BackColor = Color.Red;
-            _cutRowCursor.Location = new Point(8, 6);
-            _cutRowCursor.Name = "_cutRowCursor";
-            _cutRowCursor.Size = new Size(1, 47);
-            _cutRowCursor.TabIndex = 0;
-            _cutRowCursor.Visible = false;
+            this._cutBarFirst.BackColor = System.Drawing.Color.BlueViolet;
+            this._cutBarFirst.Location = new System.Drawing.Point(8, 6);
+            this._cutBarFirst.Name = "_cutBarFirst";
+            this._cutBarFirst.Size = new System.Drawing.Size(1, 47);
+            this._cutBarFirst.TabIndex = 31;
+            this._cutBarFirst.Visible = false;
             // 
-            // mainMenuControl1
+            // _hoverBar
             // 
-            _mainMenuControl1.AccessibleRole = AccessibleRole.MenuBar;
-            _mainMenuControl1.AutoSize = true;
-            _mainMenuControl1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            _mainMenuControl1.BackColor = SystemColors.MenuBar;
-            _mainMenuControl1.Dock = DockStyle.Top;
-            _mainMenuControl1.Location = new Point(0, 0);
-            _mainMenuControl1.Name = "_mainMenuControl1";
-            _mainMenuControl1.Size = new Size(1280, 24);
-            _mainMenuControl1.TabIndex = 60;
+            this._hoverBar.BackColor = System.Drawing.Color.DarkGray;
+            this._hoverBar.Location = new System.Drawing.Point(8, 6);
+            this._hoverBar.Name = "_hoverBar";
+            this._hoverBar.Size = new System.Drawing.Size(1, 47);
+            this._hoverBar.TabIndex = 31;
+            this._hoverBar.Visible = false;
             // 
             // MainForm
             // 
-            AutoScaleBaseSize = new Size(5, 13);
-            AutoSize = true;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(1280, 701);
-            Controls.Add(_panel1);
-            Controls.Add(_mainMenuControl1);
-            Controls.Add(_panel2);
-            Name = "MainForm";
-            Text = "ChordQuality";
-            Closed += MainFormClosed;
-            Load += MainFormLoad;
-            ((ISupportInitialize) _chordDisplay).EndInit();
-            _panel1.ResumeLayout(false);
-            _panel1.PerformLayout();
-            _groupBox1.ResumeLayout(false);
-            _panel2.ResumeLayout(false);
-            ((ISupportInitialize) _chordNameDisplay).EndInit();
-            ((ISupportInitialize) _noteDisplay).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+            this.AutoSize = true;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(1280, 701);
+            this.Controls.Add(this._panel1);
+            this.Controls.Add(this._mainMenuControl1);
+            this.Controls.Add(this._panel2);
+            this.Name = "MainForm";
+            this.Text = "ChordQuality";
+            ((System.ComponentModel.ISupportInitialize)(this._chordDisplay)).EndInit();
+            this._panel1.ResumeLayout(false);
+            this._panel1.PerformLayout();
+            this._groupBox1.ResumeLayout(false);
+            this._panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._chordNameDisplay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._noteDisplay)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -432,6 +422,19 @@ namespace ChordQuality.views
 
         private void InitializeSubscriptions()
         {
+            _chordDisplay.MouseMove += ChordDisplayMouseMove;
+            _offsetScroll.ValueChanged += OffsetScrollValueChanged;
+            _cutClrBtn.Click += cutClrBtn_Click;
+            _cutCutBtn.Click += cutCutBtn_Click;
+            _cutResetBtn.Click += cutResetBtn_Click;
+            _panel2.Resize += Panel2Resize;
+            _noteDisplay.MouseDown += NoteDisplayMouseDown;
+            _noteDisplay.MouseLeave += NoteDisplayOnMouseLeave;
+            _noteDisplay.MouseMove += NoteDisplayMouseMove;
+            _timer1.Tick += Timer1Tick;
+            Closed += MainFormClosed;
+            Load += MainFormLoad;
+
             _eventAggregator = EventAggregator.Instance;
             _playSubscription = _eventAggregator.Subscribe<PlayMessage>(message => { Play(message.DeviceIndex); });
             _pauseSubscription = _eventAggregator.Subscribe<PauseMessage>(message => { Pause(); });
@@ -996,8 +999,51 @@ namespace ChordQuality.views
 
         private void redraw_notes()
         {
-            Graphics.FromImage(_noteDisplay.Image).Clear(Color.White);
-            _artist.draw_notes(Graphics.FromImage(_noteDisplay.Image), _offsetScroll.Value, 0, 2);
+            //List<PictureBox> noteBoxes = new List<PictureBox>();
+            //noteBoxes.Add(_noteDisplay);
+
+            //// create one row per 16 bars of track
+            //int numRows = _currentFile.bars / 16;
+            //if (_currentFile.bars % 16 != 0)
+            //    numRows++;
+
+            //const int rowWidth = 960;
+            //int rowHeight = (_currentFile.max_note - _currentFile.min_note) * 2 + 1;
+
+            //for (int i = 0; i < numRows; i++)
+            //{
+            //    if (i != 0)
+            //    {
+            //        // create a new picture box for the row
+            //        var noteBox = new PictureBox();
+            //        noteBoxes.Add(noteBox);
+            //        noteBox.MouseDown += NoteDisplayMouseDown;
+            //        noteBox.MouseLeave += NoteDisplayOnMouseLeave;
+            //        _noteDisplay.MouseMove += NoteDisplayMouseMove;
+
+            //        // add the picture box to the main form so it can be rendered
+            //        _panel2.Controls.Add(noteBox);
+
+            //        noteBox.BackColor = Color.White;
+            //        noteBox.Location = new Point(_noteDisplay.Location.X, _noteDisplay.Location.Y + i * rowHeight);
+            //        noteBox.Size = new Size(rowWidth, rowHeight);
+            //        noteBox.Cursor = Cursors.SizeWE;
+            //        noteBox.TabStop = false;
+            //        noteBox.Image = new Bitmap(rowWidth, rowHeight);
+
+                    ////draw note in our cut row
+                    //_artist.draw_notes(Graphics.FromImage(cutRow.Image), barStart, 0, 2, barDiff);
+
+                    ////add to our cut panel so it can be showed
+                    //_cutPanel.Controls.Add(cutRow);
+                //}
+
+                //Graphics.FromImage(noteBoxes[i].Image).Clear(Color.White);
+                //_artist.draw_notes(Graphics.FromImage(noteBoxes[i].Image), i*16, 0, 2);
+                            //}
+                
+                Graphics.FromImage(_noteDisplay.Image).Clear(Color.White);
+                _artist.draw_notes(Graphics.FromImage(_noteDisplay.Image), _offsetScroll.Value, 0, 2);
         }
 
         private void redraw_chords()
