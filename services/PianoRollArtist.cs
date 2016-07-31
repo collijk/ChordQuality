@@ -29,13 +29,13 @@ namespace ChordQuality.services
         };
 
         private readonly SolidBrush _drawBrush = new SolidBrush(Color.Black);
-        private readonly Font _drawFont = new Font("Courier New", 10);
+        private readonly Font _drawFont = new Font("Courier New", 12);
         private readonly PictureBox _noteDisplay;
         private readonly Pen _orientpen = new Pen(Color.LightGray, 1);
         private readonly Pen _pen = new Pen(Color.Black, 2);
         private readonly QualityWeights _qualityWeights;
         private readonly Color _selectColor = Color.FromArgb(32, 0, 0, 255);
-        private readonly Font _smallFont = new Font("Courier New", 6);
+        private readonly Font _smallFont = new Font("Courier New", 12);
         private readonly Pen _thinpen = new Pen(Color.Black, 1);
         private readonly TuningScheme[] _tunings;
 

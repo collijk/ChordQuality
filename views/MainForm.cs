@@ -331,7 +331,7 @@ namespace ChordQuality.views
             _chordNameDisplay.BackColor = Color.White;
             _chordNameDisplay.Location = new Point(8, 109);
             _chordNameDisplay.Name = "_chordNameDisplay";
-            _chordNameDisplay.Size = new Size(960, 16);
+            _chordNameDisplay.Size = new Size(960, 38);
             _chordNameDisplay.TabIndex = 46;
             _chordNameDisplay.TabStop = false;
             // 
