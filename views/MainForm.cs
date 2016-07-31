@@ -49,7 +49,7 @@ namespace ChordQuality.views
         private int _cutRowDragX = -1;
         private double _cutSecond = -1;
         private IEventAggregator _eventAggregator;
-
+        //test
         private MidiFile _currentFile;
         private FileTransposeControl _fileTransposeControl1;
         private ISubscription<FileTransposedMessage> _fileTransposeSubscription;
