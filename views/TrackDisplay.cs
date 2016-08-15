@@ -81,24 +81,24 @@ namespace ChordQuality.views
                                 // if the current width is 2, modify the width of the previous trackdisplayelement
                                 // to be 2 as well. Pass in the color of the current track so we can find the
                                 // correct previous one
-                                //if (width == 2)
-                                //{
-                                //    TrackDisplayElement matchingElement = null;
-                                //    foreach (TrackDisplayElement tre in _mDisplayElementList)
-                                //    {
-                                //        // this is a matching track, so store it
-                                //        if ((Color)tre.MColorList[0] == trackColors[Array.IndexOf(tracks, t)])
-                                //        {
-                                //            matchingElement = tre;
-                                //        }
-                                //    }
+                                if (width == 2)
+                                {
+                                    TrackDisplayElement matchingElement = null;
+                                    foreach (TrackDisplayElement tre in _mDisplayElementList)
+                                    {
+                                        // this is a matching track, so store it
+                                        if ((Color)tre.MColorList[0] == trackColors[Array.IndexOf(tracks, t)])
+                                        {
+                                            matchingElement = tre;
+                                        }
+                                    }
 
-                                //    // if there was a matching element, modify the width
-                                //    if (matchingElement != null)
-                                //    {
-                                //        matchingElement.MWidthList[0] = 2.0f;
-                                //    }
-                                //}
+                                    // if there was a matching element, modify the width
+                                    if (matchingElement != null)
+                                    {
+                                        matchingElement.MWidthList[0] = 2.0f;
+                                    }
+                                }
 
                                 AddElement(element, n == 0, 0);
                             }
