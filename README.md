@@ -20,12 +20,7 @@ instructions at: https://msdn.microsoft.com/en-us/library/bb398202.aspx .
 
 With those things in mind if you download the files from github, extract them all, and open the visual studio
 solution in your version of visual studio it should run.  (The solution file is one of several files labeled 
-'ChordQuality'.  Pay attention to the file type).  At the time this is written you may or may not run into an error that
-I am currently trying to resolve for a couple weeks - not everyone will have this error and I don't know a 
-solution for it yet: when running the program you will run into visual studio errors 11 and 64 which are 
-'invalid parameter' errors and 'unprepared' errors.  This will prevent several functions of the program from 
-working.  If more people could try to build the solution it may actually be helpful in resolving this - I don't
-know why it seems to come up on my computer in particular.
+'ChordQuality'.  Pay attention to the file type).  
 
 	The program offers several functions to manipulate how the track is played and viewed:
 
@@ -51,16 +46,15 @@ major/minor thirds, fourths, fifths, and major/minor sixths
 
 Displays the 'tuning' value of the piece based on the quality, (displayed by the height of the black bars).  
 You can turn off the chord and interval labels, and turning off the tuning will also remove the display of the black
-bars.
+bars.  You also have the option to include .TAG tuning files in the directory of the project, they will load as part of the project
+and make it possible to change tuning of a midi file.
 
 5) Cut
 
 Tool currently in progress, allows rearrangement of the display of the piece so that the user can create 
 something that resembles sheet music in a more meaningful way.  You can 'cut' an area of the display by right-clicking
 on the boarders of the area you want to cut, which will create markers.  You can remove the markers with the 'reset
-markers' tool and once you've placed two markers you can cut out the area between them with the cut tools.  Eventually
-this will remove the cut-piece from the original display and reproduce it graphically below, but still play through it 
-as a seamless part of the track.  Currently it only reproduces the peice below.  The clear display button will remove 
+markers' tool and once you've placed two markers you can cut out the area between them with the cut tools.  This will be further updated to give the user the ability to make the results look more appealing.  The clear display button will remove 
 the reproduced pieces from the lower display.
 
 6) Tracks
@@ -82,24 +76,8 @@ The file tab gives you the option to load open or save new midi file, print the 
 mentioned before it has a print preview option.  It also has a midi-to-text option that displays the information in
 the midi file as a .txt file, and an 'info' option that gives you the timing, tempo, key signature and time signature
 of the midi file, as well as the number of separate tracks in the file, the octaves spanned by the file and the tracks. 
-The marker and analysis tools 
+The marker tool 'bolds' highlighted portions of the midi track: you can simply drag your mouse over a section of the midi, highlight
+it and ues the marker tool for a particular track in the file.  There is currently a bug that makes it impossible to highlight parts of the track at the beginning, this is being revised.
 
 Those are the functions offered right now by the Chord Quality Program.  
-	
-	Here is information from the old read-me file on the purposes of several methods in the code:
 
-ManagedMIDI.vcproj:
-This is the main project file for VC++ projects generated using an Application Wizard. 
-    
-It contains information about the version of Visual C++ that generated the file, and 
-information about the platforms, configurations, and project features selected with the
- Application Wizard.
-
-ManagedMIDI.cpp: This is the main DLL source file.
-
-ManagedMIDI.h: This file contains a class declaration.
-
-AssemblyInfo.cpp: Contains custom attributes for modifying assembly metadata.
-
-There are many methods/files that make up the project that need to be better documented in an updated readme file.  
-	
