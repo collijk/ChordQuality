@@ -20,12 +20,7 @@ instructions at: https://msdn.microsoft.com/en-us/library/bb398202.aspx .
 
 With those things in mind if you download the files from github, extract them all, and open the visual studio
 solution in your version of visual studio it should run.  (The solution file is one of several files labeled 
-'ChordQuality'.  Pay attention to the file type).  At the time this is written you may or may not run into an error that
-I am currently trying to resolve for a couple weeks - not everyone will have this error and I don't know a 
-solution for it yet: when running the program you will run into visual studio errors 11 and 64 which are 
-'invalid parameter' errors and 'unprepared' errors.  This will prevent several functions of the program from 
-working.  If more people could try to build the solution it may actually be helpful in resolving this - I don't
-know why it seems to come up on my computer in particular.
+'ChordQuality'.  Pay attention to the file type).  
 
 	The program offers several functions to manipulate how the track is played and viewed:
 
@@ -85,21 +80,4 @@ of the midi file, as well as the number of separate tracks in the file, the octa
 The marker and analysis tools 
 
 Those are the functions offered right now by the Chord Quality Program.  
-	
-	Here is information from the old read-me file on the purposes of several methods in the code:
 
-ManagedMIDI.vcproj:
-This is the main project file for VC++ projects generated using an Application Wizard. 
-    
-It contains information about the version of Visual C++ that generated the file, and 
-information about the platforms, configurations, and project features selected with the
- Application Wizard.
-
-ManagedMIDI.cpp: This is the main DLL source file.
-
-ManagedMIDI.h: This file contains a class declaration.
-
-AssemblyInfo.cpp: Contains custom attributes for modifying assembly metadata.
-
-There are many methods/files that make up the project that need to be better documented in an updated readme file.  
-	
