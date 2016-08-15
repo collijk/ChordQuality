@@ -46,16 +46,15 @@ major/minor thirds, fourths, fifths, and major/minor sixths
 
 Displays the 'tuning' value of the piece based on the quality, (displayed by the height of the black bars).  
 You can turn off the chord and interval labels, and turning off the tuning will also remove the display of the black
-bars.
+bars.  You also have the option to include .TAG tuning files in the directory of the project, they will load as part of the project
+and make it possible to change tuning of a midi file.
 
 5) Cut
 
 Tool currently in progress, allows rearrangement of the display of the piece so that the user can create 
 something that resembles sheet music in a more meaningful way.  You can 'cut' an area of the display by right-clicking
 on the boarders of the area you want to cut, which will create markers.  You can remove the markers with the 'reset
-markers' tool and once you've placed two markers you can cut out the area between them with the cut tools.  Eventually
-this will remove the cut-piece from the original display and reproduce it graphically below, but still play through it 
-as a seamless part of the track.  Currently it only reproduces the peice below.  The clear display button will remove 
+markers' tool and once you've placed two markers you can cut out the area between them with the cut tools.  This will be further updated to give the user the ability to make the results look more appealing.  The clear display button will remove 
 the reproduced pieces from the lower display.
 
 6) Tracks
@@ -77,7 +76,8 @@ The file tab gives you the option to load open or save new midi file, print the 
 mentioned before it has a print preview option.  It also has a midi-to-text option that displays the information in
 the midi file as a .txt file, and an 'info' option that gives you the timing, tempo, key signature and time signature
 of the midi file, as well as the number of separate tracks in the file, the octaves spanned by the file and the tracks. 
-The marker and analysis tools 
+The marker tool 'bolds' highlighted portions of the midi track: you can simply drag your mouse over a section of the midi, highlight
+it and ues the marker tool for a particular track in the file.  There is currently a bug that makes it impossible to highlight parts of the track at the beginning, this is being revised.
 
 Those are the functions offered right now by the Chord Quality Program.  
 
